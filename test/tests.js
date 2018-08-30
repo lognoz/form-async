@@ -2,7 +2,7 @@ $(document).ready(function(){
 	function define(target) {
 		return {
 			'pointer' : $(target),
-			'name'    : $(target).attr('name')
+			'name' : $(target).attr('name')
 		};
 	};
 
