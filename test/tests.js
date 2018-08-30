@@ -2,8 +2,7 @@ $(document).ready(function(){
 	function define(target) {
 		return {
 			'pointer' : $(target),
-			'name'    : $(target).attr('name'),
-			'output'  : $(target).parents('div').find('.output'),
+			'name'    : $(target).attr('name')
 		};
 	};
 
