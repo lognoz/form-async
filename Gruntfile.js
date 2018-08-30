@@ -2,6 +2,7 @@ module.exports = function(grunt) {
 	require('load-grunt-tasks')(grunt);
 
 	var gzip = require( "gzip-js" )
+	var travis = process.env.TRAVIS;
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
