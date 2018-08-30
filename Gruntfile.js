@@ -34,9 +34,26 @@ module.exports = function(grunt) {
 					'build/quick-autosave-<%= pkg.version %>.min.js': 'src/quick-autosave.js'
 				}
 			}
+		},
+		qunit: {
+			all: {
+				options: {
+					urls: [
+						'http://localhost:8000/test/index.html'
+					]
+				}
+			}
+		},
+		connect: {
+			server: {
+				options: {
+					port: 8000,
+					base: '.'
+				}
+			}
 		}
 	});
 
-	grunt.registerTask('test', ['uglify', 'compare_size']);
+	grunt.registerTask('test', ['uglify', 'compare_size', 'connect', 'qunit']);
 	grunt.registerTask('default', ['test']);
 };
