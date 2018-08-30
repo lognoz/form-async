@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 					unsafe: true
 				},
 				screwIE8: false,
-				banner: '/*! <%= pkg.name %> v<%= pkg.version %> | <%= pkg.license %> */\n'
+				banner: "/*! <%= pkg.name %> v<%= pkg.version %> | (c) Marc-Antoine Loignon and other contributors */\n",
 			},
 			build: {
 				files: {
