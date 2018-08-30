@@ -1,0 +1,10 @@
+{
+	"name": "quick-autosave",
+	"version": "1.0.0",
+	"main": "./src/quick-autosave.js",
+	"dependencies": {
+		"grunt": "^1.0.3",
+		"grunt-contrib-uglify": "2.3.0",
+		"load-grunt-tasks": "^3.1.0"
+	}
+}
