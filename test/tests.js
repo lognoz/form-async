@@ -26,8 +26,8 @@ $(document).ready(function(){
 	});
 
 	test('Test if field contain attribute data-cache', function() {
-		var json = $.parseJSON(field('simple-field').attr('data-cache'));
-		equal(typeof json, 'object', 'Passed');
+		var object = $.parseJSON(field('simple-field').attr('data-cache'));
+		equal(typeof object, 'object', 'Passed');
 	});
 
 	test('Test action define directy on input', function(assert) {
