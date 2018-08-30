@@ -12,7 +12,9 @@ $(document).ready(function(){
 	}
 
 	function trigger(p) {
-		return field(p.target).val(p.value).trigger(p.event);
+		return field(p.target)
+			.val(p.value)
+			.trigger(p.event);
 	}
 
 	sinon.spy($, "ajax");
