@@ -1,4 +1,21 @@
 $(document).ready(function(){
+	function init() {
+		sinon.spy($, "ajax");
+		tests = {
+			'simple-field': define('#simple-field')
+		};
+
+		$('.exemple').autosave({
+			success: function (data, parameter) {
+				var target = parameter.target;
+				var wrapper = target.parents('.test-case');
+				var output = wrapper.children('.output');
+				var json = JSON.stringify(parameter.data);
+				return output.text(json);
+			}
+		});
+	}
+
 	function define(target) {
 		return {
 			'pointer' : $(target),
@@ -15,21 +32,8 @@ $(document).ready(function(){
 		return field(p.target).val(p.value).trigger(p.event);
 	}
 
-	var tests = {
-		'simple-field': define('#simple-field')
-	};
-
-	$('.exemple').autosave({
-		success: function (data, parameter) {
-			var target = parameter.target;
-			var wrapper = target.parents('.test-case');
-			var output = wrapper.children('.output');
-			var json = JSON.stringify(parameter.data);
-			return output.text(json);
-		}
-	});
-
-	sinon.spy($, "ajax");
+	window.tests = {};
+	init();
 
 	test('Test if field contain attribute data-cache', function() {
 		var object = $.parseJSON(field('simple-field').attr('data-cache'));
