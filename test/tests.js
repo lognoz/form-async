@@ -1,4 +1,3 @@
-// Define environnement tests with DOM selector
 function define(target) {
 	return {
 		'pointer' : $(target),
@@ -6,46 +5,33 @@ function define(target) {
 	};
 };
 
-// Get pointer key of a target name
 function field(target) {
 	return tests[target].pointer;
 }
 
-// Change the value of an input and trigger an event
 function trigger(p) {
 	return field(p.target)
 		.val(p.value)
 		.trigger(p.event);
 }
 
-// Define success function for comparaison
-var success = function(data, parameter) {
-	return 'success';
-};
-
-// Define fail function for comparaison
-var fail = function(data, parameter) {
-	return 'fail';
-};
-
-// Active spy on ajax call
-sinon.spy($, "ajax");
-
 $(document).ready(function(){
-	// Define tests variables
+	sinon.spy($, "ajax");
+
 	var tests = {
 		'simple-field': define('#simple-field')
 	};
 
-	$('.exemple').autosave({
-		success: function (data, parameter) {
-			var target = parameter.target;
-			var wrapper = target.parents('.test-case');
-			var output = wrapper.children('.output');
-			var json = JSON.stringify(parameter.data);
-			return output.text(json);
+	var parameters = {
+		success: function(data, parameter) {
+			return 'success';
+		},
+		fail: function(parameter) {
+			return 'fail';
 		}
-	});
+	};
+
+	$('.exemple').autosave(parameters);
 
 	test('Test if field contain attribute data-cache', function() {
 		var object = $.parseJSON(field('simple-field').attr('data-cache'));
