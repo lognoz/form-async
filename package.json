@@ -8,6 +8,8 @@
 		"grunt-contrib-uglify": "2.3.0",
 		"load-grunt-tasks": "^3.1.0",
 		"grunt-compare-size": "0.4.2",
-		"gzip-js": "0.3.2"
+		"gzip-js": "0.3.2",
+		"grunt-contrib-qunit": "2.0.0",
+		"grunt-contrib-connect": "1.0.2"
 	}
 }
