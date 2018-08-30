@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	// Define environnement tests with DOM selector
 	function define(target) {
 		return {
@@ -19,19 +20,23 @@ $(document).ready(function(){
 			.trigger(p.event);
 	}
 
-	sinon.spy($, "ajax");
-
+	// Define tests variables
 	var tests = {
 		'simple-field': define('#simple-field')
 	};
 
+	// Define success function for comparaison
 	var success = function(data, parameter) {
 		return 'success';
 	};
 
+	// Define fail function for comparaison
 	var fail = function(data, parameter) {
 		return 'fail';
 	};
+
+	// Active spy on ajax call
+	sinon.spy($, "ajax");
 
 	$('.exemple').autosave({
 		success: function (data, parameter) {
@@ -54,6 +59,7 @@ $(document).ready(function(){
 			'event'  : 'blur',
 			'value'  : 'a'
 		});
+
 		equal($.ajax.getCall(0).args[0].url, '/action/unique-field.html', 'Passed');
 	});
 });
