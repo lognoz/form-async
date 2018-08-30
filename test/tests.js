@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	window.tests = {};
+	window.success = function(data, parameter) { return 'success'; };
+	window.fail = function(data, parameter) { return 'fail'; };
 
 	function init() {
 		sinon.spy($, "ajax");
