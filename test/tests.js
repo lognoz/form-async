@@ -21,23 +21,17 @@ $(document).ready(function(){
 		}
 	});
 
-	QUnit.test('Test if field contain attribute data-cache', function(assert) {
+	test('Test if field contain attribute data-cache', function() {
 		var field = tests['simple-field'];
 		var cache = field['pointer'].attr('data-cache');
 		var json = $.parseJSON(cache);
-		assert.equal(typeof json, 'object', 'Passed');
+		equal(typeof json, 'object', 'Passed');
 	});
 
-	QUnit.asyncTest('Test blur on simple field', function(assert) {
-		expect(1);
+	test('Test action define directy on input', function(assert) {
+		sinon.replace($, 'ajax', sinon.fake());
 		var field = tests['simple-field'];
-		var name = field['name'];
 		field['pointer'].val('a').trigger('blur');
-		window.setTimeout(function() {
-			var json = field['output'].html();
-			var data = $.parseJSON(json);
-			assert.equal(data[name], 'a', 'Passed');
-			QUnit.start();
-		}, 1000);
+		equal($.ajax.calledWithMatch({ url: '/action/unique-field.html' }), true, 'Passed');
 	});
 });
