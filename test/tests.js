@@ -1,13 +1,9 @@
 $(document).ready(function(){
-	function define(pointer) {
-		var target = $(pointer);
-		var name = target.attr('name');
-		var wrapper = target.parents('.test-case');
-		var output = wrapper.children('.output');
+	function define(target) {
 		return {
-			'pointer': target,
-			'output': output,
-			'name': name
+			'pointer' : $(target),
+			'name'    : $(target).attr('name'),
+			'output'  : $(target).parents('div').find('.output'),
 		};
 	};
 
