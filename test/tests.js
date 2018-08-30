@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	// Define environnement tests with DOM selector
 	function define(target) {
 		return {
 			'pointer' : $(target),
@@ -6,10 +7,12 @@ $(document).ready(function(){
 		};
 	};
 
+	// Get pointer key of a target name
 	function field(target) {
 		return tests[target].pointer;
 	}
 
+	// Change the value of an input and trigger an event
 	function trigger(p) {
 		return field(p.target)
 			.val(p.value)
