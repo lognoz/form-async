@@ -1,6 +1,7 @@
 {
 	"name": "quick-autosave",
 	"version": "1.0.0",
+	"license": "MIT",
 	"main": "./src/quick-autosave.js",
 	"dependencies": {
 		"grunt": "^1.0.3",
