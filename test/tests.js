@@ -7,6 +7,10 @@ $(document).ready(function(){
 		};
 	};
 
+	function field(target) {
+		return tests[target].pointer;
+	}
+
 	var tests = {
 		'simple-field': define('#simple-field')
 	};
@@ -22,16 +26,14 @@ $(document).ready(function(){
 	});
 
 	test('Test if field contain attribute data-cache', function() {
-		var field = tests['simple-field'];
-		var cache = field['pointer'].attr('data-cache');
-		var json = $.parseJSON(cache);
+		var json = $.parseJSON(field('simple-field').attr('data-cache'));
 		equal(typeof json, 'object', 'Passed');
 	});
 
 	test('Test action define directy on input', function(assert) {
-		sinon.replace($, 'ajax', sinon.fake());
+		sinon.spy($, "ajax");
 		var field = tests['simple-field'];
 		field['pointer'].val('a').trigger('blur');
-		equal($.ajax.calledWithMatch({ url: '/action/unique-field.html' }), true, 'Passed');
+		equal($.ajax.getCall(0).args[0].url, '/action/unique-field.html', 'Passed');
 	});
 });
