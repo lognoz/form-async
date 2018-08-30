@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	window.tests = {};
+
 	function init() {
 		sinon.spy($, "ajax");
 		tests = {
@@ -32,7 +34,6 @@ $(document).ready(function(){
 		return field(p.target).val(p.value).trigger(p.event);
 	}
 
-	window.tests = {};
 	init();
 
 	test('Test if field contain attribute data-cache', function() {
