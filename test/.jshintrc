@@ -1,0 +1,7 @@
+{
+	"extends": "../.jshintrc"
+	"browser": true,
+	"jquery": true,
+	"qunit": true,
+	"-W053": true,
+}
