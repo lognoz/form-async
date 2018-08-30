@@ -1,8 +1,24 @@
 module.exports = function(grunt) {
 	require('load-grunt-tasks')(grunt);
 
+	var gzip = require( "gzip-js" )
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		compare_size: {
+			files: [
+				"build/quick-autosave.min.js",
+				"src/quick-autosave.js"
+			],
+			options: {
+				compress: {
+					gz: function(contents) {
+						return gzip.zip(contents, {}).length;
+					}
+				},
+				cache: "build/.sizecache.json"
+			}
+		},
 		uglify: {
 			options: {
 				compress: {
@@ -20,6 +36,6 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('test', ['uglify']);
+	grunt.registerTask('test', ['uglify', 'compare_size']);
 	grunt.registerTask('default', ['test']);
 };
