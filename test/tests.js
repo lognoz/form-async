@@ -1,42 +1,41 @@
-$(document).ready(function(){
-
-	// Define environnement tests with DOM selector
-	function define(target) {
-		return {
-			'pointer' : $(target),
-			'name' : $(target).attr('name')
-		};
+// Define environnement tests with DOM selector
+function define(target) {
+	return {
+		'pointer' : $(target),
+		'name' : $(target).attr('name')
 	};
+};
 
-	// Get pointer key of a target name
-	function field(target) {
-		return tests[target].pointer;
-	}
+// Get pointer key of a target name
+function field(target) {
+	return tests[target].pointer;
+}
 
-	// Change the value of an input and trigger an event
-	function trigger(p) {
-		return field(p.target)
-			.val(p.value)
-			.trigger(p.event);
-	}
+// Change the value of an input and trigger an event
+function trigger(p) {
+	return field(p.target)
+		.val(p.value)
+		.trigger(p.event);
+}
 
+// Define success function for comparaison
+var success = function(data, parameter) {
+	return 'success';
+};
+
+// Define fail function for comparaison
+var fail = function(data, parameter) {
+	return 'fail';
+};
+
+// Active spy on ajax call
+sinon.spy($, "ajax");
+
+$(document).ready(function(){
 	// Define tests variables
 	var tests = {
 		'simple-field': define('#simple-field')
 	};
-
-	// Define success function for comparaison
-	var success = function(data, parameter) {
-		return 'success';
-	};
-
-	// Define fail function for comparaison
-	var fail = function(data, parameter) {
-		return 'fail';
-	};
-
-	// Active spy on ajax call
-	sinon.spy($, "ajax");
 
 	$('.exemple').autosave({
 		success: function (data, parameter) {
