@@ -200,22 +200,22 @@
 			$.ajax({
 				method : "POST",
 				url : action,
-				data : data
-			})
-			.done(function(data) {
-				var cache = JSON.stringify(track);
+				data : data,
+				success : function(data) {
+					var cache = JSON.stringify(track);
 
-				if (track.success != undefined)
-					tracker.success[track.success](data, param);
+					if (track.success != undefined)
+						tracker.success[track.success](data, param);
 
-				if (type == 'checkbox' || type == 'radio')
-					setCacheCheckboxRadio(name, parent);
-				else
-					target.attr('data-cache', cache);
-			})
-			.fail(function(){
-				if (track.fail != undefined)
-					tracker.fail[track.fail](param);
+					if (type == 'checkbox' || type == 'radio')
+						setCacheCheckboxRadio(name, parent);
+					else
+						target.attr('data-cache', cache);
+				},
+				error : function(){
+					if (track.fail != undefined)
+						tracker.fail[track.fail](param);
+				}
 			});
 		}
 	}
