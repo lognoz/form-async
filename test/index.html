@@ -5,7 +5,7 @@
 		<title>Quick-Autosave Test Suite</title>
 		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css">
 		<script src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
-		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="../src/quick-autosave.js"></script>
 		<script src="tests.js"></script>
 	</head>
@@ -15,26 +15,12 @@
 			<div class="test-case">
 				<h2>Unique field</h2>
 				<div class="bloc">
-					<input type="text" name="xs_username" data-action="action/ajax-01.html.php" class="exemple">
+					<input type="text" name="xs_username" data-action="index.html" id="exemple_01" class="exemple">
 				</div>
 				<div class="output">
 					<h3>Exemple output:</h3>
 					<pre><code>{}</code></pre>
 				</div>
-			</div>
-			<div class="test-case">
-				<form action="action/ajax-01.html.php" method="post" class="exemple">
-					<h2>Multiple fields</h2>
-					<div class="bloc">
-						<input type="text" name="xs_username" id="xs_username">
-						<input type="text" name="xs_name" id="xs_name">
-						<input type="text" name="xs_phone" id="xs_phone">
-					</div>
-					<div class="output">
-						<h3>Exemple output:</h3>
-						<pre><code>{}</code></pre>
-					</div>
-				</form>
 			</div>
 		</div>
 	</body>
