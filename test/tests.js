@@ -173,4 +173,19 @@ $(document).ready(function(){
 
 		spy.restore();
 	});
+
+	test('send inputs as a group', function(assert) {
+		var spy = sinon.spy($, "ajax");
+		var data = $('#group-password').attr('data-cache');
+
+		$('#group-password')
+			.val('orange')
+			.trigger('blur');
+
+		assert.ok(data);
+		assert.ok($.ajax.calledWithMatch({ url: '/action/group.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_password': 'orange', 'xs_redirection': 'index.html'} }));
+
+		spy.restore();
+	});
 });
