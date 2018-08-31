@@ -18,7 +18,7 @@ $(document).ready(function(){
 	});
 
 	test('self initialisation with data-action', function(assert) {
-		var save = sinon.spy($, "ajax");
+		var spy = sinon.spy($, "ajax");
 		var data = $('#simple-field').attr('data-cache');
 
 		$('#simple-field')
@@ -30,10 +30,10 @@ $(document).ready(function(){
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_username': 'apple'} }));
 
 		server.respond();
-		assert.ok(save.called)
+		assert.ok(spy.called)
 		assert.ok($('#simple-field').attr('data-cache') != data);
 
-		save.restore();
+		spy.restore();
 	});
 
 //	test('form initialisation with action', function(assert) {
