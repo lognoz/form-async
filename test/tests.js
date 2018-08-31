@@ -47,4 +47,26 @@ $(document).ready(function(){
 
 		save.restore();
 	});
+
+	test('form initialisation with overwriting action', function(assert) {
+		var save = sinon.spy($, "ajax");
+
+		$('#overwrite-action-city')
+			.val('avocado')
+			.trigger('blur');
+
+		assert.ok($('#overwrite-action-city').attr('data-cache'));
+		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_city': 'avocado'} }));
+
+		$('#overwrite-action-province')
+			.val('blueberrie')
+			.trigger('blur');
+
+		assert.ok($('#overwrite-action-province').attr('data-cache'));
+		assert.ok($.ajax.calledWithMatch({ url: '/action/overwrite-action.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_province': 'blueberrie'} }));
+
+		save.restore();
+	});
 });
