@@ -1,50 +1,23 @@
-function define(target) {
-	return {
-		'pointer' : $(target),
-		'name' : $(target).attr('name')
-	};
-};
-
-function field(target) {
-	return tests[target].pointer;
-}
-
-function trigger(p) {
-	return field(p.target)
-		.val(p.value)
-		.trigger(p.event);
-}
-
 $(document).ready(function(){
-	sinon.spy($, "ajax");
-
-	var tests = {
-		'simple-field': define('#simple-field')
-	};
-
-	var parameters = {
-		success: function(data, parameter) {
-			return 'success';
-		},
-		fail: function(parameter) {
-			return 'fail';
-		}
-	};
-
-	$('.exemple').autosave(parameters);
-
-	test('Test if field contain attribute data-cache', function() {
-		var object = $.parseJSON(field('simple-field').attr('data-cache'));
-		equal(typeof object, 'object', 'Passed');
+	$('.exemple').autosave({
+		success: {},
+		fail: {}
 	});
 
-	test('Test action define directy on input', function(assert) {
-		trigger({
-			'target' : 'simple-field',
-			'event'  : 'blur',
-			'value'  : 'a'
-		});
+	module('Initialization');
+	test('Test if field has data-cache attribute', function(assert) {
+		var data = function(target) {
+			return $.parseJSON($(target).attr('data-cache'));
+		}
 
-		equal($.ajax.getCall(0).args[0].url, '/action/unique-field.html', 'Passed');
+		assert.equal(typeof data('#simple-field'), 'object');
+		assert.equal(typeof data('#multiple-fields-name'), 'object');
+		assert.equal(typeof data('#multiple-fields-phone'), 'object');
+	});
+
+	module('Test if field is capable to make ajax call', {
+		setup: function() {
+			sinon.spy($, "ajax");
+		}
 	});
 });
