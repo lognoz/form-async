@@ -1,28 +1,27 @@
 $(document).ready(function(){
-	$('.exemple').autosave({
-		success: function(data, parameters) {
-			return 'Success';
-		},
-		fail: function(parameters) {
-			return 'Fail';
-		}
-	});
-
 	module('Test case', {
 		setup: function() {
-			sinon.stub($, "ajax");
+			$('.exemple').autosave({
+				success: function(data, parameters) {
+					return 'Success';
+				},
+				fail: function(parameters) {
+					return 'Fail';
+				}
+			});
 		}
 	});
 
 	test('self initialisation with data-action', function(assert) {
+		var save = sinon.spy($, "ajax");
+
 		$('#simple-field')
 			.val('apple')
 			.trigger('blur');
 
 		assert.ok($('#simple-field').attr('data-cache'));
 		assert.ok($.ajax.calledWithMatch({ url: '/action/unique-field.html' }));
-
-		$.ajax.restore();
+		save.restore();
 	});
 
 //	var requirement = {
