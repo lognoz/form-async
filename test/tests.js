@@ -29,6 +29,11 @@ $(document).ready(function(){
 		}
 	});
 	test('Test if field is capable to make ajax call', function(assert) {
+		// Drop strange test case for the loop
+		delete requirement['#group-password'];
+		delete requirement['#group-redirection'];
+		delete requirement['.checkbox-vehicule'];
+		delete requirement['.radio-gender'];
 
 	});
 });
