@@ -4,6 +4,22 @@ $(document).ready(function(){
 		fail: {}
 	});
 
+	module('Test case', {
+		setup: function() {
+			sinon.spy($, "ajax");
+		}
+	});
+
+	test('self initialisation with data-action', function(assert) {
+		assert.ok($('#simple-field').attr('data-cache'));
+
+		$('#simple-field')
+			.val('apple')
+			.trigger('blur');
+
+		assert.equal('/action/unique-field.html', $.ajax.getCall(0).args[0].url);
+	});
+
 //	var requirement = {
 //		'#simple-field': '/action/unique-field.html',
 //		'#multiple-fields-name': '/action/multiple-fields.html',
