@@ -18,19 +18,9 @@ $(document).ready(function(){
 
 	module('Initialization');
 	test('Test if field has data-cache attribute', function(assert) {
-		var data = function(target) {
-			return $.parseJSON($(target).attr('data-cache'));
+		for (var target in requirement) {
+			assert.equal(typeof $.parseJSON($(target).attr('data-cache')), 'object');
 		}
-
-		assert.equal(typeof data('#simple-field'), 'object');
-		assert.equal(typeof data('#multiple-fields-name'), 'object');
-		assert.equal(typeof data('#multiple-fields-phone'), 'object');
-		assert.equal(typeof data('#overwrite-action-city'), 'object');
-		assert.equal(typeof data('#overwrite-action-province'), 'object');
-		assert.equal(typeof data('#group-password'), 'object');
-		assert.equal(typeof data('#group-redirection'), 'object');
-		assert.equal(typeof data('.checkbox-vehicule'), 'object');
-		assert.equal(typeof data('.radio-gender'), 'object');
 	});
 
 	module('Ajax', {
