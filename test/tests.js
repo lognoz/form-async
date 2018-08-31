@@ -104,22 +104,36 @@ $(document).ready(function(){
 		spy.restore();
 	});
 
-//	test('checkbox list', function(assert) {
-//		var save = sinon.spy($, "ajax");
-//
-//
-//		$('#checkbox-bike').trigger('click');
-//		assert.ok($('#checkbox-bike').attr('data-cache'));
-//		assert.ok($.ajax.getCall(0).args[0].url == 'index.html');
-//
-//
-//		$('#checkbox-car').trigger('click');
-//		$('#checkbox-bike').trigger('click');
-//
-//		console.log($.ajax.getCall(0).args[0])
-//		console.log($.ajax.getCall(1).args[0])
-//		console.log($.ajax.getCall(2).args[0])
-//
-//		save.restore();
-//	});
+	test('checkbox list', function(assert) {
+		var spy = sinon.spy($, "ajax");
+		var data = {
+			bike: $('#checkbox-bike').attr('data-cache'),
+			car: $('#checkbox-car').attr('data-cache')
+		};
+
+		$('#checkbox-bike').trigger('click');
+		assert.ok(data.bike);
+		assert.ok($.ajax.calledWithMatch({ url: '/action/checkbox.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': 'bike'} }));
+
+		server.respond();
+
+		$('#checkbox-car').trigger('click');
+		assert.ok(data.car);
+		assert.ok($.ajax.calledWithMatch({ url: '/action/checkbox.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': 'bike&car'} }));
+
+		server.respond();
+
+		$('#checkbox-bike').trigger('click');
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': 'car'} }));
+
+		server.respond();
+
+		assert.ok(spy.called)
+		assert.ok($('#checkbox-car').attr('data-cache') != data.car);
+		assert.ok($('#checkbox-bike').attr('data-cache') == data.bike);
+
+		spy.restore();
+	});
 });
