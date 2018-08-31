@@ -1,6 +1,11 @@
 $(document).ready(function(){
+	var server = null;
+
 	module('Test case', {
 		setup: function() {
+			server = sinon.fakeServer.create();
+			server.respondWith('response');
+
 			$('.exemple').autosave({
 				success: function(data, parameters) {
 					return 'Success';
@@ -14,14 +19,19 @@ $(document).ready(function(){
 
 	test('self initialisation with data-action', function(assert) {
 		var save = sinon.spy($, "ajax");
+		var data = $('#simple-field').attr('data-cache');
 
 		$('#simple-field')
 			.val('apple')
 			.trigger('blur');
 
-		assert.ok($('#simple-field').attr('data-cache'));
+		assert.ok(data);
 		assert.ok($.ajax.calledWithMatch({ url: '?action=unique-field.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_username': 'apple'} }));
+
+		server.respond();
+		assert.ok(save.called)
+		assert.ok($('#simple-field').attr('data-cache') != data);
 
 		save.restore();
 	});
