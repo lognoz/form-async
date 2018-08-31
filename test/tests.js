@@ -4,6 +4,18 @@ $(document).ready(function(){
 		fail: {}
 	});
 
+	var requirement = {
+		'#simple-field': '/action/unique-field.html',
+		'#multiple-fields-name': '/action/multiples-fields.html',
+		'#multiple-fields-phone': '/action/multiples-fields.html',
+		'#overwrite-action-city': '/action/overwrite-action.html',
+		'#overwrite-action-province': '/action/overwrite-action.html',
+		'#group-password': '/action/group.html',
+		'#group-redirection': '/action/group.html',
+		'.checkbox-vehicule': '/action/checkbox.html',
+		'.radio-gender': '/action/radio.html'
+	};
+
 	module('Initialization');
 	test('Test if field has data-cache attribute', function(assert) {
 		var data = function(target) {
