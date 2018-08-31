@@ -51,5 +51,16 @@ $(document).ready(function(){
 				.val(parameters.value)
 				.trigger(parameters.event);
 		};
+
+		for (var target in requirement) {
+			var value = word[Math.floor(Math.random() * word.length)];
+			trigger({
+				'target': target,
+				'value': value,
+				'event': 'blur'
+			});
+
+			assert.equal($.ajax.getCall(0).args[0].url, requirement[target]);
+		}
 	});
 });
