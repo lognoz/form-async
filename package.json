@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"license": "MIT",
 	"main": "./src/quick-autosave.js",
-	"dependencies": {
+	"devDependencies": {
 		"grunt": "^1.0.3",
 		"grunt-compare-size": "0.4.2",
 		"grunt-contrib-connect": "1.0.2",
