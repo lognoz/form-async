@@ -2,14 +2,6 @@
 
 Making good form that improves user experience is not supposed to be hard to do. Many web developers prefer to prioritize time production over quality. Quick Autosave is the simplest, fastest way to send ajax request when form changes.
 
-[![Version](https://img.shields.io/npm/v/quick-autosave.svg)](https://www.npmjs.com/package/quick-autosave)
-[![npm](https://img.shields.io/npm/dt/quick-autosave.svg)](https://www.npmjs.com/package/quick-autosave)
-[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/quick-autosave/badge?style=rounded)](https://www.jsdelivr.com/package/npm/quick-autosave)
-
-<a href="https://www.lognoz.com/quick-autosave/">
-  <img width="590" src="./test/asset/img/presentation.png" alt="Demo">
-</a>
-
 ## Installation
 
 Include jQuery library, you can use cdn from [jquery.com](http://jquery.com/download/)
