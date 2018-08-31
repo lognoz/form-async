@@ -70,27 +70,39 @@ $(document).ready(function(){
 		spy.restore();
 	});
 
-//	test('form initialisation with overwriting action', function(assert) {
-//		var save = sinon.spy($, "ajax");
-//
-//		$('#overwrite-action-city')
-//			.val('avocado')
-//			.trigger('blur');
-//
-//		assert.ok($('#overwrite-action-city').attr('data-cache'));
-//		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
-//		assert.ok($.ajax.calledWithMatch({ data: {'xs_city': 'avocado'} }));
-//
-//		$('#overwrite-action-province')
-//			.val('blueberrie')
-//			.trigger('blur');
-//
-//		assert.ok($('#overwrite-action-province').attr('data-cache'));
-//		assert.ok($.ajax.calledWithMatch({ url: '/action/overwrite-action.html' }));
-//		assert.ok($.ajax.calledWithMatch({ data: {'xs_province': 'blueberrie'} }));
-//
-//		save.restore();
-//	});
+	test('form initialisation with overwriting action', function(assert) {
+		var spy = sinon.spy($, "ajax");
+		var data = {
+			city: $('#overwrite-action-city').attr('data-cache'),
+			province: $('#overwrite-action-province').attr('data-cache')
+		};
+
+		$('#overwrite-action-city')
+			.val('avocado')
+			.trigger('blur');
+
+		assert.ok(data.city);
+		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_city': 'avocado'} }));
+
+		server.respond();
+
+		$('#overwrite-action-province')
+			.val('blueberrie')
+			.trigger('blur');
+
+		assert.ok(data.province);
+		assert.ok($.ajax.calledWithMatch({ url: '/action/overwrite-action.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_province': 'blueberrie'} }));
+
+		server.respond();
+
+		assert.ok(spy.called)
+		assert.ok($('#overwrite-action-city').attr('data-cache') != data.city);
+		assert.ok($('#overwrite-action-province').attr('data-cache') != data.province);
+
+		spy.restore();
+	});
 
 //	test('checkbox list', function(assert) {
 //		var save = sinon.spy($, "ajax");
