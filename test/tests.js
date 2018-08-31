@@ -21,9 +21,12 @@ $(document).ready(function(){
 		assert.equal(typeof data('.radio-gender'), 'object');
 	});
 
-	module('Test if field is capable to make ajax call', {
+	module('Ajax', {
 		setup: function() {
 			sinon.spy($, "ajax");
 		}
+	});
+	test('Test if field is capable to make ajax call', function(assert) {
+
 	});
 });
