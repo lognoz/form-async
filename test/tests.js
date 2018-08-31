@@ -136,4 +136,41 @@ $(document).ready(function(){
 
 		spy.restore();
 	});
+
+	test('radio list', function(assert) {
+		var spy = sinon.spy($, "ajax");
+		var data = {
+			male: $('#radio-male').attr('data-cache'),
+			female: $('#radio-female').attr('data-cache'),
+			other: $('#radio-other').attr('data-cache')
+		};
+
+		$('#radio-male').trigger('click');
+		assert.ok(data.male);
+		assert.ok($.ajax.calledWithMatch({ url: '/action/radio.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_gender': 'Male'} }));
+
+		server.respond();
+
+		$('#radio-female').trigger('click');
+		assert.ok(data.female);
+		assert.ok($.ajax.calledWithMatch({ url: '/action/radio.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_gender': 'Female'} }));
+
+		server.respond();
+
+		$('#radio-other').trigger('click');
+		assert.ok(data.other);
+		assert.ok($.ajax.calledWithMatch({ url: '/action/radio.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_gender': 'Other'} }));
+
+		server.respond();
+
+		assert.ok(spy.called)
+		assert.ok($('#radio-male').attr('data-cache') == data.male);
+		assert.ok($('#radio-female').attr('data-cache') == data.female);
+		assert.ok($('#radio-other').attr('data-cache') != data.other);
+
+		spy.restore();
+	});
 });
