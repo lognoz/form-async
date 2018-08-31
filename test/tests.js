@@ -37,7 +37,7 @@ $(document).ready(function(){
 	});
 
 	test('form initialisation with action', function(assert) {
-		var save = sinon.spy($, "ajax");
+		var spy = sinon.spy($, "ajax");
 
 		$('#multiple-fields-name')
 			.val('apple')
@@ -55,7 +55,7 @@ $(document).ready(function(){
 		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_phone': 'orange'} }));
 
-		save.restore();
+		spy.restore();
 	});
 
 //	test('form initialisation with overwriting action', function(assert) {
