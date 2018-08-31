@@ -39,7 +39,12 @@ module.exports = function(grunt) {
 			all: {
 				options: {
 					urls: [
-						'http://localhost:8000/test/index.html'
+						'http://localhost:8000/test/index.html?jquery=1.11.1',
+						'http://localhost:8000/test/index.html?jquery=1.7.2',
+						'http://localhost:8000/test/index.html?jquery=1.8.3',
+						'http://localhost:8000/test/index.html?jquery=1.9.1',
+						'http://localhost:8000/test/index.html?jquery=2.1.1',
+						'http://localhost:8000/test/index.html?jquery=3.0.0'
 					]
 				}
 			}
