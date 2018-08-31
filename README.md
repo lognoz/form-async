@@ -1,6 +1,6 @@
 # JavaScript Autosave [![travis-img-url](https://travis-ci.org/lognoz/js-autosave.svg)](https://travis-ci.org/lognoz/js-autosave) [![Code Climate](https://codeclimate.com/github/lognoz/js-autosave.svg)](https://codeclimate.com/github/lognoz/js-autosave)
 
-Making good form that improves user experience is not supposed to be hard to do. Many web developers prefer to prioritize time production over quality. Quick Autosave is the simplest, fastest way to send ajax request when form changes.
+Making good form that improves user experience is not supposed to be hard to do. Many web developers prefer to prioritize time production over quality. JavaScript Autosave is the simplest, fastest way to send ajax request when form changes.
 
 ## Installation
 
@@ -10,26 +10,26 @@ Include jQuery library, you can use cdn from [jquery.com](http://jquery.com/down
 ```
 
 ### Direct download
-Include it via [jsDelivr CDN](https://www.jsdelivr.com/package/npm/quick-autosave)
+Include it via [jsDelivr CDN](https://www.jsdelivr.com/package/npm/js-autosave)
 ```html
-<script src="https://cdn.jsdelivr.net/npm/quick-autosave/src/quick-autosave.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-autosave/src/js.autosave.js"></script>
 ```
 
-Or download the script [here](https://github.com/lognoz/quick-autosave/blob/master/src/quick-autosave.js) and include it
+Or download the script [here](https://github.com/lognoz/js-autosave/blob/master/src/js.autosave.js) and include it
 ```html
-<script src="/path/to/quick-autosave.js"></script>
+<script src="/path/to/js.autosave.js"></script>
 ```
 
 ### Package Managers
-You can get it on [npm](https://www.npmjs.com/package/quick-autosave) or on [bower](https://bower.io/search/?q=quick-autosave) under the name `quick-autosave`.
+You can get it on [npm](https://www.npmjs.com/package/js-autosave) or on [bower](https://bower.io/search/?q=js-autosave) under the name `js-autosave`.
 
 ## Setup
-You can configure your autosave with jQuery selector. 
+You can configure your autosave with jQuery selector.
 ```js
 $(".exemple").autosave();
 ```
 
-There are two ways to create a DOM element that can be used by Quick Autosave. The library uses the `action` by default or the `data-action` of your selector for your ajax call. You can also overwrite the ajax call by using `data-action` on your form element (`input`, `select`, `textarea`).
+There are two ways to create a DOM element that can be used by JavaScript Autosave. The library uses the `action` by default or the `data-action` of your selector for your ajax call. You can also overwrite the ajax call by using `data-action` on your form element (`input`, `select`, `textarea`).
 
 ***Initialization with action***
 
@@ -86,14 +86,14 @@ To create a group, you can use the `data-group` attribute.
 
 ## Contenteditable
 
-If you want to use `contenteditable` as form element, you can use the `data-name` attribute. 
+If you want to use `contenteditable` as form element, you can use the `data-name` attribute.
 ```html
 <div contenteditable="true" class="textarea" data-name="xs_content"></div>
 ```
 
 ## Advanced Options
 
-If you want to catch data returned by Quick Autosave before sending ajax request, you can set `before` function. It can be useful to validate your form content. You will need to return `true` if you want to procceed the ajax call.
+If you want to catch data returned by JavaScript Autosave before sending ajax request, you can set `before` function. It can be useful to validate your form content. You will need to return `true` if you want to procceed the ajax call.
 ```js
 $(".exemple").autosave({
   before : function (parameter) {
@@ -102,9 +102,9 @@ $(".exemple").autosave({
 });
 ```
 
-You can process your ajax data return. If MySQL update request is not successful, you can forward it to your fail function . 
+You can process your ajax data return. If MySQL update request is not successful, you can forward it to your fail function.
 
-To use `fail` function, you need to set a function as an option. Quick Autosave will call it if ajax request is not working or if you forward your success function to this one. 
+To use `fail` function, you need to set a function as an option. JavaScript Autosave will call it if ajax request is not working or if you forward your success function to this one.
 
 To improve user experience, you can use `parameter` send as arguments for output retry message and a link that will resend the ajax request. For instance, if you want to use it, you will simply need `parameter.retry` function and send a jQuery selector.
 
