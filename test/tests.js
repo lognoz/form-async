@@ -45,5 +45,11 @@ $(document).ready(function(){
 			'nervous',
 			'escape'
 		];
+
+		var trigger = function(parameters) {
+			$(parameters.target)
+				.val(parameters.value)
+				.trigger(parameters.event);
+		};
 	});
 });
