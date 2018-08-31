@@ -13,6 +13,8 @@ $(document).ready(function(){
 		assert.equal(typeof data('#simple-field'), 'object');
 		assert.equal(typeof data('#multiple-fields-name'), 'object');
 		assert.equal(typeof data('#multiple-fields-phone'), 'object');
+		assert.equal(typeof data('#overwrite-action-city'), 'object');
+		assert.equal(typeof data('#overwrite-action-province'), 'object');
 	});
 
 	module('Test if field is capable to make ajax call', {
