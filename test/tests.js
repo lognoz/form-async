@@ -38,22 +38,34 @@ $(document).ready(function(){
 
 	test('form initialisation with action', function(assert) {
 		var spy = sinon.spy($, "ajax");
+		var data = {
+			name: $('#multiple-fields-name').attr('data-cache'),
+			phone: $('#multiple-fields-phone').attr('data-cache')
+		};
 
 		$('#multiple-fields-name')
 			.val('apple')
 			.trigger('blur');
 
-		assert.ok($('#multiple-fields-name').attr('data-cache'));
+		assert.ok(data.name);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_name': 'apple'} }));
+
+		server.respond();
 
 		$('#multiple-fields-phone')
 			.val('orange')
 			.trigger('blur');
 
-		assert.ok($('#multiple-fields-phone').attr('data-cache'));
+		assert.ok(data.phone);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_phone': 'orange'} }));
+
+		server.respond();
+
+		assert.ok(spy.called)
+		assert.ok($('#multiple-fields-name').attr('data-cache') != data.name);
+		assert.ok($('#multiple-fields-phone').attr('data-cache') != data.phone);
 
 		spy.restore();
 	});
