@@ -1,8 +1,34 @@
 {
-	"name": "quick-autosave",
+	"name": "js-autosave",
 	"version": "1.0.0",
+	"description": "The simplest, fastest way to send ajax request when form changes.",
+	"main": "src/js.autosave.js",
+	"directories": {
+		"test": "test"
+	},
+	"keywords": [
+		"jquery-plugin",
+		"autosave",
+		"input",
+		"form",
+		"interval",
+		"client",
+		"jquery",
+		"browser",
+		"js-autosave"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/lognoz/js-autosave.git"
+	},
+	"scripts": {
+		"test": "grunt test"
+	},
+	"author": "Marc-Antoine Loignon",
 	"license": "MIT",
-	"main": "./src/quick-autosave.js",
+	"dependencies": {
+		"jquery": "~3.0.0"
+	},
 	"devDependencies": {
 		"grunt": "^1.0.3",
 		"grunt-compare-size": "0.4.2",
