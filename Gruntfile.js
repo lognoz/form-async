@@ -8,8 +8,8 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		compare_size: {
 			files: [
-				"build/quick-autosave.min.js",
-				"src/quick-autosave.js"
+				"build/js.autosave.min.js",
+				"src/js.autosave.js"
 			],
 			options: {
 				compress: {
@@ -30,8 +30,8 @@ module.exports = function(grunt) {
 			},
 			build: {
 				files: {
-					'build/quick-autosave.min.js': 'src/quick-autosave.js',
-					'build/quick-autosave-<%= pkg.version %>.min.js': 'src/quick-autosave.js'
+					'build/js.autosave.min.js': 'src/js.autosave.js',
+					'build/js.autosave-<%= pkg.version %>.min.js': 'src/js.autosave.js'
 				}
 			}
 		},
