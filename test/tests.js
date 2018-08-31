@@ -26,7 +26,7 @@ $(document).ready(function(){
 			.trigger('blur');
 
 		assert.ok(data);
-		assert.ok($.ajax.calledWithMatch({ url: '?action=unique-field.html' }));
+		assert.ok($.ajax.calledWithMatch({ url: '/action/unique-field.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_username': 'apple'} }));
 
 		server.respond();
