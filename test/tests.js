@@ -20,7 +20,7 @@ $(document).ready(function(){
 			.trigger('blur');
 
 		assert.ok($('#simple-field').attr('data-cache'));
-		assert.ok($.ajax.calledWithMatch({ url: '/action/unique-field.html' }));
+		assert.ok($.ajax.calledWithMatch({ url: '?action=unique-field.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_username': 'apple'} }));
 
 		save.restore();
