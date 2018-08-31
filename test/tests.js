@@ -1,23 +1,28 @@
 $(document).ready(function(){
 	$('.exemple').autosave({
-		success: {},
-		fail: {}
+		success: function(data, parameters) {
+			return 'Success';
+		},
+		fail: function(parameters) {
+			return 'Fail';
+		}
 	});
 
 	module('Test case', {
 		setup: function() {
-			sinon.spy($, "ajax");
+			sinon.stub($, "ajax");
 		}
 	});
 
 	test('self initialisation with data-action', function(assert) {
-		assert.ok($('#simple-field').attr('data-cache'));
-
 		$('#simple-field')
 			.val('apple')
 			.trigger('blur');
 
-		assert.equal('/action/unique-field.html', $.ajax.getCall(0).args[0].url);
+		assert.ok($('#simple-field').attr('data-cache'));
+		assert.ok($.ajax.calledWithMatch({ url: '/action/unique-field.html' }));
+
+		$.ajax.restore();
 	});
 
 //	var requirement = {
