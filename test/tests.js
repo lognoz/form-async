@@ -36,28 +36,28 @@ $(document).ready(function(){
 		spy.restore();
 	});
 
-//	test('form initialisation with action', function(assert) {
-//		var save = sinon.spy($, "ajax");
-//
-//		$('#multiple-fields-name')
-//			.val('apple')
-//			.trigger('blur');
-//
-//		assert.ok($('#multiple-fields-name').attr('data-cache'));
-//		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
-//		assert.ok($.ajax.calledWithMatch({ data: {'xs_name': 'apple'} }));
-//
-//		$('#multiple-fields-phone')
-//			.val('orange')
-//			.trigger('blur');
-//
-//		assert.ok($('#multiple-fields-phone').attr('data-cache'));
-//		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
-//		assert.ok($.ajax.calledWithMatch({ data: {'xs_phone': 'orange'} }));
-//
-//		save.restore();
-//	});
-//
+	test('form initialisation with action', function(assert) {
+		var save = sinon.spy($, "ajax");
+
+		$('#multiple-fields-name')
+			.val('apple')
+			.trigger('blur');
+
+		assert.ok($('#multiple-fields-name').attr('data-cache'));
+		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_name': 'apple'} }));
+
+		$('#multiple-fields-phone')
+			.val('orange')
+			.trigger('blur');
+
+		assert.ok($('#multiple-fields-phone').attr('data-cache'));
+		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_phone': 'orange'} }));
+
+		save.restore();
+	});
+
 //	test('form initialisation with overwriting action', function(assert) {
 //		var save = sinon.spy($, "ajax");
 //
