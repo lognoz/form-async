@@ -152,6 +152,3 @@ Autosave will send an object to your custom function `before`, `success` and `fa
 
 ***parameter.target***<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery selector updated.
-
-## Author
-Marc-Antoine Loignon - <https://www.lognoz.com>
