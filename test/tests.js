@@ -35,5 +35,15 @@ $(document).ready(function(){
 		delete requirement['.checkbox-vehicule'];
 		delete requirement['.radio-gender'];
 
+		var word = [
+			'friends',
+			'funny',
+			'lip',
+			'trick',
+			'vehicule',
+			'serious',
+			'nervous',
+			'escape'
+		];
 	});
 });
