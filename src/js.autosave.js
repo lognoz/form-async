@@ -211,23 +211,25 @@
 		}
 	}
 
-	function retry(link, target) {
-		var track = JSON.parse(link.attr("data-cache"));
-		save(target, track, true);
+	function retry( link, target ) {
+		var track = JSON.parse( link.attr("data-cache") );
+		save( target, track, true );
 	}
 
-	function getRetryFunction(target, track) {
-		return function(element, feedback) {
-			if (feedback == undefined)
-				feedback = "Your changes could not be saved. <a href=\"#\">Try again</a>";
+	function getRetryFunction( target, track ) {
+		return function( element, feedback ) {
+			var link;
 
-			element.html(feedback);
-			var link = element.find("a");
+			if ( feedback == undefined )
+				feedback = 'Your changes could not be saved. <a href="#">Try again</a>';
 
-			link.attr("data-cache", JSON.stringify(track));
-			link.on("click", function(event){
+			element.html( feedback );
+			link = element.find( 'a' );
+
+			link.attr( 'data-cache', JSON.stringify( track ) );
+			link.on( 'click', function( event ) {
 				event.preventDefault();
-				retry($(this), target)
+				retry( $( this ), target )
 			});
 		};
 	}
