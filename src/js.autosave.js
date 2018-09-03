@@ -101,29 +101,31 @@
 		}
 	}
 
-	function addToTimer(target, config, track) {
-		if(tracker.interval[track] == undefined)
-			tracker.interval[track] = {
+	function addToTimer( target, config, track ) {
+		if( tracker.interval[ track ] == undefined )
+			tracker.interval[ track ] = {
 				timestamp : getTime(),
-				timer     : parseInt(config.timer),
+				timer     : parseInt( config.timer ),
 				child     : []
 			};
 
-		tracker.interval[track].child.push(target);
+		tracker.interval[ track ].child.push( target );
 	}
 
 	function executeTimer() {
-		for (var i in tracker.interval) {
-			var config = tracker.interval[i];
-			if (getTime() >= (config.timestamp + config.timer)) {
-				for (var j in config.child) {
+		var i, j, config;
+
+		for ( i in tracker.interval ) {
+			config = tracker.interval[ i ];
+			if ( getTime() >= ( config.timestamp + config.timer ) ) {
+				for ( j in config.child ) {
 					save(
-						config.child[j],
-						JSON.parse(config.child[j].attr("data-cache"))
+						config.child[ j ],
+						JSON.parse( config.child[ j ].attr( 'data-cache' ) )
 					);
 				}
 
-				tracker.interval[i].timestamp = getTime();
+				tracker.interval[ i ].timestamp = getTime();
 			}
 		}
 	}
