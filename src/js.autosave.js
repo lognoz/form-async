@@ -68,33 +68,36 @@
 		}
 	};
 
-	function isSupport(target, tag) {
+	function isSupport( target, tag ) {
 		return [ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf(tag) != -1 ||
 			target.attr( 'contentEditable' ) && ( target.attr( 'name' ) || target.attr( 'data-name' ) );
 	}
 
-	function isExist(element) {
+	function isExist( element ) {
 		return element != null && element != undefined;
 	}
 
 	function trackElement(target, tag, config) {
-		var list = [ "initializer", "before", "success", "fail", "action" ];
-		var track = {};
+		var token, key,
+		    list = [ 'initializer', 'before', 'success', 'fail', 'action' ],
+		    track = {},
+		    length = list.length,
+		    i = 0;
 
-		for (var i = 0; i < list.length; i++) {
-			var key = list[i];
-			if(isExist(config[key]))
-				track[key] = tracker.get(key, config[key]);
+		for ( ; i < length; i++ ) {
+			key = list[ i ];
+			if ( isExist( config[ key ] ) )
+				track[ key ] = tracker.get( key, config[ key ] );
 		}
 
-		if (config.timer !== undefined)
-			addToTimer(target, config, track.initializer);
+		if ( config.timer !== undefined )
+			addToTimer( target, config, track.initializer );
 
-		if (target.attr("data-cache") == undefined) {
-			var token = track.initializer;
-			tracker.initializer[token].child.push(target);
+		if ( target.attr( 'data-cache' ) == undefined ) {
+			token = track.initializer;
+			tracker.initializer[ token ].child.push( target );
 
-			setEvent(target, tag, track);
+			setEvent( target, tag, track );
 		}
 	}
 
