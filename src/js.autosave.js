@@ -69,9 +69,8 @@
 	};
 
 	function isSupport(target, tag) {
-		if (tag == "input" || tag == "checkbox" || tag == "radio" || tag == "textarea" || tag == "select" ||
-	      target.attr("contentEditable") == "true" && (target.attr("name") || target.attr("data-name")))
-				return true;
+		return [ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf(tag) != -1 ||
+			target.attr( 'contentEditable' ) && ( target.attr( 'name' ) || target.attr( 'data-name' ) );
 	}
 
 	function isExist(element) {
