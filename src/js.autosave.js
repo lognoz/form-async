@@ -191,7 +191,7 @@
 			track.value  = value;
 
 			$.ajax( {
-				method : "POST",
+				method : 'POST',
 				url : action,
 				data : data,
 				success : function( data ) {
