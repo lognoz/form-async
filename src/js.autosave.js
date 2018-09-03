@@ -234,20 +234,23 @@
 		};
 	}
 
-	function setCacheCheckboxRadio(name, parent) {
-		var child = tracker.initializer[parent].child;
+	function setCacheCheckboxRadio( name, parent ) {
+		var info, data,
+		    child = tracker.initializer[ parent ].child,
+		    length = child.length,
+		    i = 0;
 
-		if (child.length == 0)
+		if ( child.length == 0 )
 			return;
 
-		for (var i = 0; i < child.length; i++) {
-			if (child[i].attr("data-name") == name || child[i].attr("name") == name) {
-				var info = getTargetInfo(child[i], "radio");
-				var data = JSON.parse(child[i].attr("data-cache"));
+		for ( ; i < length; i++ ) {
+			if ( child[ i ].attr( 'data-name' ) == name || child[ i ].attr( 'name' ) == name ) {
+				info = getTargetInfo( child[ i ], 'radio' );
+				data = JSON.parse( child[ i ].attr( 'data-cache' ) );
 
 				data.value = info.value;
-				data = JSON.stringify(data);
-				child[i].attr('data-cache', data);
+				data = JSON.stringify( data );
+				child[ i ].attr( 'data-cache', data );
 			}
 		}
 	}
