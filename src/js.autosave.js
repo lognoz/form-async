@@ -152,12 +152,12 @@
 		});
 	}
 
-	function save(target, track, retry) {
-		var tag  = target.prop("tagName").toLowerCase();
-		var info = getTargetInfo(target, tag);
+	function save( target, track, retry ) {
+		var tag = target.prop( 'tagName' ).toLowerCase(),
+		    info = getTargetInfo( target, tag );
 
-		if (info.value !== track.value || retry) {
-			sendAjaxCall(target, track, info);
+		if ( info.value !== track.value || retry ) {
+			sendAjaxCall( target, track, info );
 		}
 	}
 
