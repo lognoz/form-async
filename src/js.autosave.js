@@ -134,20 +134,21 @@
 		return Date.now() / 1000 | 0;
 	}
 
-	function setEvent(target, tag, config) {
-		var parameter = getTargetInfo(target, tag);
-		var name = target.attr("name") == undefined ? target.attr("data-name") : target.attr("name");
-		var cache = "";
+	function setEvent( target, tag, config ) {
+		var target, cache,
+		    parameter = getTargetInfo( target, tag ),
+		    name = target.attr( 'name' ) || target.attr( 'data-name' ),
+		    cache = '';
 
 		config.name = name;
 		config.value = parameter.value;
-		cache = JSON.stringify(config);
+		cache = JSON.stringify( config );
 
-		target.attr("data-cache", cache);
-		target.on(parameter.event, function(event){
-			var target = $(this);
-			var cache = JSON.parse(target.attr("data-cache"));
-			save(target, cache);
+		target.attr( 'data-cache', cache );
+		target.on( parameter.event, function( event ) {
+			target = $( this );
+			cache = JSON.parse( target.attr( 'data-cache' ) );
+			save( target, cache );
 		});
 	}
 
