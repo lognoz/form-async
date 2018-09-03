@@ -10,15 +10,17 @@
 	'use strict';
 
 	$.fn.autosave = function (config) {
-		var target = $(this);
-		var config = typeof(config) == undefined ? {} : config;
+		var target = $( this ),
+		    config = typeof( config ) == undefined ? {} : config,
+		    length = target.length,
+		    i = 0;
 
-		for (var i = 0; i < target.length; i++)
-			initialize($(target[i]), config);
+		for ( ; i < length; i++ )
+			initialize( $( target[i] ), config );
 
-		setInterval(function() {
+		setInterval( function() {
 			executeTimer();
-		}, 1000);
+		}, 1000 );
 	};
 
 	var tracker = {
