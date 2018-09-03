@@ -161,56 +161,53 @@
 		}
 	}
 
-	function sendAjaxCall(target, track, info) {
-		var name   = track.name;
-		var parent = track.initializer;
-		var group  = target.attr("data-group");
-		var type   = target.attr("type");
-		var value  = info.value;
-		var action = tracker.action[track.action];
-		var data   = {};
+	function sendAjaxCall( target, track, info ) {
+		var name = track.name,
+		    parent = track.initializer,
+		    group  = target.attr( 'data-group' ),
+		    type   = target.attr( 'type' ),
+		    value  = info.value,
+		    action = tracker.action[ track.action ],
+		    data   = {};
 
 		var param  = {
-			action  : action,
-			data    : data,
-			target  : target
+			'action' : action,
+			'data' : data,
+			'target' : target
 		};
 
-		if (group != undefined) {
-			data = getValuesByGroup(name, parent, data, group);
-		}
-		else {
-			if (type == 'checkbox' || type == 'radio')
-				value = getValueByList(name, parent);
+		if ( group != undefined ) {
+			data = getValuesByGroup( name, parent, data, group );
+		} else {
+			if ( type == 'checkbox' || type == 'radio' )
+				value = getValueByList( name, parent );
 
 			data[name] = value;
 		}
 
-		if (track.before == undefined || tracker.before[track.before](param) == true) {
+		if ( track.before == undefined || tracker.before[ track.before ]( param ) == true ) {
 			param.before = track.value;
-			param.retry  = getRetryFunction(target, track);
+			param.retry  = getRetryFunction( target, track );
 			track.value  = value;
 
-			$.ajax({
+			$.ajax( {
 				method : "POST",
 				url : action,
 				data : data,
-				success : function(data) {
-					var cache = JSON.stringify(track);
+				success : function( data ) {
+					if ( track.success != undefined )
+						tracker.success[ track.success ]( data, param );
 
-					if (track.success != undefined)
-						tracker.success[track.success](data, param);
-
-					if (type == 'checkbox' || type == 'radio')
-						setCacheCheckboxRadio(name, parent);
+					if ( type == 'checkbox' || type == 'radio' )
+						setCacheCheckboxRadio( name, parent );
 					else
-						target.attr('data-cache', cache);
+						target.attr( 'data-cache', JSON.stringify( track ) );
 				},
 				error : function(){
-					if (track.fail != undefined)
-						tracker.fail[track.fail](param);
+					if ( track.fail != undefined )
+						tracker.fail[ track.fail ]( param );
 				}
-			});
+			} );
 		}
 	}
 
