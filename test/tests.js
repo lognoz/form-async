@@ -30,7 +30,7 @@ $(document).ready(function(){
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_username': 'apple'} }));
 
 		server.respond();
-		assert.ok(spy.called)
+		assert.ok(spy.called);
 		assert.ok($('#simple-field').attr('data-cache') != data);
 
 		spy.restore();
@@ -63,7 +63,7 @@ $(document).ready(function(){
 
 		server.respond();
 
-		assert.ok(spy.called)
+		assert.ok(spy.called);
 		assert.ok($('#multiple-fields-name').attr('data-cache') != data.name);
 		assert.ok($('#multiple-fields-phone').attr('data-cache') != data.phone);
 
@@ -97,7 +97,7 @@ $(document).ready(function(){
 
 		server.respond();
 
-		assert.ok(spy.called)
+		assert.ok(spy.called);
 		assert.ok($('#overwrite-action-city').attr('data-cache') != data.city);
 		assert.ok($('#overwrite-action-province').attr('data-cache') != data.province);
 
@@ -130,7 +130,7 @@ $(document).ready(function(){
 
 		server.respond();
 
-		assert.ok(spy.called)
+		assert.ok(spy.called);
 		assert.ok($('#checkbox-car').attr('data-cache') != data.car);
 		assert.ok($('#checkbox-bike').attr('data-cache') == data.bike);
 
@@ -166,7 +166,7 @@ $(document).ready(function(){
 
 		server.respond();
 
-		assert.ok(spy.called)
+		assert.ok(spy.called);
 		assert.ok($('#radio-male').attr('data-cache') == data.male);
 		assert.ok($('#radio-female').attr('data-cache') == data.female);
 		assert.ok($('#radio-other').attr('data-cache') != data.other);
