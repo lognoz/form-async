@@ -1,15 +1,15 @@
 module.exports = function(grunt) {
 	require('load-grunt-tasks')(grunt);
 
-	var gzip = require("gzip-js");
+	var gzip = require('gzip-js');
 	var travis = process.env.TRAVIS;
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		compare_size: {
 			files: [
-				"build/js.autosave.min.js",
-				"src/js.autosave.js"
+				'build/js.autosave.min.js',
+				'src/js.autosave.js'
 			],
 			options: {
 				compress: {
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 						return gzip.zip(contents, {}).length;
 					}
 				},
-				cache: "build/.sizecache.json"
+				cache: 'build/.sizecache.json'
 			}
 		},
 		uglify: {
@@ -26,7 +26,8 @@ module.exports = function(grunt) {
 					unsafe: true
 				},
 				screwIE8: false,
-				banner: "/*! <%= pkg.name %> v<%= pkg.version %> | (c) Marc-Antoine Loignon and other contributors */\n",
+				banner: '/*! <%= pkg.name %> v<%= pkg.version %> | ' +
+				        '(c) Marc-Antoine Loignon and other contributors */',
 			},
 			build: {
 				files: {
