@@ -280,22 +280,23 @@
 		return parameter;
 	}
 
-	function getValueByList(name, parent) {
-		var child = tracker.initializer[parent].child;
-		var value = "";
+	function getValueByList( name, parent ) {
+		var child = tracker.initializer[ parent ].child,
+		    value = '',
+		    i = 0;
 
-		if (child.length == 0)
-			return $("." + parent).val();
+		if ( child.length == 0 )
+			return $( "." + parent ).val();
 
-		for (var i = 0; i < child.length; i++) {
-			if (child[i].attr("data-name") == name || child[i].attr("name") == name) {
-				if (child[i].is(':checked'))
-					value += child[i].val() + '&';
+		for ( ; i < child.length; i++ ) {
+			if ( child[ i ].attr( 'data-name' ) == name || child[ i ].attr( 'name' ) == name ) {
+				if ( child[ i ].is( ':checked' ))
+					value += child[ i ].val() + '&';
 			}
 		}
 
-		if(value.length > 0)
-			value = value.substring(0, value.length - 1);
+		if ( value.length > 0 )
+			value = value.substring( 0, value.length - 1 );
 
 		return value;
 	}
