@@ -32,14 +32,34 @@
 	};
 
 	var autosave = {
-		add : function(selector, config) {}
+		watch: function(target, config) {
+			var selector = $(target),
+			    tag = selector.prop('tagName').toLowerCase(),
+			    timer = selector.attr('data-timer'),
+			    action = selector.attr('data-action') || selector.attr('action');
+
+			if (action == undefined)
+				return;
+
+			config.action = action;
+			config.timer = timer;
+			config.selector = selector;
+
+			if (selector.children().length == 0) {
+				autosave.add(selector, config);
+			} else {
+				selector.find('*').each(function() {
+					autosave.add($(this), config);
+				});
+			}
+		}
 	};
 
 	$.fn.autosave = function(config) {
 		config = config || {};
 
 		$(this).each(function(event) {
-			return autosave.add(this, config);
+			return autosave.watch(this, config);
 		});
 	};
 
