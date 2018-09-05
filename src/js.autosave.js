@@ -9,6 +9,29 @@
 } (function($) {
 	'use strict';
 
+	var globals = {
+		action : null,
+		initializer : null,
+		success : null,
+		interval : null,
+		fail : null,
+		before : null
+	};
+
+	var token = {
+		generate : function(already_exist) {
+			var text = '',
+			    string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+			    i = 0
+
+			for ( ; i < 2; i++ )
+				text += string.charAt(Math.floor(Math.random() * string.length));
+
+			return already_exist[text] == undefined ? text : token.generate(already_exist);
+		}
+	};
+
+
 //	$.fn.autosave = function(config) {
 //		var target = $(this),
 //		    length = target.length,
