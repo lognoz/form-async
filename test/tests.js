@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var server, spy;
+	var server, spy, options;
 
 	QUnit.module('Test case', {
 		beforeEach: function(assert) {
@@ -166,5 +166,81 @@ $(document).ready(function() {
 		assert.ok(data);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/group.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_password': 'orange', 'xs_redirection': 'index.html'} }));
+	});
+
+	QUnit.module('Advanced Options', {
+		beforeEach: function() {
+			spy = sinon.spy($, "ajax");
+			server = sinon.fakeServer.create();
+			options = {
+				before: function(parameters) {
+					return (parameters.data['xs_username'] !== 'cantaloupe')
+				},
+				success: function(data, parameters) {
+					if (data == 'redirect') {
+						options.fail(parameters);
+					} else {
+						parameters.target.addClass('success');
+					}
+				},
+				fail: function(parameters) {
+					parameters.target.addClass('fail');
+				}
+			};
+
+			$('.exemple').autosave(options);
+		},
+		afterEach: function(assert) {
+			spy.restore();
+			server.restore();
+		}
+	});
+
+	QUnit.test('before function', function(assert) {
+		$('#simple-field')
+			.val('cantaloupe')
+			.trigger('blur');
+
+		assert.ok(!spy.called);
+
+		$('#simple-field')
+			.val('carambola')
+			.trigger('blur');
+
+		assert.ok(spy.called);
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_username': 'carambola'} }));
+	});
+
+	QUnit.test('success function', function(assert) {
+		$('#simple-field')
+			.val('clementine')
+			.trigger('blur');
+
+		server.respondWith('success');
+		server.respond();
+
+		assert.ok($('#simple-field').hasClass('success'));
+	});
+
+	QUnit.test('fake a fail response by redirecting', function(assert) {
+		$('#simple-field')
+			.val('durian')
+			.trigger('blur');
+
+		server.respondWith('redirect');
+		server.respond();
+
+		assert.ok($('#simple-field').hasClass('fail'));
+	});
+
+	QUnit.test('fail function', function(assert) {
+		$('#simple-field')
+			.val('durian')
+			.trigger('blur');
+
+		server.respondWith([ 404, {}, '' ]);
+		server.respond();
+
+		assert.ok($('#simple-field').hasClass('fail'));
 	});
 });
