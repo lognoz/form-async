@@ -1,10 +1,10 @@
-module.exports = function( grunt ) {
-	require( 'load-grunt-tasks' )( grunt );
+module.exports = function (grunt) {
+	require('load-grunt-tasks')(grunt);
 
-	var gzip = require( 'gzip-js' );
+	var gzip = require('gzip-js');
 
-	grunt.initConfig( {
-		pkg: grunt.file.readJSON( 'package.json' ),
+	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 		jshint: {
 			all: [ 'src/**/*.js' ]
 		},
@@ -12,8 +12,8 @@ module.exports = function( grunt ) {
 			files: [ 'build/js.autosave.min.js', 'src/js.autosave.js' ],
 			options: {
 				compress: {
-					gz: function( contents ) {
-						return gzip.zip( contents, {} ).length;
+					gz: function (contents) {
+						return gzip.zip(contents, {}).length;
 					}
 				},
 				cache: 'build/.sizecache.json'
@@ -57,8 +57,8 @@ module.exports = function( grunt ) {
 				}
 			}
 		}
-	} );
+	});
 
-	grunt.registerTask( 'test', [ 'jshint', 'uglify', 'compare_size', 'connect', 'qunit' ] );
-	grunt.registerTask( 'default', [ 'test' ] );
+	grunt.registerTask('test', [ 'jshint', 'uglify', 'compare_size', 'connect', 'qunit' ]);
+	grunt.registerTask('default', [ 'test' ]);
 };
