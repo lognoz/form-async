@@ -31,6 +31,17 @@
 		}
 	};
 
+	var autosave = {
+		add : function(selector, config) {}
+	};
+
+	$.fn.autosave = function(config) {
+		config = config || {};
+
+		$(this).each(function(event) {
+			return autosave.add(this, config);
+		});
+	};
 
 //	$.fn.autosave = function(config) {
 //		var target = $(this),
