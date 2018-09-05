@@ -201,6 +201,7 @@ $(document).ready(function() {
 				},
 				fail: function(parameters) {
 					parameters.target.addClass('fail');
+					parameters.retry($('#test-case-retry'));
 				}
 			};
 
@@ -258,5 +259,20 @@ $(document).ready(function() {
 		server.respond();
 
 		assert.ok($('#simple-field').hasClass('fail'));
+	});
+
+	QUnit.test('retry link', function(assert) {
+		$('#simple-field')
+			.val('strawberries')
+			.trigger('blur');
+
+		server.respondWith([ 404, {}, '' ]);
+		server.respond();
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_username': 'strawberries'} }));
+
+		$('#test-case-retry a').trigger('click');
+		server.respondWith('success');
+		server.respond();
+		assert.ok($('#simple-field').hasClass('success'));
 	});
 });
