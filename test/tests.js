@@ -1,16 +1,18 @@
 $(document).ready(function() {
-	var server = null;
+	var server = sinon.fakeServer.create();
+	var spy = sinon.spy($, "ajax");
 
 	module('Test case', {
 		setup: function() {
-			server = sinon.fakeServer.create();
 			server.respondWith('response');
 			$('.exemple').autosave();
+		},
+		afterEach: function() {
+			spy.restore();
 		}
 	});
 
 	test('self initialisation with data-action', function(assert) {
-		var spy = sinon.spy($, "ajax");
 		var data = $('#simple-field').attr('data-cache');
 
 		$('#simple-field')
@@ -24,12 +26,9 @@ $(document).ready(function() {
 		server.respond();
 		assert.ok(spy.called);
 		assert.ok($('#simple-field').attr('data-cache') != data);
-
-		spy.restore();
 	});
 
 	test('form initialisation with action', function(assert) {
-		var spy = sinon.spy($, "ajax");
 		var data = {
 			name: $('#multiple-fields-name').attr('data-cache'),
 			phone: $('#multiple-fields-phone').attr('data-cache')
@@ -58,12 +57,9 @@ $(document).ready(function() {
 		assert.ok(spy.called);
 		assert.ok($('#multiple-fields-name').attr('data-cache') != data.name);
 		assert.ok($('#multiple-fields-phone').attr('data-cache') != data.phone);
-
-		spy.restore();
 	});
 
 	test('form initialisation with overwriting action', function(assert) {
-		var spy = sinon.spy($, "ajax");
 		var data = {
 			city: $('#overwrite-action-city').attr('data-cache'),
 			province: $('#overwrite-action-province').attr('data-cache')
@@ -92,12 +88,9 @@ $(document).ready(function() {
 		assert.ok(spy.called);
 		assert.ok($('#overwrite-action-city').attr('data-cache') != data.city);
 		assert.ok($('#overwrite-action-province').attr('data-cache') != data.province);
-
-		spy.restore();
 	});
 
 	test('checkbox list', function(assert) {
-		var spy = sinon.spy($, "ajax");
 		var data = {
 			bike: $('#checkbox-bike').attr('data-cache'),
 			car: $('#checkbox-car').attr('data-cache')
@@ -125,12 +118,9 @@ $(document).ready(function() {
 		assert.ok(spy.called);
 		assert.ok($('#checkbox-car').attr('data-cache') != data.car);
 		assert.ok($('#checkbox-bike').attr('data-cache') == data.bike);
-
-		spy.restore();
 	});
 
 	test('radio list', function(assert) {
-		var spy = sinon.spy($, "ajax");
 		var data = {
 			male: $('#radio-male').attr('data-cache'),
 			female: $('#radio-female').attr('data-cache'),
@@ -162,12 +152,9 @@ $(document).ready(function() {
 		assert.ok($('#radio-male').attr('data-cache') == data.male);
 		assert.ok($('#radio-female').attr('data-cache') == data.female);
 		assert.ok($('#radio-other').attr('data-cache') != data.other);
-
-		spy.restore();
 	});
 
 	test('send inputs as a group', function(assert) {
-		var spy = sinon.spy($, "ajax");
 		var data = $('#group-password').attr('data-cache');
 
 		$('#group-password')
@@ -177,7 +164,5 @@ $(document).ready(function() {
 		assert.ok(data);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/group.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_password': 'orange', 'xs_redirection': 'index.html'} }));
-
-		spy.restore();
 	});
-} );
+});
