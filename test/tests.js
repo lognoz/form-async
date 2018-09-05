@@ -1,18 +1,20 @@
 $(document).ready(function() {
-	var server = sinon.fakeServer.create();
-	var spy = sinon.spy($, "ajax");
+	var server, spy;
 
-	module('Test case', {
-		setup: function() {
+	QUnit.module('Test case', {
+		beforeEach: function(assert) {
+			spy = sinon.spy($, "ajax");
+			server = sinon.fakeServer.create();
 			server.respondWith('response');
 			$('.exemple').autosave();
 		},
-		afterEach: function() {
+		afterEach: function(assert) {
 			spy.restore();
+			server.restore();
 		}
 	});
 
-	test('self initialisation with data-action', function(assert) {
+	QUnit.test('self initialisation with data-action', function(assert) {
 		var data = $('#simple-field').attr('data-cache');
 
 		$('#simple-field')
@@ -28,7 +30,7 @@ $(document).ready(function() {
 		assert.ok($('#simple-field').attr('data-cache') != data);
 	});
 
-	test('form initialisation with action', function(assert) {
+	QUnit.test('form initialisation with action', function(assert) {
 		var data = {
 			name: $('#multiple-fields-name').attr('data-cache'),
 			phone: $('#multiple-fields-phone').attr('data-cache')
@@ -59,7 +61,7 @@ $(document).ready(function() {
 		assert.ok($('#multiple-fields-phone').attr('data-cache') != data.phone);
 	});
 
-	test('form initialisation with overwriting action', function(assert) {
+	QUnit.test('form initialisation with overwriting action', function(assert) {
 		var data = {
 			city: $('#overwrite-action-city').attr('data-cache'),
 			province: $('#overwrite-action-province').attr('data-cache')
@@ -90,7 +92,7 @@ $(document).ready(function() {
 		assert.ok($('#overwrite-action-province').attr('data-cache') != data.province);
 	});
 
-	test('checkbox list', function(assert) {
+	QUnit.test('checkbox list', function(assert) {
 		var data = {
 			bike: $('#checkbox-bike').attr('data-cache'),
 			car: $('#checkbox-car').attr('data-cache')
@@ -120,7 +122,7 @@ $(document).ready(function() {
 		assert.ok($('#checkbox-bike').attr('data-cache') == data.bike);
 	});
 
-	test('radio list', function(assert) {
+	QUnit.test('radio list', function(assert) {
 		var data = {
 			male: $('#radio-male').attr('data-cache'),
 			female: $('#radio-female').attr('data-cache'),
@@ -154,7 +156,7 @@ $(document).ready(function() {
 		assert.ok($('#radio-other').attr('data-cache') != data.other);
 	});
 
-	test('send inputs as a group', function(assert) {
+	QUnit.test('send inputs as a group', function(assert) {
 		var data = $('#group-password').attr('data-cache');
 
 		$('#group-password')
