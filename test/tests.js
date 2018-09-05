@@ -5,15 +5,7 @@ $(document).ready(function() {
 		setup: function() {
 			server = sinon.fakeServer.create();
 			server.respondWith('response');
-
-			$('.exemple').autosave({
-				success: function(data, parameters) {
-					return 'Success';
-				},
-				fail: function(parameters) {
-					return 'Fail';
-				}
-			});
+			$('.exemple').autosave();
 		}
 	});
 
