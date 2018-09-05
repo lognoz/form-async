@@ -10,13 +10,19 @@
 	'use strict';
 
 	var reference = {
-		action : {},
-		selector : {},
-		success : {},
-		interval : {},
-		fail : {},
-		before : {}
-		generate: function(already_exist) {
+		setup: function() {
+			this.before = {};
+			this.fail = {};
+			this.success = {};
+
+			this.action = {};
+			this.form = {};
+			this.input = {};
+
+			this.interval = {};
+			this.token = {};
+		},
+		generate: function() {
 			var text = '',
 			    string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
 			    i = 0
@@ -24,7 +30,20 @@
 			for ( ; i < 2; i++ )
 				text += string.charAt(Math.floor(Math.random() * string.length));
 
-			return already_exist[text] == undefined ? text : token.generate(already_exist);
+			return this.token[text] == undefined ? text : reference.generate();
+		},
+		get: function(type, value) {
+			var token, i;
+
+			for (i in this[type]) {
+				if (this[type][i] == value)
+					return i;
+			}
+
+			token = this.generate();
+			this[type][token] = value;
+
+			return token;
 		}
 	};
 
@@ -62,15 +81,25 @@
 				return;
 
 			this.track(selector, tag, {
-				selector: config.selector,
+				form: config.selector,
 				before: config.before,
 				succes: config.success,
 				fail: config.fail,
 				action: selector.attr('data-action') || config.action,
 				timer: selector.attr('data-timer') || config.timer
 			});
+		},
+		track: function(selector, tag, config) {
+			var references = {};
+
+			$.each(config, function(key, value) {
+				if (value !== undefined && value !== null)
+					references[key] = reference.get(key, value);
+			});
 		}
 	};
+
+	reference.setup();
 
 	$.fn.autosave = function(config) {
 		config = config || {};
