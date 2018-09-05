@@ -168,6 +168,22 @@ $(document).ready(function() {
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_password': 'orange', 'xs_redirection': 'index.html'} }));
 	});
 
+	QUnit.test('contenteditable', function(assert) {
+		var data = $('#contenteditable').attr('data-cache');
+
+		$('#contenteditable')
+			.html('mango')
+			.trigger('blur');
+
+		assert.ok(data);
+		assert.ok($.ajax.calledWithMatch({ url: '/action/contenteditable.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_content': 'mango'} }));
+
+		server.respond();
+		assert.ok(spy.called);
+		assert.ok($('#contenteditable').attr('data-cache') != data);
+	});
+
 	QUnit.module('Advanced Options', {
 		beforeEach: function() {
 			spy = sinon.spy($, "ajax");
