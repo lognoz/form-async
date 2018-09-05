@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
 	var server = null;
 
 	module('Test case', {
@@ -188,4 +188,4 @@ $(document).ready(function(){
 
 		spy.restore();
 	});
-});
+} );
