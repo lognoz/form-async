@@ -6,6 +6,9 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		jshint: {
+			all: [ 'src/**/*.js' ]
+		},
 		compare_size: {
 			files: [
 				'build/js.autosave.min.js',
@@ -60,6 +63,6 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('test', ['uglify', 'compare_size', 'connect', 'qunit']);
+	grunt.registerTask('test', ['jshint', 'uglify', 'compare_size', 'connect', 'qunit']);
 	grunt.registerTask('default', ['test']);
 };
