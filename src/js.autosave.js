@@ -9,17 +9,14 @@
 } (function($) {
 	'use strict';
 
-	var globals = {
-		action : null,
-		initializer : null,
-		success : null,
-		interval : null,
-		fail : null,
-		before : null
-	};
-
-	var token = {
-		generate : function(already_exist) {
+	var reference = {
+		action : {},
+		selector : {},
+		success : {},
+		interval : {},
+		fail : {},
+		before : {}
+		generate: function(already_exist) {
 			var text = '',
 			    string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
 			    i = 0
