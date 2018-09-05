@@ -11,12 +11,11 @@
 
 	$.fn.autosave = function (config) {
 		var target = $( this ),
-		    config = typeof( config ) == undefined ? {} : config,
 		    length = target.length,
 		    i = 0;
 
 		for ( ; i < length; i++ )
-			initialize( $( target[i] ), config );
+			initialize( $( target[i] ), config || {} );
 
 		setInterval( function() {
 			executeTimer();
@@ -135,8 +134,7 @@
 	}
 
 	function setEvent( target, tag, config ) {
-		var target, cache,
-		    parameter = getTargetInfo( target, tag ),
+		var parameter = getTargetInfo( target, tag ),
 		    name = target.attr( 'name' ) || target.attr( 'data-name' ),
 		    cache = '';
 
@@ -229,7 +227,7 @@
 			link.attr( 'data-cache', JSON.stringify( track ) );
 			link.on( 'click', function( event ) {
 				event.preventDefault();
-				retry( $( this ), target )
+				retry( $( this ), target );
 			});
 		};
 	}
@@ -262,7 +260,7 @@
 		for (var i = 0; i < child.length; i++) {
 			for (var j = 0; j < list.length; j++) {
 				if (child[i].attr("data-name") == list[j] || child[i].attr("name") == list[j]) {
-					var name    = list[j];
+					name    = list[j];
 					var element = child[i];
 					var tag     = element.prop("tagName").toLowerCase();
 					var type    = element.attr("type");
@@ -333,16 +331,14 @@
 				timer  : target.attr("data-timer")
 			};
 
-			var config = {
+			trackElement(target, tag, {
 				initializer : config.initializer,
 				before      : config.before,
 				success     : config.success,
 				fail        : config.fail,
 				action      : overwrite.action == undefined ? config.action : overwrite.action,
 				timer       : overwrite.timer == undefined ? config.timer : overwrite.timer
-			};
-
-			trackElement(target, tag, config);
+			} );
 		}
 	}
 
