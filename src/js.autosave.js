@@ -49,9 +49,29 @@
 				autosave.add(selector, config);
 			} else {
 				selector.find('*').each(function() {
-					autosave.add($(this), config);
+					autosave.add(this, config);
 				});
 			}
+		},
+		support: function(selector, tag) {
+			return [ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf(tag) != -1 ||
+				selector.attr('contentEditable') && (selector.attr('name') || selector.attr('data-name'));
+		},
+		add: function(target, config) {
+			var selector = $(target),
+			    tag = selector.prop("tagName").toLowerCase();
+
+			if (!this.support(selector, tag))
+				return;
+
+			this.track(selector, tag, {
+				selector: config.selector,
+				before: config.before,
+				succes: config.success,
+				fail: config.fail,
+				action: selector.attr('data-action') || config.action,
+				timer: selector.attr('data-timer') || config.timer
+			});
 		}
 	};
 
