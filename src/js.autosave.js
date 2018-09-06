@@ -9,7 +9,7 @@
 } (function($) {
 	'use strict';
 
-	var reference = {
+	var globals = {
 		setup: function() {
 			this.before = [];
 			this.fail = [];
@@ -74,17 +74,131 @@
 				timer: selector.attr('data-timer') || config.timer
 			});
 		},
+		schema: function(selector, tag) {
+			var type = selector.attr("type");
+			if (type == 'checkbox' || type == 'radio') {
+				return {
+					value: selector.is(':checked'),
+					trigger: 'change'
+				};
+			}
+			else if (tag == "input" || tag == "textarea") {
+				return {
+					value: selector.val(),
+					trigger: 'blur'
+				};
+			}
+			else if (tag == 'select') {
+				return {
+					value: selector.val(),
+					trigger: 'change'
+				};
+			}
+			else {
+				return {
+					value: selector.html(),
+					trigger: 'blur'
+				};
+			}
+		},
 		track: function(selector, tag, config) {
-			var references = {};
+			var name, length, schema, references = {};
 
 			$.each(config, function(key, value) {
 				if (value !== undefined && value !== null)
-					references[key] = reference.get(key, value);
+					references[key] = globals.get(key, value);
 			});
+
+			if (selector.attr('data-autosave-id') == undefined) {
+				schema = this.schema(selector, tag);
+				length = globals.input.length;
+
+				references.name = selector.attr('name') || selector.attr('data-name');
+				references.selector = selector;
+				references.tag = tag;
+				references.trigger = schema.trigger;
+				references.value = schema.value;
+
+				globals.input.push(references);
+				selector.attr('data-autosave-id', length);
+				selector.on(schema.trigger, function(event) {
+					var selector = $(this),
+					    id = selector.attr('data-autosave-id');
+
+					autosave.save(selector, id);
+				});
+			}
+		},
+		save: function(selector, id, retry) {
+			var references = globals.input[id],
+			    schema = this.schema(selector, references.tag);
+
+			if (schema.value !== references.value || retry) {
+				this.call(selector, references, schema);
+			}
 		}
 	};
 
-	reference.setup();
+//	function save( target, track, retry ) {
+//		var tag = target.prop( 'tagName' ).toLowerCase(),
+//		    info = getTargetInfo( target, tag );
+//
+//		if ( info.value !== track.value || retry ) {
+//			sendAjaxCall( target, track, info );
+//		}
+//	}
+//
+//	function sendAjaxCall( target, track, info ) {
+//		var name = track.name,
+//		    parent = track.initializer,
+//		    group  = target.attr( 'data-group' ),
+//		    type   = target.attr( 'type' ),
+//		    value  = info.value,
+//		    action = tracker.action[ track.action ],
+//		    data   = {};
+//
+//		var param  = {
+//			'action' : action,
+//			'data' : data,
+//			'target' : target
+//		};
+//
+//		if ( group != undefined ) {
+//			data = getValuesByGroup( name, parent, data, group );
+//		} else {
+//			if ( type == 'checkbox' || type == 'radio' )
+//				value = getValueByList( name, parent );
+//
+//			data[name] = value;
+//		}
+//
+//		if ( track.before == undefined || tracker.before[ track.before ]( param ) == true ) {
+//			param.before = track.value;
+//			param.retry  = getRetryFunction( target, track );
+//			track.value  = value;
+//
+//			$.ajax( {
+//				method : 'POST',
+//				url : action,
+//				data : data,
+//				success : function( data ) {
+//					if ( track.success != undefined )
+//						tracker.success[ track.success ]( data, param );
+//
+//					if ( type == 'checkbox' || type == 'radio' )
+//						setCacheCheckboxRadio( name, parent );
+//					else
+//						target.attr( 'data-cache', JSON.stringify( track ) );
+//				},
+//				error : function(){
+//					if ( track.fail != undefined )
+//						tracker.fail[ track.fail ]( param );
+//				}
+//			} );
+//		}
+//	}
+
+	globals.setup();
 
 	$.fn.autosave = function(config) {
 		config = config || {};
