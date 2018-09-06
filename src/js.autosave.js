@@ -11,38 +11,24 @@
 
 	var reference = {
 		setup: function() {
-			this.before = {};
-			this.fail = {};
-			this.success = {};
+			this.before = [];
+			this.fail = [];
+			this.success = [];
 
-			this.action = {};
-			this.form = {};
-			this.input = {};
-
-			this.interval = {};
-			this.token = {};
-		},
-		generate: function() {
-			var text = '',
-			    string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
-			    i = 0
-
-			for ( ; i < 2; i++ )
-				text += string.charAt(Math.floor(Math.random() * string.length));
-
-			return this.token[text] == undefined ? text : reference.generate();
+			this.action = [];
+			this.form = [];
+			this.input = [];
 		},
 		get: function(type, value) {
-			var token, key;
+			var key, length = this[type].length;
 			for (key in this[type]) {
-				if (this[type][key] == value)
-					return key;
+				if (this[type][key] == value) {
+					return parseInt(key);
+				}
 			}
 
-			token = this.generate();
-			this[type][token] = value;
-
-			return token;
+			this[type].push(value);
+			return length;
 		}
 	};
 
