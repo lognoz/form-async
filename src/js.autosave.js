@@ -134,20 +134,95 @@
 			    schema = this.schema(selector, references.tag);
 
 			if (schema.value !== references.value || retry) {
-				this.call(selector, references, schema);
+				this.call(selector, references, schema, id);
 			}
+		},
+		call: function(selector, references, schema, id) {
+			var group = selector.attr('data-autosave-group'),
+			    type = selector.attr('type'),
+			    value = schema.value,
+			    action = globals.action[references.action],
+			    data = {},
+			    parameters = {};
+
+			if (group != undefined)
+				data = this.group(references, data, group);
+			else if (type == 'checkbox' || type == 'radio')
+				data = this.list(references);
+			else
+				data[references.name] = schema.value;
+
+			parameters = {
+				action: action,
+				data: data,
+				selector: selector
+			};
+
+			if (references.before == undefined || globals.before[references.before](parameters) == true) {
+				$.ajax({
+					method: 'POST',
+					url: action,
+					data: data,
+					success: function(data) {
+						if (references.success != undefined)
+							globals.success[references.success](data, parameters);
+
+						globals.input[id].value = schema.value;
+					},
+					error: function() {
+
+					}
+				});
+			}
+		},
+		list: function(references) {
+			var input = globals.input,
+			    value = '',
+			    data = {},
+			    i = 0;
+
+			for (; i < input.length; i++) {
+				if (input[i].form == references.form && input[i].name == references.name) {
+					if (input[i].selector.is(':checked'))
+						value += input[i].selector.val() + '&';
+				}
+			}
+
+			if (value.length > 0)
+				value = value.substring(0, value.length - 1);
+
+			data[references.name] = value;
+			return data;
+		},
+		group: function(references, data, group) {
+			var list = group.replace(/\s/g,'').split(','),
+			    input = globals.input,
+			    data = {},
+			    schema,
+			    i = 0;
+
+			for (; i < input.length; i++) {
+				if (input[i].form == references.form && list.indexOf(input[i.name])) {
+					schema = this.schema(input[i].selector, input[i].tag);
+					data[input[i].name] = schema.value;
+				}
+			}
+
+			return data;
 		}
 	};
 
-//	function save( target, track, retry ) {
-//		var tag = target.prop( 'tagName' ).toLowerCase(),
-//		    info = getTargetInfo( target, tag );
-//
-//		if ( info.value !== track.value || retry ) {
-//			sendAjaxCall( target, track, info );
-//		}
-//	}
-//
+	globals.setup();
+
+	$.fn.autosave = function(config) {
+		config = config || {};
+
+		$(this).each(function(event) {
+			return autosave.watch(this, config);
+		});
+	};
+
+
 //	function sendAjaxCall( target, track, info ) {
 //		var name = track.name,
 //		    parent = track.initializer,
@@ -197,17 +272,6 @@
 //			} );
 //		}
 //	}
-
-	globals.setup();
-
-	$.fn.autosave = function(config) {
-		config = config || {};
-
-		$(this).each(function(event) {
-			return autosave.watch(this, config);
-		});
-	};
-
 //	$.fn.autosave = function(config) {
 //		var target = $(this),
 //		    length = target.length,
