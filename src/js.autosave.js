@@ -68,7 +68,7 @@
 			this.track(selector, tag, {
 				form: config.selector,
 				before: config.before,
-				succes: config.success,
+				success: config.success,
 				fail: config.fail,
 				action: selector.attr('data-action') || config.action,
 				timer: selector.attr('data-timer') || config.timer
