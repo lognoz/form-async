@@ -33,11 +33,10 @@
 			return this.token[text] == undefined ? text : reference.generate();
 		},
 		get: function(type, value) {
-			var token, i;
-
-			for (i in this[type]) {
-				if (this[type][i] == value)
-					return i;
+			var token, key;
+			for (key in this[type]) {
+				if (this[type][key] == value)
+					return key;
 			}
 
 			token = this.generate();
