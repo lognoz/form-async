@@ -9,6 +9,21 @@
 } (function($, window) {
 	'use strict';
 
+	/**
+	 * Contextual manager is a singleton that be uses to manages application
+	 * references variables when developpers implements $.fn.autosave(). If
+	 * before, fail and success functions is sending as arguments, it will be
+	 * store in references variable.
+	 *
+	 *   References.input object contain:
+	 *    - action      Action id reference in variable references.action
+	 *    - form        Form id reference in variable references.form
+	 *    - name        Element name attribute
+	 *    - selector    Element selector
+	 *    - tag         Element tag type
+	 *    - trigger     Element trigger event
+	 *    - value       Element last saving value
+	 */
 	var ContextualManager = (function() {
 		var references, instance;
 
@@ -26,6 +41,7 @@
 		}
 
 		function all(type) {
+			console.log(references);
 			return references[type];
 		}
 
@@ -39,9 +55,8 @@
 			    id = list.length;
 
 			for (key in list) {
-				if (references[type][key] == value) {
+				if (references[type][key] == value)
 					return parseInt(key);
-				}
 			}
 
 			references[type].push(value);
