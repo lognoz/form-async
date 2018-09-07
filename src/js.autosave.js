@@ -6,7 +6,7 @@
    } else {
       factory(jQuery);
 	}
-} (function($) {
+} (function($, window) {
 	'use strict';
 
 	var globals = {
