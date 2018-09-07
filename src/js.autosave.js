@@ -10,15 +10,12 @@
 	'use strict';
 
 	var globals = {
-		setup: function() {
-			this.before = [];
-			this.fail = [];
-			this.success = [];
-
-			this.action = [];
-			this.form = [];
-			this.input = [];
-		},
+		before:   [],
+		fail:     [],
+		success:  [],
+		action:   [],
+		form:     [],
+		input:    [],
 		get: function(type, value) {
 			var key, length = this[type].length;
 			for (key in this[type]) {
@@ -227,8 +224,6 @@
 			return data;
 		}
 	};
-
-	globals.setup();
 
 	$.fn.autosave = function(config) {
 		config = config || {};
