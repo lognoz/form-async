@@ -133,7 +133,7 @@
 			var references = globals.input[id],
 			    schema = this.schema(selector, references.tag);
 
-			if (schema.value !== references.value || retry) {
+			if (schema.value !== references.value) {
 				this.call(selector, references, schema, id);
 			}
 		},
@@ -155,7 +155,22 @@
 			parameters = {
 				action: action,
 				data: data,
-				selector: selector
+				selector: selector,
+				retry: function(dom, feedback) {
+					var link;
+
+					if (feedback == undefined)
+						feedback = 'Your changes could not be saved. <a href="#">Try again</a>';
+
+					dom.html(feedback);
+					link = selector.find('a');
+
+					link.attr('data-autosave-id', id);
+					link.on('click', function(event) {
+						event.preventDefault();
+						autosave.call(selector, references, schema, id);
+					});
+				}
 			};
 
 			if (references.before == undefined || globals.before[references.before](parameters) == true) {
@@ -170,7 +185,8 @@
 						globals.input[id].value = schema.value;
 					},
 					error: function() {
-
+						if (references.fail != undefined)
+							globals.fail[references.fail](parameters);
 					}
 				});
 			}
