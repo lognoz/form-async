@@ -41,7 +41,6 @@
 		}
 
 		function all(type) {
-			console.log(references);
 			return references[type];
 		}
 
