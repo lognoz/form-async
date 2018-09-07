@@ -9,6 +9,9 @@
 } (function($, window) {
 	'use strict';
 
+	// List of helpers functions
+	var helper = {};
+	// Contextual manager instance
 	var globals = {
 		before:   [],
 		fail:     [],
