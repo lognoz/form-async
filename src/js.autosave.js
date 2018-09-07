@@ -9,31 +9,68 @@
 } (function($, window) {
 	'use strict';
 
+	var ContextualManager = (function() {
+		var references, instance;
+
+		references = {
+			before:    [],
+			fail:      [],
+			success:   [],
+			action:    [],
+			form:      [],
+			input:     []
+		};
+
+		function update(id, value) {
+			references.input[id].value = value;
+		}
+
+		function all(type) {
+			return references[type];
+		}
+
+		function get(type, id) {
+			return references[type][id];
+		}
+
+		function append(type, value) {
+			var key,
+			    list = references[type],
+			    id = list.length;
+
+			for (key in list) {
+				if (references[type][key] == value) {
+					return parseInt(key);
+				}
+			}
+
+			references[type].push(value);
+			return id;
+		}
+
+		function ContextualManager() {
+			return {
+				all: all,
+				append: append,
+				get: get,
+				update: update
+			};
+		}
+
+		return {
+			new: function(){
+				if (instance == null) {
+					instance = new ContextualManager();
+				}
+				return instance;
+			}
+		};
+	}());
+
 	// List of helpers functions
 	var helper = {};
 	// Contextual manager instance
-	var globals = {
-		before:   [],
-		fail:     [],
-		success:  [],
-		action:   [],
-		form:     [],
-		input:    []
-	};
-
-	function getGlobalVariable(type, value) {
-		var key,
-		    length = globals[type].length;
-
-		for (key in globals[type]) {
-			if (globals[type][key] == value) {
-				return parseInt(key);
-			}
-		}
-
-		globals[type].push(value);
-		return length;
-	}
+	var cm = ContextualManager.new();
 
 	function watch(form, config) {
 		var element, tag, index, value,
@@ -59,6 +96,80 @@
 				timer:    element.attr('data-timer') || selector.attr('data-timer')
 			});
 		})
+	}
+
+	function create(selector, tag, config) {
+		var name, id, element,
+		    references = {};
+
+		$.each(config, function(key, value) {
+			if (value !== undefined && value !== null)
+				references[key] = cm.append(key, value);
+		});
+
+		element = getElementDetail(selector, tag);
+
+		references.name = selector.attr('name') || selector.attr('data-name');
+		references.selector = selector;
+		references.tag = tag;
+		references.trigger = element.trigger;
+		references.value = element.value;
+
+		id = cm.append('input', references);
+		selector.attr('data-autosave-id', id);
+		selector.on(element.trigger, save);
+	}
+
+	function save(event) {
+		var selector = $(event.target),
+		    id = selector.attr('data-autosave-id'),
+		    references = cm.get('input', id),
+			 element = getElementDetail(selector, references.tag);
+
+		if (element.value !== references.value) {
+			call(selector, references, element, id);
+		}
+	}
+
+	function call(selector, references, detail, id) {
+		var group = selector.attr('data-autosave-group'),
+			 type = selector.attr('type'),
+			 value = detail.value,
+			 action = cm.get('action', references.action),
+			 data = {},
+			 parameters = {};
+
+		if (group != undefined)
+			data = getValueByGroup(references, group);
+		else if (type == 'checkbox' || type == 'radio')
+			data = getValueByList(references);
+		else
+			data[references.name] = detail.value;
+
+		parameters = {
+			action: action,
+			data: data,
+			selector: selector,
+			retry: getRetryFunction(selector, references, detail, id)
+		};
+
+		if (references.before == undefined || cm.get('before', references.before)(parameters) == true) {
+			$.ajax({
+				method: 'POST',
+				url: action,
+				data: data,
+				success: function(data) {
+					if (references.success != undefined)
+						cm.get('success', references.success)(data, parameters);
+
+					cm.update(id, detail.value);
+				},
+				error: function() {
+					if (references.fail != undefined)
+						cm.get('fail', references.fail)(parameters);
+				}
+			});
+		}
 	}
 
 	function getFormElements(form, config) {
@@ -109,81 +220,6 @@
 		}
 	}
 
-	function create(selector, tag, config) {
-		var name, length, element,
-		    references = {};
-
-		$.each(config, function(key, value) {
-			if (value !== undefined && value !== null)
-				references[key] = getGlobalVariable(key, value);
-		});
-
-		element = getElementDetail(selector, tag);
-		length = globals.input.length;
-
-		references.name = selector.attr('name') || selector.attr('data-name');
-		references.selector = selector;
-		references.tag = tag;
-		references.trigger = element.trigger;
-		references.value = element.value;
-
-		globals.input.push(references);
-		selector.attr('data-autosave-id', length);
-		selector.on(element.trigger, save);
-	}
-
-	function save(event) {
-		var selector = $(event.target),
-		    id = selector.attr('data-autosave-id'),
-		    references = globals.input[id],
-			 element = getElementDetail(selector, references.tag);
-
-		if (element.value !== references.value) {
-			call(selector, references, element, id);
-		}
-	}
-
-	function call(selector, references, detail, id) {
-		var group = selector.attr('data-autosave-group'),
-			 type = selector.attr('type'),
-			 value = detail.value,
-			 action = globals.action[references.action],
-			 data = {},
-			 parameters = {};
-
-		if (group != undefined)
-			data = getValueByGroup(references, group);
-		else if (type == 'checkbox' || type == 'radio')
-			data = getValueByList(references);
-		else
-			data[references.name] = detail.value;
-
-		parameters = {
-			action: action,
-			data: data,
-			selector: selector,
-			retry: getRetryFunction(selector, references, detail, id)
-		};
-
-		if (references.before == undefined || globals.before[references.before](parameters) == true) {
-			$.ajax({
-				method: 'POST',
-				url: action,
-				data: data,
-				success: function(data) {
-					if (references.success != undefined)
-						globals.success[references.success](data, parameters);
-
-					globals.input[id].value = detail.value;
-				},
-				error: function() {
-					if (references.fail != undefined)
-						globals.fail[references.fail](parameters);
-				}
-			});
-		}
-	}
-
 	function getRetryFunction(selector, references, detail, id) {
 		return function(target, feedback) {
 			var link;
@@ -204,7 +240,7 @@
 
 	function getValueByGroup(references, group) {
 		var list = group.replace(/\s/g,'').split(','),
-			 input = globals.input,
+			 input = cm.all('input'),
 			 data = {},
 			 element,
 			 i = 0;
@@ -220,7 +256,7 @@
 	}
 
 	function getValueByList(references) {
-		var input = globals.input,
+		var input = cm.all('input'),
 			 value = '',
 			 data = {},
 			 i = 0;
