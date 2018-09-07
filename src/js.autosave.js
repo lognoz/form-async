@@ -33,34 +33,29 @@
 	}
 
 	function watch(form, config) {
-		var element, tag,
+		var element, tag, index, value,
 		    selector = $(form),
-		    timer = selector.attr('data-timer'),
-		    action = selector.attr('data-action') || selector.attr('action'),
-		    elements = null,
-		    i = 0;
+		    action = selector.attr('data-action') || selector.attr('action');
 
 		if (action == undefined)
 			return;
 
-		elements = getFormElements(form);
-
-		for (; i < elements.length; i++) {
-			element = $(elements[i]);
+		$.each(getFormElements(form), function(index, value) {
+			element = $(value);
 			tag = element.prop("tagName").toLowerCase();
 
 			if (!supported(element, tag) || element.attr('data-autosave-id') !== undefined)
-				continue;
+				return;
 
 			create(element, tag, {
-				form: selector,
-				before: config.before,
-				success: config.success,
-				fail: config.fail,
-				action: element.attr('data-action') || action,
-				timer: element.attr('data-timer') || timer
+				form:     selector,
+				before:   config.before,
+				success:  config.success,
+				fail:     config.fail,
+				action:   element.attr('data-action') || action,
+				timer:    element.attr('data-timer') || selector.attr('data-timer')
 			});
-		}
+		})
 	}
 
 	function getFormElements(form, config) {
