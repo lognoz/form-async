@@ -95,7 +95,7 @@
 				action:   element.attr('data-action') || action,
 				timer:    element.attr('data-timer') || selector.attr('data-timer')
 			});
-		})
+		});
 	}
 
 	function create(selector, tag, config) {
