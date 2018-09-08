@@ -19,6 +19,30 @@ module.exports = function (grunt) {
 				cache: 'build/.sizecache.json'
 			}
 		},
+		template: {
+			options: {
+				data: function() {
+					return {
+						version: '1.0.0',
+						years: grunt.template.today('yyyy')
+					};
+				}
+			},
+			lib: {
+				src: 'src/wrapper.js',
+				dest: 'tmp/js.autosave.js'
+			}
+		},
+		includes: {
+			options: {
+				includeRegexp: /\/\/\s*include "(\S+)";/,
+				includePath: 'src'
+			},
+			lib: {
+				src: 'tmp/js.autosave.js',
+				dest: 'tmp/js.autosave.js'
+			}
+		},
 		uglify: {
 			options: {
 				compress: {
@@ -59,6 +83,6 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('test', [ 'jshint', 'uglify', 'compare_size', 'connect', 'qunit' ]);
+	grunt.registerTask('test', [ 'jshint', 'template', 'includes', 'uglify', 'compare_size', 'connect', 'qunit' ]);
 	grunt.registerTask('default', [ 'test' ]);
 };
