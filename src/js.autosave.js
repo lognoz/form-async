@@ -88,9 +88,24 @@
 		};
 	}());
 
-	// List of helpers functions
-	var helper = {};
-	// Contextual manager instance
+	var Helper = (function() {
+		var instance;
+
+		function Helper() {
+			return {};
+		}
+
+		return {
+			new: function(){
+				if (instance == null) {
+					instance = new Helper();
+				}
+				return instance;
+			}
+		};
+	}());
+
+	var helper = Helper.new();
 	var cm = ContextualManager.new();
 
 	function watch(form, config) {
