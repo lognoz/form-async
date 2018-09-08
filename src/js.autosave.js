@@ -91,8 +91,14 @@
 	var Helper = (function() {
 		var instance;
 
+		function tag(selector) {
+			return selector.prop("tagName").toLowerCase();
+		}
+
 		function Helper() {
-			return {};
+			return {
+				tag: tag
+			};
 		}
 
 		return {
@@ -118,7 +124,7 @@
 
 		$.each(getFormElements(form), function(index, value) {
 			element = $(value);
-			tag = element.prop("tagName").toLowerCase();
+			tag = helper.tag(element);
 
 			if (!supported(element, tag) || element.attr('data-autosave-id') !== undefined)
 				return;
