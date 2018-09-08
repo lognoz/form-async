@@ -34,21 +34,21 @@ There are two ways to create a DOM element that can be used by JavaScript Autosa
 ***Initialization with action***
 
 ```html
-<form action="action/ajax-01.html.php" method="post" class="exemple">
+<form action="/path/to/ajax.html" method="post" class="exemple">
   <input type="text" name="xs_username" value="" placeholder="Username">
 </form>
 ```
 
 ***Initialization with data-action***
 ```html
-<input type="text" name="xs_username" class="exemple" data-action="action/ajax-01.html.php" >
+<input type="text" name="xs_username" class="exemple" data-action="/path/to/ajax.html" >
 ```
 
 ***Overwrite action for xs_phone***
 ```html
-<form action="action/ajax-01.html.php" method="post" class="exemple">
+<form action="/path/to/ajax.html" method="post" class="exemple">
   <input type="text" name="xs_username">
-  <input type="text" name="xs_phone" data-action="action/ajax-02.html.php">
+  <input type="text" name="xs_phone" data-action="/path/to/overwrite.html">
 </form>
 ```
 
