@@ -31,7 +31,7 @@ $(".exemple").autosave();
 
 There are two ways to create a DOM element that can be used by JavaScript Autosave. The library uses the `action` by default or the `data-action` of your selector for your ajax call. You can also overwrite the ajax call by using `data-action` on your form element (`input`, `select`, `textarea`).
 
-***Initialization with action***
+**Initialization with action**
 
 ```html
 <form action="/path/to/ajax.html" method="post" class="exemple">
@@ -39,12 +39,12 @@ There are two ways to create a DOM element that can be used by JavaScript Autosa
 </form>
 ```
 
-***Initialization with data-action***
+**Initialization with data-action**
 ```html
 <input type="text" name="xs_username" class="exemple" data-action="/path/to/ajax.html" >
 ```
 
-***Overwrite action for xs_phone***
+**Overwrite action for xs_phone**
 ```html
 <form action="/path/to/ajax.html" method="post" class="exemple">
   <input type="text" name="xs_username">
@@ -91,7 +91,7 @@ To use `fail` function, you need to set a function as an option. JavaScript Auto
 
 To improve user experience, you can use `parameter` send as arguments for output retry message and a link that will resend the ajax request. For instance, if you want to use it, you will simply need `parameter.retry` function and send a jQuery selector.
 
-***Basic usage***
+**Basic usage**
 ```js
 var func = {
   before : function (parameter) {
@@ -110,7 +110,7 @@ var func = {
 $(".exemple").autosave(func);
 ```
 
-***Custom retry message***
+**Custom retry message**
 ```js
 var func = {
   fail : function (parameter) {
