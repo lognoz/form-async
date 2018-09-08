@@ -68,25 +68,23 @@
 		    selector = $(form),
 		    action = selector.attr('data-action') || selector.attr('action');
 
-		if (action == undefined)
-			return;
+		if (action !== undefined) {
+			$.each(getFormElements(form), function(index, value) {
+				element = $(value);
+				tag = helper.tag(element);
 
-		$.each(getFormElements(form), function(index, value) {
-			element = $(value);
-			tag = helper.tag(element);
-
-			if (!supported(element, tag) || element.attr('data-autosave-id') !== undefined)
-				return;
-
-			create(element, tag, {
-				form:     selector,
-				before:   config.before,
-				success:  config.success,
-				fail:     config.fail,
-				action:   element.attr('data-action') || action,
-				timer:    element.attr('data-timer') || selector.attr('data-timer')
+				if (supported(element, tag) && element.attr('data-autosave-id') === undefined) {
+					create(element, tag, {
+						form:     selector,
+						before:   config.before,
+						success:  config.success,
+						fail:     config.fail,
+						action:   element.attr('data-action') || action,
+						timer:    element.attr('data-timer') || selector.attr('data-timer')
+					});
+				}
 			});
-		});
+		}
 	}
 
 	function create(selector, tag, config) {
