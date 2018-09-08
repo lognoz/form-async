@@ -1,3 +1,10 @@
+/*!
+ * JavaScript Autosave v1.0.1
+ * https://github.com/lognoz/js-autosave
+ *
+ * Copyright 2018, 2018 Marc-Antoine Loignon
+ * Released under the MIT license
+ */
 (function(factory) {
 	if (typeof define === 'function' && define.amd) {
 		define(['jquery'], factory);
