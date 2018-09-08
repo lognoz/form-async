@@ -32,9 +32,7 @@
 	 *    }
 	 */
 	var ContextualManager = (function() {
-		var references, instance;
-
-		references = {
+		var instance, references = {
 			before:    [],
 			fail:      [],
 			success:   [],
