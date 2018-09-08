@@ -52,23 +52,6 @@ There are two ways to create a DOM element that can be used by JavaScript Autosa
 </form>
 ```
 
-## Timer
-
-To saving a form element with a timer, you can use the `data-timer` attribute. 
-
-***Save textarea every 10 seconds***
-```html
-<textarea rows="4" cols="50" name="xs_content" data-timer="10"></textarea>
-```
-
-***Save all form elements every 10 seconds***
-```html
-<form action="action/ajax-01.html.php" method="post" class="exemple" data-timer="10">
-  <input type="text" name="xs_username">
-  <input type="text" name="xs_phone" data-action="action/ajax-02.html.php">
-</form>
-```
-
 ## Send group of field
 
 To create a group, you can use the `data-group` attribute.
