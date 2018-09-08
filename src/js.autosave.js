@@ -78,31 +78,12 @@
 		};
 	}());
 
-	var Helper = (function() {
-		var instance;
-
-		function tag(selector) {
+	var cm = ContextualManager.new();
+	var helper = {
+		tag: function(selector) {
 			return selector.prop("tagName").toLowerCase();
 		}
-
-		function Helper() {
-			return {
-				tag: tag
-			};
-		}
-
-		return {
-			new: function(){
-				if (instance == null) {
-					instance = new Helper();
-				}
-				return instance;
-			}
-		};
-	}());
-
-	var helper = Helper.new();
-	var cm = ContextualManager.new();
+	};
 
 	function watch(form, config) {
 		var element, tag, index, value,
