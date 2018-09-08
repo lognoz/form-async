@@ -41,38 +41,30 @@
 			input:     []
 		};
 
-		function update(id, value) {
-			references.input[id].value = value;
-		}
-
-		function all(type) {
-			return references[type];
-		}
-
-		function get(type, id) {
-			return references[type][id];
-		}
-
-		function append(type, value) {
-			var key,
-			    list = references[type],
-			    id = list.length;
-
-			for (key in list) {
-				if (references[type][key] == value)
-					return parseInt(key);
-			}
-
-			references[type].push(value);
-			return id;
-		}
-
 		function ContextualManager() {
 			return {
-				all: all,
-				append: append,
-				get: get,
-				update: update
+				all: function(type) {
+					return references[type];
+				},
+				append: function(type, value) {
+					var key,
+					    list = references[type],
+					    id = list.length;
+
+					for (key in list) {
+						if (references[type][key] == value)
+							return parseInt(key);
+					}
+
+					references[type].push(value);
+					return id;
+				},
+				get: function(type, id) {
+					return references[type][id];
+				},
+				update: function(id, value) {
+					references.input[id].value = value;
+				}
 			};
 		}
 
