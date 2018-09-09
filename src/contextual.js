@@ -34,7 +34,7 @@ function ContextualManager() {
 		}
 
 		return properties;
-	}
+	},
 
 	this.watch = function(properties) {
 		properties = this.setParent(properties);
