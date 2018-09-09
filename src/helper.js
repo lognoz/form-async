@@ -1,5 +1,5 @@
-var helper = {
-	get: {
+function Helper() {
+	this.get = {
 		tag: function(selector) {
 			return selector.prop("tagName").toLowerCase();
 		},
@@ -15,12 +15,14 @@ var helper = {
 				selector.val() || selector.html();
 		}
 	},
-	supported: function(target) {
+
+	this.supported = function(target) {
 		var selector = $(target);
 		return [ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf(this.get.tag(selector)) != -1 ||
 			selector.attr('contentEditable') && (selector.attr('name') || selector.attr('data-name'));
 	},
-	properties: function(parent, target, status) {
+
+	this.properties = function(parent, target, status) {
 		var parent = $(parent);
 		var selector = $(target);
 		return {
@@ -37,7 +39,8 @@ var helper = {
 			name:      selector.attr('name') || selector.attr('data-name')
 		};
 	},
-	child: function(target, config) {
+
+	this.child = function(target, config) {
 		var children = target.children;
 		var length = children.length;
 		var list = [];
@@ -55,4 +58,4 @@ var helper = {
 			return list
 		}
 	}
-};
+}
