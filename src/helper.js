@@ -13,6 +13,18 @@ function Helper() {
 		value: function(selector) {
 			return [ 'checkbox', 'radio' ].indexOf(this.type(selector)) !== -1 ? selector.is(':checked') :
 				selector.val() || selector.html();
+		},
+		action: function(selector, parent) {
+			return parent.attr('data-action') || parent.attr('action') || selector.attr('data-action');
+		},
+		time: function(selector, parent) {
+			return parent.attr('data-timer') || selector.attr('data-timer') || null;
+		},
+		name: function(selector) {
+			return selector.attr('name') || selector.attr('data-name');
+		},
+		group: function (selector) {
+			return selector.attr('data-autosave-group') || null;
 		}
 	},
 
@@ -33,10 +45,10 @@ function Helper() {
 			type:      this.get.type(selector),
 			handler:   this.get.handler(selector),
 			value:     this.get.value(selector),
-			action:    parent.attr('data-action') || parent.attr('action') || selector.attr('data-action'),
-			timer:     parent.attr('data-timer') || selector.attr('data-timer') || null,
-			group:     selector.attr('data-autosave-group') || null,
-			name:      selector.attr('name') || selector.attr('data-name')
+			action:    this.get.action(selector, parent),
+			timer:     this.get.time(selector, parent),
+			name:      this.get.name(selector),
+			group:     this.get.group(selector)
 		};
 	},
 
