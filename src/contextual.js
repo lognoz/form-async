@@ -28,9 +28,6 @@ var ContextualManager = (function() {
 
 	function ContextualManager() {
 		return {
-			all: function(type) {
-				return references[type];
-			},
 			watch: function(properties) {
 				properties = this.set(properties, 'parent');
 				properties = this.set(properties, 'selector');
@@ -61,24 +58,8 @@ var ContextualManager = (function() {
 
 				return properties;
 			},
-			append: function(type, value) {
-				var key,
-					 list = references[type],
-					 id = list.length;
-
-				for (key in list) {
-					if (references[type][key] == value)
-						return parseInt(key);
-				}
-
-				references[type].push(value);
-				return id;
-			},
-			get: function(type, id) {
+			get: function(id, type) {
 				return references[type][id];
-			},
-			update: function(id, value) {
-				references.input[id].value = value;
 			}
 		};
 	}
