@@ -22,18 +22,44 @@
  */
 var ContextualManager = (function() {
 	var instance, references = {
-		before:    [],
-		fail:      [],
-		success:   [],
-		action:    [],
-		form:      [],
-		input:     []
+		parent: [],
+		selector: []
 	};
 
 	function ContextualManager() {
 		return {
 			all: function(type) {
 				return references[type];
+			},
+			watch: function(properties) {
+				properties = this.set(properties, 'parent');
+				properties = this.set(properties, 'selector');
+				return properties;
+			},
+			set: function(properties, type) {
+				var key;
+				var exist = false;
+				var list = references[type];
+				var length = list.length;
+
+				if (type === 'selector') {
+					properties.id_selector = length;
+					references[type].push(properties);
+				} else {
+					for (key in list) {
+						if (list[key] === properties.parent[0]) {
+							properties.id_parent = parseInt(key);
+							exist = true;
+						}
+					}
+
+					if (!exist) {
+						references[type].push(properties.parent[0]);
+						properties.id_parent = length;
+					}
+				}
+
+				return properties;
 			},
 			append: function(type, value) {
 				var key,
