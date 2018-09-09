@@ -18,22 +18,20 @@ var helper = {
 		return [ 'checkbox', 'radio' ].indexOf(this.type(selector)) !== -1 ? selector.is(':checked') :
 			selector.val() || selector.html();
 	},
-	properties: function(parent, target, config) {
+	properties: function(parent, target, status) {
 		var parent = $(parent);
 		var selector = $(target);
 		return {
 			parent:    parent,
 			selector:  selector,
+			status:    status,
 			tag:       this.tag(selector),
 			type:      this.type(selector),
 			handler:   this.handler(selector),
 			value:     this.value(selector),
 			action:    parent.attr('data-action') || parent.attr('action') || selector.attr('data-action'),
 			timer:     parent.attr('data-timer') || selector.attr('data-timer') || null,
-			name:      selector.attr('name') || selector.attr('data-name'),
-			before:    config.before || null,
-			success:   config.success || null,
-			fail:      config.fail || null
+			name:      selector.attr('name') || selector.attr('data-name')
 		};
 	},
 	child: function(target, config) {
