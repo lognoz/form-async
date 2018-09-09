@@ -189,12 +189,15 @@ function save(event) {
 	var selector = $(event.target);
 	var id = selector.attr('data-autosave-id');
 	var references = contextual.get(id, 'selector');
-	var value = helper.value(selector);
+	var value = helper.get.value(selector);
 
 	if (references.value !== value) {
 		call(references, value);
 	}
 }
+
+var helper = new Helper();
+var contextual = new ContextualManager();
 
 $.fn.autosave = function(config) {
 	config = config || {};
