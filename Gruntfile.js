@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 			all: [ 'src/**/*.js' ]
 		},
 		compare_size: {
-			files: [ 'build/js.autosave.min.js', 'src/js.autosave.js' ],
+			files: [ 'dist/js.autosave.min.js', 'dist/js.autosave.js' ],
 			options: {
 				compress: {
 					gz: function (contents) {
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 			},
 			lib: {
 				src: 'src/wrapper.js',
-				dest: 'tmp/js.autosave.js'
+				dest: 'build/js.autosave.js'
 			}
 		},
 		includes: {
@@ -39,8 +39,8 @@ module.exports = function (grunt) {
 				includePath: 'src'
 			},
 			lib: {
-				src: 'tmp/js.autosave.js',
-				dest: 'tmp/js.autosave.js'
+				src: 'build/js.autosave.js',
+				dest: 'dist/js.autosave.js'
 			}
 		},
 		uglify: {
@@ -54,8 +54,7 @@ module.exports = function (grunt) {
 			},
 			build: {
 				files: {
-					'build/js.autosave.min.js': 'src/js.autosave.js',
-					'build/js.autosave-<%= pkg.version %>.min.js': 'src/js.autosave.js'
+					'dist/js.autosave.min.js': 'dist/js.autosave.js',
 				}
 			}
 		},
