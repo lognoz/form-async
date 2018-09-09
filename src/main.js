@@ -185,6 +185,17 @@ function create(properties) {
 	references.selector.on(references.handler, save);
 }
 
+function save(event) {
+	var selector = $(event.target);
+	var id = selector.attr('data-autosave-id');
+	var references = contextual.get(id, 'selector');
+	var value = helper.value(selector);
+
+	if (references.value !== value) {
+		call(references, value);
+	}
+}
+
 $.fn.autosave = function(config) {
 	config = config || {};
 
