@@ -3,4 +3,4 @@ node_js:
   - "8.9.3"
 before_script:
   - npm install
-script: grunt test
+script: grunt travis
