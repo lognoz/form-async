@@ -31,6 +31,7 @@ var helper = {
 			value:     this.value(selector),
 			action:    parent.attr('data-action') || parent.attr('action') || selector.attr('data-action'),
 			timer:     parent.attr('data-timer') || selector.attr('data-timer') || null,
+			group:     selector.attr('data-autosave-group') || null,
 			name:      selector.attr('name') || selector.attr('data-name')
 		};
 	},
