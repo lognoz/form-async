@@ -179,6 +179,12 @@
 //	return data;
 //}
 
+function create(properties) {
+	var references = contextual.watch(properties);
+	selector.attr('data-autosave-id', references.id_selector);
+	selector.on(element.handler, save);
+}
+
 $.fn.autosave = function(config) {
 	config = config || {};
 
