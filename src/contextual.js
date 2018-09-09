@@ -8,37 +8,37 @@ function ContextualManager() {
 	this.references = {
 		parent: [],
 		selector: []
-	};
+	},
 
-	this.watch = function(properties) {
-		properties = this.set(properties, 'parent');
-		properties = this.set(properties, 'selector');
+	this.setSelector = function(properties) {
+		properties.id_selector = this.references.selector.length;
+		this.references.selector.push(properties);
 		return properties;
 	},
 
-	this.set = function(properties, type) {
+	this.setParent = function(properties) {
 		var key;
 		var exist = false;
-		var list = this.references[type];
-		var length = list.length;
+		var list = this.references.parent;
 
-		if (type === 'selector') {
-			properties.id_selector = length;
-			this.references[type].push(properties);
-		} else {
-			for (key in list) {
-				if (list[key] === properties.parent[0]) {
-					properties.id_parent = parseInt(key);
-					exist = true;
-				}
-			}
-
-			if (!exist) {
-				this.references[type].push(properties.parent[0]);
-				properties.id_parent = length;
+		for (key in list) {
+			if (list[key] === properties.parent[0]) {
+				properties.id_parent = parseInt(key);
+				exist = true;
 			}
 		}
 
+		if (!exist) {
+			this.references.parent.push(properties.parent[0]);
+			properties.id_parent = length;
+		}
+
+		return properties;
+	}
+
+	this.watch = function(properties) {
+		properties = this.setParent(properties);
+		properties = this.setSelector(properties);
 		return properties;
 	},
 
