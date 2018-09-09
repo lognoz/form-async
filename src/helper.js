@@ -1,22 +1,24 @@
 var helper = {
-	tag: function(selector) {
-		return selector.prop("tagName").toLowerCase();
-	},
-	type: function(selector) {
-		return selector.attr('type') || null;
+	get: {
+		tag: function(selector) {
+			return selector.prop("tagName").toLowerCase();
+		},
+		type: function(selector) {
+			return selector.attr('type') || null;
+		},
+		handler: function(selector) {
+			return [ 'checkbox', 'radio' ].indexOf(this.type(selector)) !== -1 ||
+				this.tag(selector) === 'select' ? 'change' : 'blur';
+		},
+		value: function(selector) {
+			return [ 'checkbox', 'radio' ].indexOf(this.type(selector)) !== -1 ? selector.is(':checked') :
+				selector.val() || selector.html();
+		}
 	},
 	supported: function(target) {
 		var selector = $(target);
-		return [ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf(this.tag(selector)) != -1 ||
+		return [ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf(this.get.tag(selector)) != -1 ||
 			selector.attr('contentEditable') && (selector.attr('name') || selector.attr('data-name'));
-	},
-	handler: function(selector) {
-		return [ 'checkbox', 'radio' ].indexOf(this.type(selector)) !== -1 ||
-			this.tag(selector) === 'select' ? 'change' : 'blur';
-	},
-	value: function(selector) {
-		return [ 'checkbox', 'radio' ].indexOf(this.type(selector)) !== -1 ? selector.is(':checked') :
-			selector.val() || selector.html();
 	},
 	properties: function(parent, target, status) {
 		var parent = $(parent);
@@ -25,10 +27,10 @@ var helper = {
 			parent:    parent,
 			selector:  selector,
 			status:    status,
-			tag:       this.tag(selector),
-			type:      this.type(selector),
-			handler:   this.handler(selector),
-			value:     this.value(selector),
+			tag:       this.get.tag(selector),
+			type:      this.get.type(selector),
+			handler:   this.get.handler(selector),
+			value:     this.get.value(selector),
 			action:    parent.attr('data-action') || parent.attr('action') || selector.attr('data-action'),
 			timer:     parent.attr('data-timer') || selector.attr('data-timer') || null,
 			group:     selector.attr('data-autosave-group') || null,
