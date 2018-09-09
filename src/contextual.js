@@ -3,22 +3,6 @@
  * references variables when developpers implements $.fn.autosave(). If
  * before, fail and success functions is sending as arguments, it will be
  * store in references variable.
- *
- *  references.before:   function
- *  references.fail:     function
- *  references.success:  function
- *  references.action:   selectors action attribute
- *  references.form:     intializator selectors
- *  references.input:
- *    {
- *      action    key of references.action
- *      form      key of references.form
- *      name      selector name attribute
- *      selector  selector itself
- *      tag       selector tag type
- *      trigger   type of trigger event
- *      value     last saving value
- *    }
  */
 var ContextualManager = (function() {
 	var instance, references = {
