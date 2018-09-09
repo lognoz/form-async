@@ -67,4 +67,4 @@ var ContextualManager = (function() {
 	};
 }());
 
-var cm = ContextualManager.new();
+var contextual = ContextualManager.new();
