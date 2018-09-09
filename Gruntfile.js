@@ -82,6 +82,7 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('test', [ 'jshint', 'template', 'includes', 'uglify', 'compare_size', 'connect', 'qunit' ]);
-	grunt.registerTask('default', [ 'test' ]);
+	grunt.registerTask('test', [ 'jshint', 'connect', 'qunit' ]);
+	grunt.registerTask('build', [ 'template', 'includes', 'uglify', 'compare_size' ]);
+	grunt.registerTask('default', [ 'build', 'test' ]);
 };
