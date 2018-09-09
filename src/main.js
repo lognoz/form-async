@@ -4,20 +4,18 @@ function watch(form, config) {
 		 action = selector.attr('data-action') || selector.attr('action');
 
 	if (action !== undefined) {
-		$.each(getFormElements(form), function(index, value) {
+		$.each(helper.child(form), function(index, value) {
 			element = $(value);
 			tag = helper.tag(element);
 
-			if (supported(element, tag) && element.attr('data-autosave-id') === undefined) {
-				create(element, tag, {
-					form:     selector,
-					before:   config.before,
-					success:  config.success,
-					fail:     config.fail,
-					action:   element.attr('data-action') || action,
-					timer:    element.attr('data-timer') || selector.attr('data-timer')
-				});
-			}
+			create(element, tag, {
+				form:     selector,
+				before:   config.before,
+				success:  config.success,
+				fail:     config.fail,
+				action:   element.attr('data-action') || action,
+				timer:    element.attr('data-timer') || selector.attr('data-timer')
+			});
 		});
 	}
 }
@@ -94,26 +92,6 @@ function call(selector, references, detail, id) {
 			}
 		});
 	}
-}
-
-function getFormElements(form, config) {
-	var list = [],
-		 selector = $(form);
-
-	if (selector.children().length == 0) {
-		list.push(form);
-	} else {
-		selector.find('*').each(function() {
-			list.push(this);
-		});
-	}
-
-	return list;
-}
-
-function supported(selector, tag) {
-	return [ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf(tag) != -1 ||
-		selector.attr('contentEditable') && (selector.attr('name') || selector.attr('data-name'));
 }
 
 function getElementDetail(selector, tag) {
