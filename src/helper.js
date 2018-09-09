@@ -18,19 +18,25 @@ var helper = {
 		return [ 'checkbox', 'radio' ].indexOf(this.type(selector)) !== -1 ? selector.is(':checked') :
 			selector.val() || selector.html();
 	},
-	properties: function(target) {
+	properties: function(parent, target, config) {
+		var parent = $(parent);
 		var selector = $(target);
 		return {
-			tag:      this.tag(selector),
-			type:     this.type(selector),
-			handler:  this.handler(selector),
-			value:    this.value(selector),
-			action:   selector.attr('data-action') || null,
-			timer:    selector.attr('data-timer') || null,
-			name:     selector.attr('name') || selector.attr('data-name')
+			parent:    parent,
+			selector:  selector,
+			tag:       this.tag(selector),
+			type:      this.type(selector),
+			handler:   this.handler(selector),
+			value:     this.value(selector),
+			action:    parent.attr('data-action') || parent.attr('action') || selector.attr('data-action'),
+			timer:     parent.attr('data-timer') || selector.attr('data-timer') || null,
+			name:      selector.attr('name') || selector.attr('data-name'),
+			before:    config.before || null,
+			success:   config.success || null,
+			fail:      config.fail || null
 		};
 	},
-	child: function(target) {
+	child: function(target, config) {
 		var children = target.children;
 		var length = children.length;
 		var list = [];
@@ -38,11 +44,11 @@ var helper = {
 
 		if (length === 0) {
 			if (this.supported(target))
-				return [ this.properties(target) ];
+				return [ this.properties(target, target, config) ];
 		} else {
 			for (; i < length; i++) {
 				if (this.supported(children[i]))
-					list.push(this.properties(children[i]));
+					list.push(this.properties(target, children[i], config));
 			}
 
 			return list
