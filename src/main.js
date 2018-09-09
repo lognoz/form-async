@@ -1,9 +1,3 @@
-function create(properties) {
-	var references = contextual.watch(properties);
-	references.selector.attr('data-autosave-id', references.id_selector);
-	references.selector.on(references.handler, save);
-}
-
 function save(event) {
 	var selector = $(event.target);
 	var id = selector.attr('data-autosave-id');
@@ -11,7 +5,8 @@ function save(event) {
 	var value = helper.get.value(selector);
 
 	if (references.value !== value) {
-		call(references, value);
+		console.log(references);
+		//call(references, value);
 	}
 }
 
@@ -19,12 +14,18 @@ var helper = new Helper();
 var contextual = new ContextualManager();
 
 $.fn.autosave = function(config) {
-	config = config || {};
+	var children;
+	var id_parent;
 
 	$(this).each(function(event) {
-		$.each(helper.child(this, config), function(index, properties) {
-			if (properties.action !== null)
-				create(properties)
-		});
+		if (children = helper.child(this, config || {})) {
+			id_parent = contextual.set_parent(this);
+
+			$.each(children, function(index, properties) {
+				properties = contextual.get_properties(properties, id_parent)
+				properties.selector.attr('data-autosave-id', properties.id_selector);
+				properties.selector.on(properties.handler, save);
+			});
+		}
 	});
 };
