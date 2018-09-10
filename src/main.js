@@ -1,13 +1,24 @@
 function save(event) {
 	var selector = $(event.target);
 	var id = selector.attr('data-autosave-id');
-	var references = contextual.get(id, 'selector');
+	var properties = contextual.get(id, 'selector');
 	var value = helper.get.value(selector);
 
-	if (references.value !== value) {
-		console.log(references);
-		//call(references, value);
+	if (properties.value !== value) {
+		call(properties, value);
 	}
+}
+
+function call(properties, value) {
+	var values = {};
+	var status = properties.status;
+
+	if (properties.group !== null)
+		values = helper.get.value_by_group(properties);
+	else if (properties.type == 'checkbox' || properties.type == 'radio')
+		values = helper.get.value_by_list(properties);
+	else
+		values[properties.name] = value;
 }
 
 var helper = new Helper();
