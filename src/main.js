@@ -1,28 +1,31 @@
-function save(event) {
-	var selector = $(event.target);
-	var id = selector.attr('data-autosave-id');
-	var properties = contextual.get(id, 'selector');
-	var value = helper.get.value(selector);
+function Autosave() {
+	this.save = function(event) {
+		var selector = $(event.target);
+		var id = selector.attr('data-autosave-id');
+		var properties = contextual.get(id, 'selector');
+		var value = helper.get.value(selector);
 
-	if (properties.value !== value) {
-		call(properties, value);
+		if (properties.value !== value) {
+			call(properties, value);
+		}
+	},
+
+	this.call = function(properties, value) {
+		var values = {};
+		var status = properties.status;
+
+		if (properties.group !== null)
+			values = helper.get.value_by_group(properties);
+		else if (properties.type == 'checkbox' || properties.type == 'radio')
+			values = helper.get.value_by_list(properties);
+		else
+			values[properties.name] = value;
 	}
 }
 
-function call(properties, value) {
-	var values = {};
-	var status = properties.status;
-
-	if (properties.group !== null)
-		values = helper.get.value_by_group(properties);
-	else if (properties.type == 'checkbox' || properties.type == 'radio')
-		values = helper.get.value_by_list(properties);
-	else
-		values[properties.name] = value;
-}
-
-var helper = new Helper();
+var autosave = new Autosave();
 var contextual = new ContextualManager();
+var helper = new Helper();
 
 $.fn.autosave = function(config) {
 	config = config || {};
@@ -33,7 +36,7 @@ $.fn.autosave = function(config) {
 		$.each(helper.child(this, config), function(index, properties) {
 			var id = contextual.set('selector', properties);
 			properties.selector.attr('data-autosave-id', id);
-			properties.selector.on(properties.handler, save);
+			properties.selector.on(properties.handler, autosave.save);
 		});
 	});
 };
