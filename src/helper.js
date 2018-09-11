@@ -25,6 +25,43 @@ function Helper() {
 		},
 		group: function (selector) {
 			return selector.attr('data-autosave-group') || null;
+		},
+		value_by_group: function(properties) {
+			var key, element;
+			var group = properties.group.replace(/\s/g,'').split(',');
+			var list = contextual.references.selector;
+			var values = {};
+
+			for (key in list) {
+				element = list[key];
+				if (element.id_parent === properties.id_parent && group.indexOf(element.name) !== -1) {
+					values[element.name] = this.value(element.selector);
+				}
+			}
+
+			return values;
+		},
+		value_by_list: function(properties) {
+			var key, element;
+			var list = contextual.references.selector;
+			var name = properties.name;
+			var values = {};
+			var value = '';
+
+			for (key in list) {
+				element = list[key];
+				if (element.id_parent === properties.id_parent &&
+				    element.name === properties.name &&
+				    element.selector.is(':checked')) {
+					value += element.selector.val() + '&';
+				}
+			}
+
+			if (value.length > 0)
+				value = value.substring(0, value.length - 1);
+
+			values[name] = value;
+			return values;
 		}
 	},
 
