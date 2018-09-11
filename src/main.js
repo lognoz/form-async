@@ -25,18 +25,15 @@ var helper = new Helper();
 var contextual = new ContextualManager();
 
 $.fn.autosave = function(config) {
-	var children;
-	var id_parent;
+	config = config || {};
 
 	$(this).each(function(event) {
-		if (children = helper.child(this, config || {})) {
-			id_parent = contextual.set_parent(this);
+		contextual.set('constructor', this);
 
-			$.each(children, function(index, properties) {
-				properties = contextual.get_properties(properties, id_parent)
-				properties.selector.attr('data-autosave-id', properties.id_selector);
-				properties.selector.on(properties.handler, save);
-			});
-		}
+		$.each(helper.child(this, config), function(index, properties) {
+			var id = contextual.set('selector', properties);
+			properties.selector.attr('data-autosave-id', id);
+			properties.selector.on(properties.handler, save);
+		});
 	});
 };
