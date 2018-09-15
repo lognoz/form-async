@@ -6,17 +6,16 @@
  * Released under the MIT license
  */
 (function(factory) {
-	if (typeof define === 'function' && define.amd) {
-		define(['jquery'], factory);
-	} else if (typeof exports === 'object') {
+	if (typeof define === 'function' && define.amd)
+		define([ 'jquery' ], factory);
+	else if (typeof exports === 'object')
 		module.exports = factory(require('jquery'));
-	} else {
+	else
 		factory(jQuery);
-	}
-}(function($, window) {
+}(function($, window){
 'use strict';
 
 //include "contextual.js";
 //include "helper.js";
 //include "main.js";
-}));
+} ) );
