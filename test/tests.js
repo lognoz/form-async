@@ -76,11 +76,6 @@ $(document).ready(function() {
 	});
 
 	QUnit.test('checkbox list', function(assert) {
-		var data = {
-			bike: $('#checkbox-bike').attr('data-cache'),
-			car: $('#checkbox-car').attr('data-cache')
-		};
-
 		$('#checkbox-bike').trigger('click');
 		server.respond();
 
