@@ -63,16 +63,90 @@ module.exports = function (grunt) {
 			}
 		},
 		connect: {
-			server: {
+			'server': {
 				options: {
 					port: 8000,
 					base: '.'
+				}
+			},
+			'build-sauce': {
+				options: {
+					port: 9999,
+					base: ['.', 'test']
+				}
+			}
+		},
+		'saucelabs-qunit': {
+			all: {
+				options: {
+					urls: ['http://127.0.0.1:9999'],
+					testname: 'Sauce Test for js-cookie',
+					build: process.env.TRAVIS_JOB_ID,
+					statusCheckAttempts: -1,
+					throttled: 3,
+					browsers: [
+						{
+							browserName: 'safari',
+							platform: 'OS X 10.11',
+							version: '10.0'
+						},
+						{
+							browserName: 'safari',
+							platform: 'OS X 10.12',
+							version: '10.1'
+						},
+						{
+							browserName: 'safari',
+							platform: 'OS X 10.13',
+							version: '11.0'
+						},
+						{
+							browserName: 'firefox',
+							platform: 'OS X 10.11',
+							version: '56.0'
+						},
+						{
+							browserName: 'chrome',
+							platform: 'OS X 10.10',
+							version: '61.0'
+						},
+						{
+							browserName: 'internet explorer',
+							platform: 'Windows 7',
+							version: '11.0'
+						},
+						{
+							browserName: 'internet explorer',
+							platform: 'Windows 7',
+							version: '10.0'
+						},
+						{
+							browserName: 'internet explorer',
+							platform: 'Windows 7',
+							version: '9.0'
+						},
+						{
+							browserName: 'internet explorer',
+							platform: 'Windows 7',
+							version: '8.0'
+						},
+						{
+							browserName: 'firefox',
+							platform: 'Linux',
+							version: '45.0'
+						},
+						{
+							browserName: 'chrome',
+							platform: 'Linux',
+							version: '48.0'
+						}
+					]
 				}
 			}
 		}
 	});
 
-	grunt.registerTask('test', [ 'jshint', 'connect', 'qunit' ]);
+	grunt.registerTask('test', [ 'jshint', 'connect', 'qunit', 'saucelabs-qunit' ]);
 	grunt.registerTask('build', [ 'template', 'uglify', 'compare_size' ]);
 	grunt.registerTask('all', [ 'build', 'test' ]);
 };
