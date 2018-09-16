@@ -64,30 +64,18 @@
 			var data = selector.getAttribute('data-autosave-group');
 			return data ? data.replace(/\s/g,'').split(',') : null;
 		},
-		value: function(elements) {
-			var i, reference, name,
-		    	 data = {};
+		value: function(reference, selector, name) {
+			if ([ 'input', 'select', 'textarea' ].indexOf(reference.tag) !== -1 && (reference.type !== 'checkbox' || selector.checked))
+				return $(selector).val();
+			else
+				return $(selector).html();
 
-			$.each(elements, function(index, pointer) {
-				reference = contextual.get('element', pointer);
-				name = reference.name;
 
-				if (data[name] === undefined)
-					data[name] = [];
-
-				if ([ 'input', 'select', 'textarea' ].indexOf(reference.tag) !== -1) {
-					if (reference.type !== 'checkbox' || reference.selector.checked) {
-						data[name].push(reference.selector.value);
-					}
-				} else {
-					data[name].push(reference.selector.innerHTML);
-				}
-			});
-
-			for (i in data)
-				data[i] = data[i].join('&');
-
-			return data;
+//			for (key in data) {
+//				console.log(key + '=' + data[key].join('&' + key + '='))
+//			}
+//
+//			return data;
 		}
 	};
 
@@ -248,7 +236,32 @@
 		);
 
 		this.data = function() {
-			return properties.value(this.dependency);
+			var reference, value, name, key,
+			    data = {};
+
+			$.each(this.dependency, function(index, pointer) {
+				reference = contextual.get('element', pointer);
+				name = reference.name;
+				value = properties.value(reference, reference.selector, name);
+
+				if (name.substr(-2) === '[]') {
+					name = name.substr(0, name.length - 2);
+					if (data[name] === undefined)
+						data[name] = [];
+
+					if (value !== '')
+						data[name].push(value);
+				} else {
+					data[name] = value;
+				}
+			});
+
+			for (var key in data) {
+				if (data[key] instanceof Array && data[key].length === 0)
+					data[key] = '';
+			}
+
+			return data;
 		};
 	}
 
