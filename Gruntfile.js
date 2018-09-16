@@ -146,7 +146,7 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('test', [ 'jshint', 'connect', 'qunit', 'saucelabs-qunit' ]);
+	grunt.registerTask('test', [ 'jshint', 'connect', 'qunit' ]);
 	grunt.registerTask('build', [ 'template', 'uglify', 'compare_size' ]);
 	grunt.registerTask('all', [ 'build', 'test' ]);
 };
