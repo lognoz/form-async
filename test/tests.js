@@ -87,7 +87,7 @@ $(document).ready(function() {
 		assert.ok(spy.called);
 		assert.ok($('#checkbox-bike').attr('data-autosave-id'));
 		assert.ok($.ajax.calledWithMatch({ url: '/action/checkbox.html' }));
-		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': 'bike'} }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': ['bike']} }));
 
 		$('#checkbox-car').trigger('click');
 		server.respond();
@@ -95,13 +95,13 @@ $(document).ready(function() {
 		assert.ok(spy.called);
 		assert.ok($('#checkbox-car').attr('data-autosave-id'));
 		assert.ok($.ajax.calledWithMatch({ url: '/action/checkbox.html' }));
-		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': 'bike&car'} }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': ['bike', 'car']} }));
 
 		$('#checkbox-bike').trigger('click');
 		server.respond();
 
 		assert.ok(spy.called);
-		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': 'car'} }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': ['car']} }));
 	});
 
 	QUnit.test('radio list', function(assert) {
@@ -161,19 +161,18 @@ $(document).ready(function() {
 			spy = sinon.spy($, "ajax");
 			server = sinon.fakeServer.create();
 			options = {
-				before: function(parameters) {
-					return (parameters.data['xs_username'] !== 'cantaloupe')
+				before: function() {
+					return (this.data['xs_username'] !== 'cantaloupe')
 				},
-				success: function(data, parameters) {
-					if (data == 'redirect') {
-						options.fail(parameters);
-					} else {
-						parameters.selector.addClass('success');
-					}
+				success: function(data) {
+					if (data == 'redirect')
+						options.fail();
+					else
+						$(this.selector).addClass('success');
 				},
 				fail: function(parameters) {
-					parameters.selector.addClass('fail');
-					parameters.retry($('#test-case-retry'));
+					$(this.selector).addClass('fail');
+					this.retry('#test-case-retry');
 				}
 			};
 
