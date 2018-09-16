@@ -130,6 +130,31 @@ $(document).ready(function() {
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_gender': 'Other'} }));
 	});
 
+	QUnit.test('select', function(assert) {
+		$('#select-car [value="audi"]').attr('selected', true)
+		$('#select-car').trigger('change');
+
+		assert.ok(spy.called);
+		assert.ok($('#select-car').attr('data-autosave-id'));
+		assert.ok($.ajax.calledWithMatch({ url: '/action/select.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_car': 'audi'} }));
+
+		server.respond();
+	});
+
+	QUnit.test('select with multiple attribute', function(assert) {
+		$('#select-multiple-car [value="audi"]').attr('selected', true)
+		$('#select-multiple-car [value="volvo"]').attr('selected', true)
+		$('#select-multiple-car').trigger('change');
+
+		assert.ok(spy.called);
+		assert.ok($('#select-car').attr('data-autosave-id'));
+		assert.ok($.ajax.calledWithMatch({ url: '/action/select-multiple.html' }));
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_car': ['volvo', 'audi']} }));
+
+		server.respond();
+	});
+
 	QUnit.test('send inputs as a group', function(assert) {
 		$('#group-password')
 			.val('orange')
