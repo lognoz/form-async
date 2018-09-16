@@ -33,7 +33,7 @@ $(document).ready(function() {
 			.trigger('blur');
 
 		assert.ok(spy.called);
-		assert.ok($('#multiple-fields-name').attr('data-autosave-id'))
+		assert.ok($('#multiple-fields-name').attr('data-autosave-id'));
 		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_name': 'apple'} }));
 
@@ -44,7 +44,7 @@ $(document).ready(function() {
 			.trigger('blur');
 
 		assert.ok(spy.called);
-		assert.ok($('#multiple-fields-phone').attr('data-autosave-id'))
+		assert.ok($('#multiple-fields-phone').attr('data-autosave-id'));
 		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_phone': 'orange'} }));
 
@@ -120,7 +120,7 @@ $(document).ready(function() {
 		server.respond();
 
 		assert.ok(spy.called);
-		assert.ok($('#radio-other').attr('data-autosave-id'))
+		assert.ok($('#radio-other').attr('data-autosave-id'));
 		assert.ok($.ajax.calledWithMatch({ url: '/action/radio.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_gender': 'Other'} }));
 	});
@@ -138,8 +138,8 @@ $(document).ready(function() {
 	});
 
 	QUnit.test('select with multiple attribute', function(assert) {
-		$('#select-multiple-car [value="audi"]').attr('selected', true)
-		$('#select-multiple-car [value="volvo"]').attr('selected', true)
+		$('#select-multiple-car [value="audi"]').attr('selected', true);
+		$('#select-multiple-car [value="volvo"]').attr('selected', true);
 		$('#select-multiple-car').trigger('change');
 
 		assert.ok(spy.called);
@@ -199,7 +199,7 @@ $(document).ready(function() {
 			server = sinon.fakeServer.create();
 			options = {
 				before: function() {
-					return (this.data['xs_username'] !== 'cantaloupe')
+					return (this.data.xs_username !== 'cantaloupe');
 				},
 				success: function(data) {
 					if (data == 'redirect')
