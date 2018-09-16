@@ -256,7 +256,7 @@
 				}
 			});
 
-			for (var key in data) {
+			for (key in data) {
 				if (data[key] instanceof Array && data[key].length === 0)
 					data[key] = '';
 			}
