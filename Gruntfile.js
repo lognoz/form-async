@@ -74,5 +74,5 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test', [ 'jshint', 'connect', 'qunit' ]);
 	grunt.registerTask('build', [ 'template', 'uglify', 'compare_size' ]);
-	grunt.registerTask('travis', [ 'build', 'test' ]);
+	grunt.registerTask('all', [ 'build', 'test' ]);
 };
