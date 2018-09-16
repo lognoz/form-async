@@ -69,13 +69,6 @@
 				return $(selector).val();
 			else
 				return $(selector).html();
-
-
-//			for (key in data) {
-//				console.log(key + '=' + data[key].join('&' + key + '='))
-//			}
-//
-//			return data;
 		}
 	};
 
