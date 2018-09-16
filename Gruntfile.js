@@ -29,17 +29,7 @@ module.exports = function (grunt) {
 				}
 			},
 			lib: {
-				src: 'src/wrapper.js',
-				dest: 'build/js.autosave.js'
-			}
-		},
-		includes: {
-			options: {
-				includeRegexp: /\/\/\s*include "(\S+)";/,
-				includePath: 'src'
-			},
-			lib: {
-				src: 'build/js.autosave.js',
+				src: 'src/js.autosave.js',
 				dest: 'dist/js.autosave.js'
 			}
 		},
@@ -83,6 +73,6 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('test', [ 'jshint', 'connect', 'qunit' ]);
-	grunt.registerTask('build', [ 'template', 'includes', 'uglify', 'compare_size' ]);
+	grunt.registerTask('build', [ 'template', 'uglify', 'compare_size' ]);
 	grunt.registerTask('travis', [ 'build', 'test' ]);
 };
