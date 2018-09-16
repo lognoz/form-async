@@ -176,6 +176,23 @@ $(document).ready(function() {
 		server.respond();
 	});
 
+	QUnit.test('complexe name', function(assert) {
+		$('#checkbox-complexe-name-bike').trigger('click');
+		server.respond();
+		assert.ok(spy.called);
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule[][data]': ['bike']} }));
+
+		$('#checkbox-complexe-name-car').trigger('click');
+		server.respond();
+		assert.ok(spy.called);
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule[][data]': ['bike', 'car']} }));
+
+		$('#checkbox-complexe-name-walk').trigger('click');
+		server.respond();
+		assert.ok(spy.called);
+		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule[][][][data]': 'walk'} }));
+	});
+
 	QUnit.module('Advanced Options', {
 		beforeEach: function() {
 			spy = sinon.spy($, "ajax");

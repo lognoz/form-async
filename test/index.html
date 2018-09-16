@@ -75,6 +75,14 @@
 					<div contenteditable="true" id="contenteditable" data-name="xs_content"></div>
 				</form>
 			</div>
+			<div class="test-case">
+				<h2>Complexe name</h2>
+				<form action="/action/complexe-name.html" method="post" class="exemple">
+					<input type="checkbox" name="xs_vehicule[][data][]" id="checkbox-complexe-name-bike" value="bike">
+					<input type="checkbox" name="xs_vehicule[][data][]" id="checkbox-complexe-name-car" value="car">
+					<input type="checkbox" name="xs_vehicule[][][][data]" id="checkbox-complexe-name-walk" value="walk">
+				</form>
+			</div>
 			<div id="test-case-retry"></div>
 		</div>
 		<script src="http://code.jquery.com/qunit/qunit-2.6.2.js"></script>
