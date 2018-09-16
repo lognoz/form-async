@@ -30,8 +30,8 @@
 			<div class="test-case">
 				<h2>Checkbox</h2>
 				<form action="/action/checkbox.html" method="post" class="exemple">
-					<input type="checkbox" name="xs_vehicule" id="checkbox-bike" value="bike">
-					<input type="checkbox" name="xs_vehicule" id="checkbox-car" value="car">
+					<input type="checkbox" name="xs_vehicule[]" id="checkbox-bike" value="bike">
+					<input type="checkbox" name="xs_vehicule[]" id="checkbox-car" value="car">
 				</form>
 			</div>
 			<div class="test-case">
@@ -40,6 +40,26 @@
 					<input type="radio" name="xs_gender" id="radio-male" value="Male">
 					<input type="radio" name="xs_gender" id="radio-female" value="Female">
 					<input type="radio" name="xs_gender" id="radio-other" value="Other">
+				</form>
+			</div>
+			<div class="test-case">
+				<h2>Select</h2>
+				<form action="/action/select.html" method="post" class="exemple">
+					<select name="xs_car" id="select-car">
+						<option value="volvo">Volvo</option>
+						<option value="mercedes">Mercedes</option>
+						<option value="audi">Audi</option>
+					</select>
+				</form>
+			</div>
+			<div class="test-case">
+				<h2>Select with multiple attribute</h2>
+				<form action="/action/select-multiple.html" method="post" class="exemple">
+					<select name="xs_car" id="select-multiple-car" multiple="multiple">
+						<option value="volvo">Volvo</option>
+						<option value="mercedes">Mercedes</option>
+						<option value="audi">Audi</option>
+					</select>
 				</form>
 			</div>
 			<div class="test-case">
@@ -59,7 +79,7 @@
 		</div>
 		<script src="http://code.jquery.com/qunit/qunit-2.6.2.js"></script>
 		<script src="https://sinonjs.org/releases/sinon-6.1.5.js"></script>
-		<script src="../dist/js.autosave.js"></script>
+		<script src="../src/js.autosave.js"></script>
 		<script src="tests.js"></script>
 	</body>
 </html>
