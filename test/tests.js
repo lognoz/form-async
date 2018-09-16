@@ -126,7 +126,7 @@ $(document).ready(function() {
 	});
 
 	QUnit.test('select', function(assert) {
-		$('#select-car [value="audi"]').attr('selected', true)
+		$('#select-car').val('audi');
 		$('#select-car').trigger('change');
 
 		assert.ok(spy.called);
