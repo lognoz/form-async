@@ -1,4 +1,4 @@
-# JavaScript Autosave [![travis-img-url](https://travis-ci.org/lognoz/js-autosave.svg?branch=master)](https://travis-ci.org/lognoz/js-autosave) [![Code Climate](https://codeclimate.com/github/lognoz/js-autosave.svg)](https://codeclimate.com/github/lognoz/js-autosave)
+# JavaScript Autosave [![travis-img-url](https://travis-ci.org/lognoz/js-autosave.svg?branch=master)](https://travis-ci.org/lognoz/js-autosave)
 
 Making good form that improves user experience is not supposed to be hard to do. JavaScript Autosave is the simplest, fastest way to send ajax request when form changes.
 
