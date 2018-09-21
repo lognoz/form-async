@@ -16,20 +16,22 @@ Making good form that improves user experience is not supposed to be hard to do.
 
 ## Getting Started
 
-1. Download the [latest release](https://github.com/lognoz/js-autosave/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/js-autosave) or [bower](https://bower.io/search/?q=js-autosave).
+1. Download jQuery library or use cdn from [jquery.com](http://jquery.com/download/).
 
-2. Add the plugin script and initialise it on your form.
-  ```html
-  <form action="/path/to/ajax.html" method="post" id="exemple">
-    <input type="text" name="xs_username">
-  </form>
+2. Download the [latest release](https://github.com/lognoz/js-autosave/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/js-autosave) or [bower](https://bower.io/search/?q=js-autosave).
 
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="path/to/js-autosave.js"></script>
-  <script>
-    $("#exemple").autosave();
-  </script>
-  ```
+3. Add the plugin script and initialise it on your form.
+```html
+	<form action="/path/to/ajax.html" method="post" id="exemple">
+		<input type="text" name="xs_username">
+	</form>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="path/to/js-autosave.js"></script>
+	<script>
+		$("#exemple").autosave();
+	</script>
+```
 
 ## Callbacks
 
