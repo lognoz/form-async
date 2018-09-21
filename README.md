@@ -31,6 +31,20 @@ Making good form that improves user experience is not supposed to be hard to do.
   </script>
   ```
 
+## Callbacks
+
+**before**  
+Type: `Function` Default: `null`  
+A pre-request callback function that can be use to validate data before it is sent. Must return `true` to establish ajax request.
+
+**success**  
+Type: `Function` Default: `null`  
+A callback function invoked if the request succeeds. The function gets passed one argument: the data returned from the server.
+
+**fail**  
+Type: `Function` Default: `null`  
+A callback function invoked if the request fails.
+
 ## Setup
 You can configure your autosave with jQuery selector.
 ```js
