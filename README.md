@@ -22,15 +22,15 @@ Making good form that improves user experience is not supposed to be hard to do.
 
 3. Add the plugin script and initialise it on your form.
 ```html
-	<form action="/path/to/ajax.html" method="post" id="exemple">
-		<input type="text" name="xs_username">
-	</form>
+<form action="/path/to/ajax.html" method="post" id="exemple">
+  <input type="text" name="xs_username">
+</form>
 
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script src="path/to/js-autosave.js"></script>
-	<script>
-		$("#exemple").autosave();
-	</script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="path/to/js-autosave.js"></script>
+<script>
+  $("#exemple").autosave();
+</script>
 ```
 
 ## Callbacks
