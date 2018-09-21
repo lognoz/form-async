@@ -2,6 +2,18 @@
 
 Making good form that improves user experience is not supposed to be hard to do. JavaScript Autosave is the simplest, fastest way to send ajax request when form changes.
 
+## Features
+
+* Lightweight (~1.5kb gziped).
+* Saves any HTML form element.
+* Support content editable property.
+* Full customization.
+* Clear the field if it not matches support.
+* Retry functionality if ajax call fail.
+* Send form elements as group of field.
+* Provide the way to validate changes before sending ajax call.
+* Heavily tested.
+
 ## Installation
 
 Include jQuery library, you can use cdn from [jquery.com](http://jquery.com/download/)
