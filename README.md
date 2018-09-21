@@ -14,26 +14,22 @@ Making good form that improves user experience is not supposed to be hard to do.
 * Provide the way to validate changes before sending ajax call.
 * Heavily tested.
 
-## Installation
+## Getting Started
 
-Include jQuery library, you can use cdn from [jquery.com](http://jquery.com/download/)
-```html
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-```
+1. Download the [latest release](https://github.com/lognoz/js-autosave/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/js-autosave) or [bower](https://bower.io/search/?q=js-autosave).
 
-### Direct download
-Include it via [jsDelivr CDN](https://www.jsdelivr.com/package/npm/js-autosave)
-```html
-<script src="https://cdn.jsdelivr.net/npm/js-autosave/src/js.autosave.js"></script>
-```
+2. Add the plugin script and initialise it on your form.
+  ```html
+  <form action="/path/to/ajax.html" method="post" id="exemple">
+    <input type="text" name="xs_username">
+  </form>
 
-Or download the script [here](https://github.com/lognoz/js-autosave/blob/master/src/js.autosave.js) and include it
-```html
-<script src="/path/to/js.autosave.js"></script>
-```
-
-### Package Managers
-You can get it on [npm](https://www.npmjs.com/package/js-autosave) or on [bower](https://bower.io/search/?q=js-autosave) under the name `js-autosave`.
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="path/to/js-autosave.js"></script>
+  <script>
+    $("#exemple").autosave();
+  </script>
+  ```
 
 ## Setup
 You can configure your autosave with jQuery selector.
