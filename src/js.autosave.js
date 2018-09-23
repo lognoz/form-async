@@ -6,12 +6,13 @@
  * Released under the MIT license
  */
 (function(factory) {
-	if (typeof define === 'function' && define.amd)
+	if (typeof define === 'function' && define.amd) {
 		define([ 'jquery' ], factory);
-	else if (typeof exports === 'object')
+	} else if (typeof exports === 'object') {
 		module.exports = factory(require('jquery'));
-	else
+	} else {
 		factory(jQuery);
+	}
 }(function($, window){
 	'use strict';
 
