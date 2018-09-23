@@ -159,7 +159,7 @@
 		},
 
 		create: function(target, watcher) {
-			return contextual.set('element', new Element(target, watcher));
+			return contextual.set('element', new $.autosave(target, watcher));
 		},
 
 		find: function(elements, list) {
@@ -210,49 +210,52 @@
 		}
 	};
 
-	function Element(target, watcher) {
-		this.selector    = target;
-		this.watcher     = watcher;
-		this.action      = properties.action(target);
-		this.handler     = properties.handler(target);
-		this.name        = properties.name(target);
-		this.tag         = properties.tag(target);
-		this.type        = properties.type(target);
-		this.state       = properties.state(target);
-		this.dependency  = [];
+	$.autosave = function( target, watcher ) {
+		this.selector   = target;
+		this.watcher    = watcher;
+		this.action     = properties.action( target );
+		this.handler    = properties.handler( target );
+		this.name       = properties.name( target );
+		this.tag        = properties.tag( target );
+		this.type       = properties.type( target );
+		this.state      = properties.state( target );
+		this.dependency = [];
 
-		this.attribute   = {
-			group: properties.group(target)
+		this.attribute  = {
+			group: properties.group( target )
 		};
 
-		this.options = contextual.get('constructor',
-			contextual.get('watcher', this.watcher).constructor
+		this.options = contextual.get( 'constructor',
+			contextual.get( 'watcher', this.watcher ).constructor
 		);
 
 		this.data = function() {
 			var reference, value, name, key,
-			    data = {};
+				data = {};
 
-			$.each(this.dependency, function(index, pointer) {
-				reference = contextual.get('element', pointer);
+			$.each( this.dependency, function( index, pointer ) {
+				reference = contextual.get( 'element', pointer );
 				name = reference.name;
-				value = properties.value(reference, reference.selector, name);
+				value = properties.value( reference, reference.selector, name );
 
-				if (name.substr(-2) === '[]') {
-					name = name.substr(0, name.length - 2);
-					if (data[name] === undefined)
-						data[name] = [];
+				if ( name.substr(-2) === '[]' ) {
+					name = name.substr( 0, name.length - 2 );
+					if ( data[ name ] === undefined ) {
+						data[ name ] = [];
+					}
 
-					if (value !== '')
-						data[name].push(value);
+					if ( value !== '' ) {
+						data[ name ].push( value );
+					}
 				} else {
-					data[name] = value;
+					data[ name ] = value;
 				}
-			});
+			} );
 
-			for (key in data) {
-				if (data[key] instanceof Array && data[key].length === 0)
+			for ( key in data ) {
+				if ( data[ key ] instanceof Array && data[ key ].length === 0 ) {
 					data[key] = '';
+				}
 			}
 
 			return data;
