@@ -5,282 +5,198 @@
  * Copyright 2018, <%= years %> Marc-Antoine Loignon
  * Released under the MIT license
  */
-(function(factory) {
-	if (typeof define === 'function' && define.amd) {
-		define([ 'jquery' ], factory);
-	} else if (typeof exports === 'object') {
-		module.exports = factory(require('jquery'));
+( function( factory ) {
+	if ( typeof define === 'function' && define.amd ) {
+		define( [ 'jquery' ], factory );
+	} else if ( typeof exports === 'object' ) {
+		module.exports = factory( require( 'jquery' ) );
 	} else {
-		factory(jQuery);
+		factory( jQuery );
 	}
-}(function($, window){
+}( function( $, window ) {
 	'use strict';
 
-	var ContextualManager = function() {
-		var references = {
-			constructor: [],
-			element: [],
-			watcher: []
-		};
-
-		this.set = function(type, parameters) {
-			return references[type].push(parameters) - 1;
-		};
-		this.get = function(type, key) {
-			return references[type][key];
-		};
-		this.update = function(options) {
-			return (references[options.reference][options.key][options.parameter] = options.value);
-		};
-	};
-
 	var properties = {
-		tag: function(selector) {
+		tag: function( selector ) {
 			return selector.tagName.toLowerCase();
 		},
-		action: function(selector) {
-			return selector.getAttribute('action') || selector.getAttribute('data-action') || null;
+		action: function( selector ) {
+			return selector.getAttribute( 'action' ) || selector.getAttribute( 'data-action' ) || null;
 		},
-		name: function(selector) {
-			return selector.getAttribute('name') || selector.getAttribute('data-name');
+		name: function( selector ) {
+			return selector.getAttribute( 'name' ) || selector.getAttribute( 'data-name' );
 		},
-		type: function(selector) {
-			return selector.getAttribute('type') || null;
+		type: function( selector ) {
+			return selector.getAttribute( 'type' ) || null;
 		},
-		valid: function(selector) {
-			return this.name(selector) && (
+		valid: function( selector ) {
+			return this.name( selector ) && (
 				[ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf( this.tag(selector) ) != -1 ||
-				selector.getAttribute('contentEditable')
+				selector.getAttribute( 'contentEditable' )
 			);
 		},
-		handler: function(selector) {
-			return [ 'checkbox', 'radio' ].indexOf( this.type(selector) ) !== -1 ||
-				this.tag(selector) === 'select' ? 'change' : 'blur';
+		handler: function( selector ) {
+			return [ 'checkbox', 'radio' ].indexOf( this.type( selector ) ) !== -1 ||
+				this.tag( selector ) === 'select' ? 'change' : 'blur';
 		},
-		state: function(selector) {
-			return [ 'checkbox', 'radio' ].indexOf( this.type(selector) ) !== -1 ? selector.checked :
+		state: function( selector ) {
+			return [ 'checkbox', 'radio' ].indexOf( this.type( selector ) ) !== -1 ? selector.checked :
 				selector.value || selector.innerHTML;
 		},
-		group: function(selector) {
-			var data = selector.getAttribute('data-autosave-group');
-			return data ? data.replace(/\s/g,'').split(',') : null;
+		group: function( selector ) {
+			var data = selector.getAttribute( 'data-autosave-group' );
+			return data ? data.replace( /\s/g, '' ).split( ',' ) : null;
 		},
-		value: function(reference, selector, name) {
-			if ([ 'input', 'select', 'textarea' ].indexOf(reference.tag) !== -1 && (reference.type !== 'checkbox' || selector.checked))
-				return $(selector).val();
+		value: function( reference, selector, name ) {
+			if ([ 'input', 'select', 'textarea' ].indexOf( reference.tag ) !== -1 && ( reference.type !== 'checkbox' || selector.checked ))
+				return $( selector ).val();
 			else
-				return $(selector).html();
+				return $( selector ).html();
 		}
 	};
 
-	var autosave = {
-		construct: function(options) {
-			return contextual.set('constructor', options || {});
-		},
-
-		watch: function(element, constructor) {
-			return contextual.set('watcher', {
-				action      : properties.action(element),
-				constructor : constructor,
-				selector    : element,
-				children    : []
-			});
-		},
-
-		save: function(event) {
-			var selector = event.target,
-		    	 state = properties.state(selector),
-		    	 id = selector.getAttribute('data-autosave-id'),
-		    	 element = contextual.get('element', id);
-
-			if (element.state !== state) {
-				autosave.call(element, state, id);
-			}
-		},
-
-		retry: function(element, state, id) {
-			return function(target, feedback) {
-				var link,
-			    	 selector = $(target);
-
-				if (feedback == undefined)
-					feedback = 'Your changes could not be saved. <a href="#">Try again</a>';
-
-				selector.html(feedback);
-
-				link = selector.find('a');
-				link.attr('data-autosave-id', id);
-				link.on('click', function(event) {
-					event.preventDefault();
-					autosave.call(element, state, id);
-				});
-			};
-		},
-
-		call: function(element, state, id) {
-			var data = element.data(),
-		    	 options = element.options,
-		    	 watcher = contextual.get('watcher', element.watcher),
-		    	 action = element.action || watcher.action;
-
-			options.selector = element.selector;
-			options.retry = autosave.retry(element, state, id);
-			options.action = action;
-			options.data = data;
-			options.properties = {
-				name: element.name,
-				tag: element.tag,
-				type: element.type,
-				handler: element.handler
-			};
-
-			if (options.before == undefined || options.before()) {
-				$.ajax({
-					method: 'POST',
-					url: action,
-					data: data,
-					success: function(data) {
-						contextual.update({
-							reference: 'element',
-							parameter: 'state',
-							key: id,
-							value: state
-						});
-
-						if (options.success !== undefined)
-							options.success(data);
-					},
-					error: function() {
-						if (options.fail !== undefined)
-							options.fail();
-					}
-				});
-			}
-		},
-
-		create: function(target, watcher) {
-			return contextual.set('element', new $.autosave(target, watcher));
-		},
-
-		find: function(elements, list) {
-			var references,
-		    	 data = [];
-
-			$(elements).each(function(index, pointer) {
-				references = contextual.get('element', pointer);
-				if (list.indexOf(references.name) !== -1)
-					data.push(pointer);
-			});
-
-			return data;
-		},
-
-		dependency: function(elements, reference, key) {
-			if (reference.type === 'checkbox')
-				return autosave.find(elements, [ reference.name ]);
-			else if (reference.attribute.group)
-				return autosave.find(elements, reference.attribute.group);
-			else
-				return [ key ];
-		},
-
-		track: function(elements, watcher) {
-			var reference;
-
-			contextual.update({
-				reference: 'watcher',
-				parameter: 'children',
-				key: watcher,
-				value: elements
-			});
-
-			$(elements).each(function(index, pointer) {
-				reference = contextual.get('element', pointer);
-
-				contextual.update({
-					reference: 'element',
-					parameter: 'dependency',
-					key: pointer,
-					value: autosave.dependency(elements, reference, pointer)
-				});
-
-				$(reference.selector).attr('data-autosave-id', pointer);
-				$(reference.selector).on(reference.handler, autosave.save);
-			});
-		}
+	$.autosave = function( form, callbacks ) {
+		this.action = properties.action( form );
+		this.callbacks = callbacks;
+		this.elements = [];
+		this.form = form;
+		this.init();
 	};
 
-	$.autosave = function( target, watcher ) {
-		this.selector   = target;
-		this.watcher    = watcher;
-		this.action     = properties.action( target );
-		this.handler    = properties.handler( target );
-		this.name       = properties.name( target );
-		this.tag        = properties.tag( target );
-		this.type       = properties.type( target );
-		this.state      = properties.state( target );
-		this.dependency = [];
-
-		this.attribute  = {
-			group: properties.group( target )
-		};
-
-		this.options = contextual.get( 'constructor',
-			contextual.get( 'watcher', this.watcher ).constructor
-		);
-
-		this.data = function() {
-			var reference, value, name, key,
-				data = {};
-
-			$.each( this.dependency, function( index, pointer ) {
-				reference = contextual.get( 'element', pointer );
-				name = reference.name;
-				value = properties.value( reference, reference.selector, name );
-
-				if ( name.substr(-2) === '[]' ) {
-					name = name.substr( 0, name.length - 2 );
-					if ( data[ name ] === undefined ) {
-						data[ name ] = [];
-					}
-
-					if ( value !== '' ) {
-						data[ name ].push( value );
-					}
+	$.extend( $.autosave, {
+		prototype: {
+			targets: function() {
+				if ( this.form.children.length == 0 && $(this.form).is( "select, input, textarea, [contentEditable]" ) ) {
+					return [ this.form ];
 				} else {
-					data[ name ] = value;
+					return $( this.form )
+						.find( "select, input, textarea, [contentEditable]" )
+						.not( ":submit, :reset, :image, :disabled" );
 				}
-			} );
+			},
+			data: function( element, id ) {
+				var dependency = this.dependency( element, id ),
+					key,
+					data = {},
+					t = this;
 
-			for ( key in data ) {
-				if ( data[ key ] instanceof Array && data[ key ].length === 0 ) {
-					data[key] = '';
+				$.each( dependency, function( index, id ) {
+					var element = t.elements[ id ];
+					var name = element.name;
+					var value = properties.value( element, element.selector, name );
+
+					if ( name.substr(-2) === '[]' ) {
+						name = name.substr( 0, name.length - 2 );
+						data[ name ] = data[ name ] || [];
+
+						if ( value !== '' )
+							data[ name ].push( value );
+					} else {
+						data[ name ] = value;
+					}
+
+					for ( key in data ) {
+						if ( data[ key ] instanceof Array && data[ key ].length === 0 )
+							data[key] = '';
+					}
+				} );
+
+				return data;
+			},
+			call: function( element, state, id ) {
+				var data = this.data( element, id );
+				var action = element.action || this.action;
+				var callbacks = this.callbacks || {};
+				var t = this;
+
+				callbacks.action = action;
+				callbacks.properties = {
+					handler : element.handler,
+					name    : element.name,
+					tag     : element.tag,
+					type    : element.type
+				};
+
+				if ( callbacks.before === undefined || callbacks.before( data ) ) {
+					$.ajax( {
+						method: 'POST',
+						url: action,
+						data: data,
+						context: element.selector,
+						success: function( response, status, xhr ) {
+							$( element.selector ).data( 'previous-state', state );
+
+							if (callbacks.success !== undefined)
+								callbacks.success( response );
+						},
+						error: function() {
+							if (callbacks.fail !== undefined)
+								callbacks.fail();
+						}
+					} );
 				}
-			}
+			},
+			find: function( elements, list ) {
+ 				var data = [],
+					t = this;
 
-			return data;
-		};
-	}
-
-	var contextual = new ContextualManager();
-
-	$.fn.autosave = function(options) {
-		var watcher, elements,
-	    	 constructor = autosave.construct(options || {});
-
-		$(this).each(function(event) {
-			elements = [];
-			watcher = autosave.watch(this, constructor);
-
-			if (this.children.length == 0) {
-				elements.push(autosave.create(this, watcher));
-			} else {
-				$(this.children).each(function(event) {
-					elements.push(autosave.create(this, watcher));
+				$( elements ).each( function( index, element ) {
+					if ( list.indexOf( element.name ) !== -1 ) {
+						data.push( index );
+					}
 				});
-			}
 
-			return autosave.track(elements, watcher);
-		});
-	};
+				return data;
+			},
+			dependency: function( element, id ) {
+				if ( element.type === 'checkbox' ) {
+					return this.find( this.elements, [ element.name ] );
+				} else if ( element.group ) {
+					return this.find( this.elements, element.group );
+				} else {
+					return [ id ];
+				}
+			},
+			init: function() {
+				var targets = this.targets();
+				var t = this;
+
+				function save( event ) {
+					var target = event.target;
+					var id = $.data( target, 'autosave-element' );
+					var element = t.elements[ id ];
+					var state = properties.state( target );
+
+					if ( $.data( target, 'previous-state' ) !== state ) {
+						t.call( element, state, id );
+					}
+				}
+
+				$.each( targets, function( key, target ) {
+					t.elements.push({
+						selector : target,
+						action   : properties.action( target ),
+						group    : properties.group( target ),
+						handler  : properties.handler( target ),
+						name     : properties.name( target ),
+						tag      : properties.tag( target ),
+						type     : properties.type( target )
+					});
+
+					$( target )
+						.on( properties.handler( target ), save )
+						.data( 'autosave-element', t.elements.length -1 )
+						.data( 'previous-state', properties.state( target ) );
+				} );
+			}
+		}
+	} );
+
+	$.extend( $.fn, {
+		autosave: function( options ) {
+			$( this ).each( function( event ) {
+				return $( this ).data( 'autosave', new $.autosave( this, options ) );
+			} );
+		}
+	} );
 }));
