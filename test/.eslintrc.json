@@ -1,0 +1,8 @@
+{
+  "root": true,
+  "extends": "../.eslintrc.json",
+  "globals": {
+    "sinon": true,
+    "QUnit": false
+  }
+}

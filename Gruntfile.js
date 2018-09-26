@@ -1,16 +1,16 @@
-module.exports = function (grunt) {
-	require('load-grunt-tasks')(grunt);
+module.exports = function( grunt ) {
+	require( 'load-grunt-tasks' )( grunt );
 
-	var gzip = require('gzip-js');
+	var gzip = require( 'gzip-js' );
 
-	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
+	grunt.initConfig( {
+		pkg: grunt.file.readJSON( 'package.json' ),
 		compare_size: {
 			files: [ 'dist/js.autosave.min.js', 'dist/js.autosave.js' ],
 			options: {
 				compress: {
-					gz: function (contents) {
-						return gzip.zip(contents, {}).length;
+					gz: function( contents ) {
+						return gzip.zip( contents, {} ).length;
 					}
 				},
 				cache: 'build/.sizecache.json'
@@ -21,7 +21,7 @@ module.exports = function (grunt) {
 				data: function() {
 					return {
 						version: '1.0.0',
-						years: grunt.template.today('yyyy')
+						years: grunt.template.today( 'yyyy' )
 					};
 				}
 			},
@@ -37,11 +37,11 @@ module.exports = function (grunt) {
 				},
 				screwIE8: false,
 				banner: '/*! <%= pkg.name %> v<%= pkg.version %> | ' +
-				        '(c) Marc-Antoine Loignon and other contributors */',
+					'(c) Marc-Antoine Loignon and other contributors */'
 			},
 			build: {
 				files: {
-					'dist/js.autosave.min.js': 'dist/js.autosave.js',
+					'dist/js.autosave.min.js': 'dist/js.autosave.js'
 				}
 			}
 		},
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
 			options: {
 				quiet: true
 			},
-			target: [ "src/**/*.js", "Gruntfile.js", "test/**/*.js" ]
+			target: [ 'src/**/*.js', 'Gruntfile.js', 'test/**/*.js' ]
 		},
 		qunit: {
 			all: {
@@ -73,9 +73,9 @@ module.exports = function (grunt) {
 				}
 			}
 		}
-	});
+	} );
 
-	grunt.registerTask('test', [ 'eslint', 'connect', 'qunit' ]);
-	grunt.registerTask('build', [ 'template', 'uglify', 'compare_size' ]);
-	grunt.registerTask('all', [ 'build', 'test' ]);
+	grunt.registerTask( 'test', [ 'eslint', 'connect', 'qunit' ] );
+	grunt.registerTask( 'build', [ 'template', 'uglify', 'compare_size' ] );
+	grunt.registerTask( 'all', [ 'build', 'test' ] );
 };
