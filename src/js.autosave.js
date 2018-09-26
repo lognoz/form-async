@@ -122,14 +122,25 @@
 						}
 					};
 
-				if ( callbacks.before !== undefined )
+				if (typeof callbacks.before == 'function')
 					callbacks.before.call( element.selector, request );
 
 				if ( aborted )
 					return;
 
 				delete request.abort;
-				request.callbacks = callbacks;
+
+				$.extend( request, {
+					response: '',
+					success: function() {
+						if (typeof callbacks.success == 'function')
+							callbacks.success.call( element.selector, request.response, request );
+					},
+					fail: function() {
+						if (typeof callbacks.fail == 'function')
+							callbacks.fail.call( element.selector, request );
+					}
+				} );
 
 				$.ajax( {
 					method: 'POST',
@@ -138,13 +149,11 @@
 					context: element.selector,
 					success: function( response, status, xhr ) {
 						$( element.selector ).data( 'previous-state', state );
-
-						if ( callbacks.success !== undefined )
-							callbacks.success.call( element.selector, response, request );
+						request.response = response;
+						request.success();
 					},
 					error: function() {
-						if ( callbacks.success !== undefined )
-							callbacks.fail.call( element.selector, request );
+						request.fail();
 					}
 				} );
 			},
