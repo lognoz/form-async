@@ -31,7 +31,7 @@
 		},
 		valid: function( selector ) {
 			return this.name( selector ) && (
-				[ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf( this.tag(selector) ) != -1 ||
+				[ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf( this.tag( selector ) ) != -1 ||
 				selector.getAttribute( 'contentEditable' )
 			);
 		},
@@ -48,7 +48,7 @@
 			return data ? data.replace( /\s/g, '' ).split( ',' ) : null;
 		},
 		value: function( reference, selector, name ) {
-			if ([ 'input', 'select', 'textarea' ].indexOf( reference.tag ) !== -1 && ( reference.type !== 'checkbox' || selector.checked ))
+			if ([ 'input', 'select', 'textarea' ].indexOf( reference.tag ) !== -1 && ( reference.type !== 'checkbox' || selector.checked ) )
 				return $( selector ).val();
 			else
 				return $( selector ).html();
@@ -66,7 +66,7 @@
 	$.extend( $.autosave, {
 		prototype: {
 			targets: function() {
-				if ( this.form.children.length == 0 && $(this.form).is( "select, input, textarea, [contentEditable]" ) ) {
+				if ( this.form.children.length == 0 && $( this.form ).is( "select, input, textarea, [contentEditable]" ) ) {
 					return [ this.form ];
 				} else {
 					return $( this.form )
@@ -133,11 +133,11 @@
 				$.extend( request, {
 					response: '',
 					success: function() {
-						if (typeof callbacks.success == 'function')
+						if ( typeof callbacks.success == 'function' )
 							callbacks.success.call( element.selector, request.response, request );
 					},
 					fail: function() {
-						if (typeof callbacks.fail == 'function')
+						if ( typeof callbacks.fail == 'function' )
 							callbacks.fail.call( element.selector, request );
 					}
 				} );
@@ -205,7 +205,7 @@
 
 					$( target )
 						.on( properties.handler( target ), save )
-						.data( 'autosave-element', t.elements.length -1 )
+						.data( 'autosave-element', t.elements.length - 1 )
 						.data( 'previous-state', properties.state( target ) );
 				} );
 			}
@@ -219,4 +219,4 @@
 			} );
 		}
 	} );
-}));
+} ) );
