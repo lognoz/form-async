@@ -20,7 +20,7 @@ $(document).ready(function() {
 			.trigger('blur');
 
 		assert.ok(spy.called);
-		assert.ok($('#simple-field').attr('data-autosave-id'));
+		assert.ok($('#simple-field').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/unique-field.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_username': 'apple'} }));
 
@@ -33,7 +33,7 @@ $(document).ready(function() {
 			.trigger('blur');
 
 		assert.ok(spy.called);
-		assert.ok($('#multiple-fields-name').attr('data-autosave-id'));
+		assert.ok($('#multiple-fields-name').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_name': 'apple'} }));
 
@@ -44,7 +44,7 @@ $(document).ready(function() {
 			.trigger('blur');
 
 		assert.ok(spy.called);
-		assert.ok($('#multiple-fields-phone').attr('data-autosave-id'));
+		assert.ok($('#multiple-fields-phone').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_phone': 'orange'} }));
 
@@ -57,7 +57,7 @@ $(document).ready(function() {
 			.trigger('blur');
 
 		assert.ok(spy.called);
-		assert.ok($('#overwrite-action-city').attr('data-autosave-id'));
+		assert.ok($('#overwrite-action-city').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/multiple-fields.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_city': 'avocado'} }));
 
@@ -68,7 +68,7 @@ $(document).ready(function() {
 			.trigger('blur');
 
 		assert.ok(spy.called);
-		assert.ok($('#overwrite-action-province').attr('data-autosave-id'));
+		assert.ok($('#overwrite-action-province').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/overwrite-action.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_province': 'blueberrie'} }));
 
@@ -80,7 +80,7 @@ $(document).ready(function() {
 		server.respond();
 
 		assert.ok(spy.called);
-		assert.ok($('#checkbox-bike').attr('data-autosave-id'));
+		assert.ok($('#checkbox-bike').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/checkbox.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': ['bike']} }));
 
@@ -88,7 +88,7 @@ $(document).ready(function() {
 		server.respond();
 
 		assert.ok(spy.called);
-		assert.ok($('#checkbox-car').attr('data-autosave-id'));
+		assert.ok($('#checkbox-car').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/checkbox.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_vehicule': ['bike', 'car']} }));
 
@@ -104,7 +104,7 @@ $(document).ready(function() {
 		server.respond();
 
 		assert.ok(spy.called);
-		assert.ok($('#radio-male').attr('data-autosave-id')),
+		assert.ok($('#radio-male').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/radio.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_gender': 'Male'} }));
 
@@ -112,7 +112,7 @@ $(document).ready(function() {
 		server.respond();
 
 		assert.ok(spy.called);
-		assert.ok($('#radio-female').attr('data-autosave-id')),
+		assert.ok($('#radio-female').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/radio.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_gender': 'Female'} }));
 
@@ -120,7 +120,7 @@ $(document).ready(function() {
 		server.respond();
 
 		assert.ok(spy.called);
-		assert.ok($('#radio-other').attr('data-autosave-id'));
+		assert.ok($('#radio-other').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/radio.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_gender': 'Other'} }));
 	});
@@ -130,7 +130,7 @@ $(document).ready(function() {
 		$('#select-car').trigger('change');
 
 		assert.ok(spy.called);
-		assert.ok($('#select-car').attr('data-autosave-id'));
+		assert.ok($('#select-car').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/select.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_car': 'audi'} }));
 
@@ -143,7 +143,7 @@ $(document).ready(function() {
 		$('#select-multiple-car').trigger('change');
 
 		assert.ok(spy.called);
-		assert.ok($('#select-car').attr('data-autosave-id'));
+		assert.ok($('#select-car').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/select-multiple.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_car': ['volvo', 'audi']} }));
 
@@ -156,7 +156,7 @@ $(document).ready(function() {
 			.trigger('blur');
 
 		assert.ok(spy.called);
-		assert.ok($('#group-password').attr('data-autosave-id'));
+		assert.ok($('#group-password').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/group.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_password': 'orange', 'xs_redirection': 'index.html'} }));
 
@@ -169,7 +169,7 @@ $(document).ready(function() {
 			.trigger('blur');
 
 		assert.ok(spy.called);
-		assert.ok($('#contenteditable').attr('data-autosave-id'));
+		assert.ok($('#contenteditable').data('autosave-element') !== undefined);
 		assert.ok($.ajax.calledWithMatch({ url: '/action/contenteditable.html' }));
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_content': 'mango'} }));
 
@@ -197,23 +197,27 @@ $(document).ready(function() {
 		beforeEach: function() {
 			spy = sinon.spy($, "ajax");
 			server = sinon.fakeServer.create();
-			options = {
-				before: function() {
-					return (this.data.xs_username !== 'cantaloupe');
+			$('.exemple').autosave({
+				before: function(request) {
+					if (request.data.xs_username === 'cantaloupe') {
+						request.abort();
+					}
 				},
-				success: function(data) {
-					if (data == 'redirect')
-						options.fail();
-					else
-						$(this.selector).addClass('success');
-				},
-				fail: function(parameters) {
-					$(this.selector).addClass('fail');
-					this.retry('#test-case-retry');
-				}
-			};
+				success: function(response, request) {
+					if ( response === 'redirect' ) {
+						return request.fail(request);
+					}
 
-			$('.exemple').autosave(options);
+					$(this).addClass('success');
+				},
+				fail: function(request) {
+					$(this).addClass('fail');
+
+					$('#test-case-retry').on('click', function(event) {
+						request.retry();
+					});
+				}
+			});
 		},
 		afterEach: function(assert) {
 			spy.restore();
@@ -278,7 +282,7 @@ $(document).ready(function() {
 		server.respond();
 		assert.ok($.ajax.calledWithMatch({ data: {'xs_username': 'strawberries'} }));
 
-		$('#test-case-retry a').trigger('click');
+		$('#test-case-retry').trigger('click');
 		server.respondWith('success');
 		server.respond();
 		assert.ok($('#simple-field').hasClass('success'));
