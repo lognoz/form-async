@@ -162,7 +162,7 @@
 				} );
 			},
 			find: function( elements, list ) {
- 				var data = [];
+				var data = [];
 
 				$( elements ).each( function( index, element ) {
 					if ( list.indexOf( element.name ) !== -1 ) {
