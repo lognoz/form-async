@@ -13,7 +13,7 @@
 	} else {
 		factory( jQuery );
 	}
-}( function( $ ) {
+} )( function( $ ) {
 	'use strict';
 
 	var properties = {
@@ -21,7 +21,8 @@
 			return selector.tagName.toLowerCase();
 		},
 		action: function( selector ) {
-			return selector.getAttribute( 'action' ) || selector.getAttribute( 'data-action' ) || null;
+			return selector.getAttribute( 'action' ) ||
+				selector.getAttribute( 'data-action' ) || null;
 		},
 		name: function( selector ) {
 			return selector.getAttribute( 'name' ) || selector.getAttribute( 'data-name' );
@@ -31,8 +32,10 @@
 		},
 		valid: function( selector ) {
 			return this.name( selector ) && (
-				[ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf( this.tag( selector ) ) != -1 ||
-				selector.getAttribute( 'contentEditable' )
+				selector.getAttribute( 'contentEditable' ) ||
+				[ 'input', 'checkbox', 'radio', 'textarea', 'select' ].indexOf(
+					this.tag( selector )
+				) !== -1
 			);
 		},
 		handler: function( selector ) {
@@ -40,18 +43,20 @@
 				this.tag( selector ) === 'select' ? 'change' : 'blur';
 		},
 		state: function( selector ) {
-			return [ 'checkbox', 'radio' ].indexOf( this.type( selector ) ) !== -1 ? selector.checked :
-				selector.value || selector.innerHTML;
+			return [ 'checkbox', 'radio' ].indexOf( this.type( selector ) ) !== -1 ?
+				selector.checked : selector.value || selector.innerHTML;
 		},
 		group: function( selector ) {
 			var data = selector.getAttribute( 'data-autosave-group' );
 			return data ? data.replace( /\s/g, '' ).split( ',' ) : null;
 		},
 		value: function( reference, selector ) {
-			if ([ 'input', 'select', 'textarea' ].indexOf( reference.tag ) !== -1 && ( reference.type !== 'checkbox' || selector.checked ) )
+			if ( [ 'input', 'select', 'textarea' ].indexOf( reference.tag ) !== -1 &&
+				( reference.type !== 'checkbox' || selector.checked ) ) {
 				return $( selector ).val();
-			else
+			} else {
 				return $( selector ).html();
+			}
 		}
 	};
 
@@ -66,12 +71,13 @@
 	$.extend( $.autosave, {
 		prototype: {
 			targets: function() {
-				if ( this.form.children.length == 0 && $( this.form ).is( "select, input, textarea, [contentEditable]" ) ) {
+				var valid = 'select, input, textarea, [contentEditable]';
+				if ( this.form.children.length === 0 && $( this.form ).is( valid ) ) {
 					return [ this.form ];
 				} else {
 					return $( this.form )
-						.find( "select, input, textarea, [contentEditable]" )
-						.not( ":submit, :reset, :image, :disabled" );
+						.find( valid )
+						.not( ':submit, :reset, :image, :disabled' );
 				}
 			},
 			data: function( element, id ) {
@@ -85,19 +91,21 @@
 						name = element.name,
 						value = properties.value( element, element.selector );
 
-					if ( name.substr(-2) === '[]' ) {
+					if ( name.substr( -2 ) === '[]' ) {
 						name = name.substr( 0, name.length - 2 );
 						data[ name ] = data[ name ] || [];
 
-						if ( value !== '' )
+						if ( value !== '' ) {
 							data[ name ].push( value );
+						}
 					} else {
 						data[ name ] = value;
 					}
 
 					for ( key in data ) {
-						if ( data[ key ] instanceof Array && data[ key ].length === 0 )
-							data[key] = '';
+						if ( data[ key ] instanceof Array && data[ key ].length === 0 ) {
+							data[ key ] = '';
+						}
 					}
 				} );
 
@@ -116,30 +124,34 @@
 							aborted = true;
 						},
 						properties: {
-							handler : element.handler,
-							name    : element.name,
-							tag     : element.tag,
-							type    : element.type
+							handler: element.handler,
+							name: element.name,
+							tag: element.tag,
+							type: element.type
 						}
 					};
 
-				if (typeof callbacks.before == 'function')
+				if ( typeof callbacks.before == 'function' ) {
 					callbacks.before.call( element.selector, request );
+				}
 
-				if ( aborted )
+				if ( aborted ) {
 					return;
+				}
 
 				delete request.abort;
 
 				$.extend( request, {
 					response: '',
 					success: function() {
-						if ( typeof callbacks.success == 'function' )
+						if ( typeof callbacks.success == 'function' ) {
 							callbacks.success.call( element.selector, request.response, request );
+						}
 					},
 					fail: function() {
-						if ( typeof callbacks.fail == 'function' )
+						if ( typeof callbacks.fail == 'function' ) {
 							callbacks.fail.call( element.selector, request );
+						}
 					},
 					retry: function() {
 						t.call( element, state, id );
@@ -197,15 +209,15 @@
 				}
 
 				$.each( targets, function( key, target ) {
-					t.elements.push({
-						selector : target,
-						action   : properties.action( target ),
-						group    : properties.group( target ),
-						handler  : properties.handler( target ),
-						name     : properties.name( target ),
-						tag      : properties.tag( target ),
-						type     : properties.type( target )
-					});
+					t.elements.push( {
+						selector: target,
+						action: properties.action( target ),
+						group: properties.group( target ),
+						handler: properties.handler( target ),
+						name: properties.name( target ),
+						tag: properties.tag( target ),
+						type: properties.type( target )
+					} );
 
 					$( target )
 						.on( properties.handler( target ), save )
@@ -223,4 +235,4 @@
 			} );
 		}
 	} );
-} ) );
+} );
