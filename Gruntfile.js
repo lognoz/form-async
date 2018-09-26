@@ -49,7 +49,7 @@ module.exports = function (grunt) {
 			options: {
 				quiet: true
 			},
-			target: [ "src/**/*.js" ]
+			target: [ "src/**/*.js", "Gruntfile.js", "test/**/*.js" ]
 		},
 		qunit: {
 			all: {
