@@ -108,33 +108,46 @@
 				var action = element.action || this.action;
 				var callbacks = this.callbacks || {};
 				var t = this;
-
-				callbacks.action = action;
-				callbacks.properties = {
-					handler : element.handler,
-					name    : element.name,
-					tag     : element.tag,
-					type    : element.type
+				var aborted = false;
+				var request = {
+					action: action,
+					data: data,
+					abort: function() {
+						aborted = true;
+					},
+					properties: {
+						handler : element.handler,
+						name    : element.name,
+						tag     : element.tag,
+						type    : element.type
+					}
 				};
 
-				if ( callbacks.before === undefined || callbacks.before( data ) ) {
-					$.ajax( {
-						method: 'POST',
-						url: action,
-						data: data,
-						context: element.selector,
-						success: function( response, status, xhr ) {
-							$( element.selector ).data( 'previous-state', state );
+				if ( callbacks.before !== undefined )
+					callbacks.before.call( element.selector, request );
 
-							if (callbacks.success !== undefined)
-								callbacks.success( response );
-						},
-						error: function() {
-							if (callbacks.fail !== undefined)
-								callbacks.fail();
-						}
-					} );
-				}
+				if ( aborted )
+					return;
+
+				delete request.abort;
+				request.callbacks = callbacks;
+
+				$.ajax( {
+					method: 'POST',
+					url: action,
+					data: data,
+					context: element.selector,
+					success: function( response, status, xhr ) {
+						$( element.selector ).data( 'previous-state', state );
+
+						if ( callbacks.success !== undefined )
+							callbacks.success.call( element.selector, response, request );
+					},
+					error: function() {
+						if ( callbacks.success !== undefined )
+							callbacks.fail.call( element.selector, request );
+					}
+				} );
 			},
 			find: function( elements, list ) {
  				var data = [],
