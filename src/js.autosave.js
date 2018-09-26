@@ -13,7 +13,7 @@
 	} else {
 		factory( jQuery );
 	}
-}( function( $, window ) {
+}( function( $ ) {
 	'use strict';
 
 	var properties = {
@@ -47,7 +47,7 @@
 			var data = selector.getAttribute( 'data-autosave-group' );
 			return data ? data.replace( /\s/g, '' ).split( ',' ) : null;
 		},
-		value: function( reference, selector, name ) {
+		value: function( reference, selector ) {
 			if ([ 'input', 'select', 'textarea' ].indexOf( reference.tag ) !== -1 && ( reference.type !== 'checkbox' || selector.checked ) )
 				return $( selector ).val();
 			else
@@ -83,7 +83,7 @@
 				$.each( dependency, function( index, id ) {
 					var element = t.elements[ id ],
 						name = element.name,
-						value = properties.value( element, element.selector, name );
+						value = properties.value( element, element.selector );
 
 					if ( name.substr(-2) === '[]' ) {
 						name = name.substr( 0, name.length - 2 );
@@ -151,7 +151,7 @@
 					url: action,
 					data: data,
 					context: element.selector,
-					success: function( response, status, xhr ) {
+					success: function( response ) {
 						$( element.selector ).data( 'previous-state', state );
 						request.response = response;
 						request.success();
@@ -218,7 +218,7 @@
 
 	$.extend( $.fn, {
 		autosave: function( options ) {
-			$( this ).each( function( event ) {
+			$( this ).each( function() {
 				return $( this ).data( 'autosave', new $.autosave( this, options ) );
 			} );
 		}
