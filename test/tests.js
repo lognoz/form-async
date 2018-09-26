@@ -1,9 +1,9 @@
 $( document ).ready( function() {
-	var server, spy;
+	var server, spy, autosave;
 
 	QUnit.module( 'Test case', {
 		beforeEach: function() {
-			$( '.exemple' ).autosave();
+			autosave = $( '.exemple' ).autosave();
 			spy = sinon.spy( $, 'ajax' );
 			server = sinon.fakeServer.create();
 			server.respondWith( 'response' );
@@ -11,6 +11,7 @@ $( document ).ready( function() {
 		afterEach: function() {
 			spy.restore();
 			server.restore();
+			autosave.destroy();
 		}
 	} );
 
@@ -205,7 +206,7 @@ $( document ).ready( function() {
 		beforeEach: function() {
 			spy = sinon.spy( $, 'ajax' );
 			server = sinon.fakeServer.create();
-			$( '.exemple' ).autosave( {
+			autosave = $( '.exemple' ).autosave( {
 				before: function( request ) {
 					if ( request.data.xs_username === 'cantaloupe' ) {
 						request.abort();
@@ -230,6 +231,7 @@ $( document ).ready( function() {
 		afterEach: function() {
 			spy.restore();
 			server.restore();
+			autosave.destroy();
 		}
 	} );
 
@@ -294,5 +296,19 @@ $( document ).ready( function() {
 		server.respondWith( 'success' );
 		server.respond();
 		assert.ok( $( '#simple-field' ).hasClass( 'success' ) );
+	} );
+
+	QUnit.test( 'destroy', function( assert ) {
+		autosave.destroy();
+
+		assert.ok( $( '#simple-field' ).data( 'autosave-element' ) === undefined );
+		assert.ok( $( '#simple-field' ).data( 'previous-state' ) === undefined );
+		assert.ok( $( '#simple-field' ).data( 'autosave' ) === undefined );
+
+		$( '#simple-field' )
+			.val( 'chili pepper' )
+			.trigger( 'blur' );
+
+		assert.ok( !spy.called );
 	} );
 } );
