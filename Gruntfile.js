@@ -5,9 +5,6 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		jshint: {
-			all: [ 'src/**/*.js' ]
-		},
 		compare_size: {
 			files: [ 'dist/js.autosave.min.js', 'dist/js.autosave.js' ],
 			options: {
@@ -48,6 +45,12 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		eslint: {
+			options: {
+				quiet: true
+			},
+			target: [ "src/**/*.js" ]
+		},
 		qunit: {
 			all: {
 				options: {
@@ -72,7 +75,7 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('test', [ 'jshint', 'connect', 'qunit' ]);
+	grunt.registerTask('test', [ 'eslint', 'connect', 'qunit' ]);
 	grunt.registerTask('build', [ 'template', 'uglify', 'compare_size' ]);
 	grunt.registerTask('all', [ 'build', 'test' ]);
 };
