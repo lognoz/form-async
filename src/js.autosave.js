@@ -81,9 +81,9 @@
 					t = this;
 
 				$.each( dependency, function( index, id ) {
-					var element = t.elements[ id ];
-					var name = element.name;
-					var value = properties.value( element, element.selector, name );
+					var element = t.elements[ id ],
+						name = element.name,
+						value = properties.value( element, element.selector, name );
 
 					if ( name.substr(-2) === '[]' ) {
 						name = name.substr( 0, name.length - 2 );
@@ -104,24 +104,23 @@
 				return data;
 			},
 			call: function( element, state, id ) {
-				var data = this.data( element, id );
-				var action = element.action || this.action;
-				var callbacks = this.callbacks || {};
-				var t = this;
-				var aborted = false;
-				var request = {
-					action: action,
-					data: data,
-					abort: function() {
-						aborted = true;
-					},
-					properties: {
-						handler : element.handler,
-						name    : element.name,
-						tag     : element.tag,
-						type    : element.type
-					}
-				};
+				var aborted = false,
+					action = element.action || this.action,
+					callbacks = this.callbacks || {},
+					data = this.data( element, id ),
+					request = {
+						action: action,
+						data: data,
+						abort: function() {
+							aborted = true;
+						},
+						properties: {
+							handler : element.handler,
+							name    : element.name,
+							tag     : element.tag,
+							type    : element.type
+						}
+					};
 
 				if ( callbacks.before !== undefined )
 					callbacks.before.call( element.selector, request );
@@ -150,14 +149,13 @@
 				} );
 			},
 			find: function( elements, list ) {
- 				var data = [],
-					t = this;
+ 				var data = [];
 
 				$( elements ).each( function( index, element ) {
 					if ( list.indexOf( element.name ) !== -1 ) {
 						data.push( index );
 					}
-				});
+				} );
 
 				return data;
 			},
@@ -171,14 +169,14 @@
 				}
 			},
 			init: function() {
-				var targets = this.targets();
-				var t = this;
+				var targets = this.targets(),
+					t = this;
 
 				function save( event ) {
-					var target = event.target;
-					var id = $.data( target, 'autosave-element' );
-					var element = t.elements[ id ];
-					var state = properties.state( target );
+					var target = event.target,
+						id = $.data( target, 'autosave-element' ),
+						element = t.elements[ id ],
+						state = properties.state( target );
 
 					if ( $.data( target, 'previous-state' ) !== state ) {
 						t.call( element, state, id );
