@@ -108,6 +108,7 @@
 					action = element.action || this.action,
 					callbacks = this.callbacks || {},
 					data = this.data( element, id ),
+					t = this,
 					request = {
 						action: action,
 						data: data,
@@ -139,6 +140,9 @@
 					fail: function() {
 						if ( typeof callbacks.fail == 'function' )
 							callbacks.fail.call( element.selector, request );
+					},
+					retry: function() {
+						t.call( element, state, id );
 					}
 				} );
 
