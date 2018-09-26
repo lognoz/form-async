@@ -1,43 +1,43 @@
 {
-	"name": "js-autosave",
-	"version": "1.0.0",
-	"description": "The simplest, fastest way to send ajax request when form changes.",
-	"main": "src/js.autosave.js",
-	"directories": {
-		"test": "test"
-	},
-	"keywords": [
-		"jquery-plugin",
-		"autosave",
-		"input",
-		"form",
-		"interval",
-		"client",
-		"jquery",
-		"browser",
-		"js-autosave"
-	],
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/lognoz/js-autosave.git"
-	},
-	"scripts": {
-		"test": "grunt test"
-	},
-	"author": "Marc-Antoine Loignon",
-	"license": "MIT",
-	"dependencies": {
-		"jquery": "~3.0.0"
-	},
-	"devDependencies": {
-		"grunt": "^1.0.3",
-		"grunt-compare-size": "0.4.2",
-		"grunt-contrib-connect": "1.0.2",
-		"grunt-contrib-jshint": "^1.1.0",
-		"grunt-contrib-qunit": "2.0.0",
-		"grunt-contrib-uglify": "2.3.0",
-		"grunt-template": "^0.2.3",
-		"gzip-js": "0.3.2",
-		"load-grunt-tasks": "^3.1.0"
-	}
+  "name": "js-autosave",
+  "version": "1.0.0",
+  "description": "The simplest, fastest way to send ajax request when form changes.",
+  "main": "src/js.autosave.js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "jquery-plugin",
+    "autosave",
+    "input",
+    "form",
+    "interval",
+    "client",
+    "jquery",
+    "browser",
+    "js-autosave"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lognoz/js-autosave.git"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "author": "Marc-Antoine Loignon",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~3.0.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-compare-size": "0.4.2",
+    "grunt-contrib-connect": "1.0.2",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-qunit": "2.0.0",
+    "grunt-contrib-uglify": "2.3.0",
+    "grunt-template": "^0.2.3",
+    "gzip-js": "0.3.2",
+    "load-grunt-tasks": "^3.1.0"
+  }
 }
