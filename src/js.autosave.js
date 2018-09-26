@@ -193,6 +193,16 @@
 					return [ id ];
 				}
 			},
+			destroy: function() {
+				$( this.form ).removeData( 'autosave' );
+
+				$.each( this.elements, function( index, properties ) {
+					$( properties.selector )
+						.off( properties.handler )
+						.removeData( 'autosave-element' )
+						.removeData( 'previous-state' );
+				} );
+			},
 			init: function() {
 				var targets = this.targets(),
 					t = this;
@@ -230,9 +240,20 @@
 
 	$.extend( $.fn, {
 		autosave: function( options ) {
+			var constructor = [];
+
 			$( this ).each( function() {
-				return $( this ).data( 'autosave', new $.autosave( this, options ) );
+				constructor.push( new $.autosave( this, options ) );
+				return $( this ).data( 'autosave', constructor[ constructor.length - 1 ] );
 			} );
+
+			return {
+				destroy: function() {
+					$( constructor ).each( function() {
+						this.destroy();
+					} );
+				}
+			};
 		}
 	} );
 } );
