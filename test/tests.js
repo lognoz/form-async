@@ -1,7 +1,7 @@
 $( document ).ready( function() {
 	var server, spy, autosave;
 
-	QUnit.module( 'Test case', {
+	QUnit.module( 'Autosave functionalities', {
 		beforeEach: function() {
 			autosave = $( '.exemple' ).autosave();
 			spy = sinon.spy( $, 'ajax' );
@@ -15,26 +15,70 @@ $( document ).ready( function() {
 		}
 	} );
 
-	QUnit.test( 'self initialisation with data-action', function( assert ) {
+	QUnit.test( 'Basic requirements', function( assert ) {
+		assert.expect( 34 );
+
+		var form = $( '.exemple' ),
+			elements = {
+				'simple-field': true,
+				'multiple-fields-name': true,
+				'multiple-fields-phone': true,
+				'overwrite-action-city': true,
+				'overwrite-action-province': true,
+				'checkbox-bike': true,
+				'checkbox-car': true,
+				'radio-male': true,
+				'radio-female': true,
+				'radio-other': true,
+				'select-car': true,
+				'select-multiple-car': true,
+				'group-password': true,
+				'group-redirection': true,
+				'contenteditable': true,
+				'checkbox-complexe-name-bike': true,
+				'checkbox-complexe-name-car': true,
+				'checkbox-complexe-name-walk': true,
+				'address-disabled-field': false,
+				'city-disabled-field': false,
+				'reset-disabled-field': false,
+				'submit-disabled-field': false,
+				'image-disabled-field': false
+			};
+
+		$.each( elements, function( target, expected ) {
+			assert.ok(
+				( $( '#' + target ).data( 'autosave-element' ) !== undefined ) === expected
+			);
+		} );
+
+		$.each( form, function( index, target ) {
+			assert.ok( $( target ).data( 'autosave' ) !== undefined );
+		} );
+	} );
+
+
+	QUnit.test( 'Self initialisation', function( assert ) {
+		assert.expect( 3 );
+
 		$( '#simple-field' )
 			.val( 'apple' )
 			.trigger( 'blur' );
 
 		assert.ok( spy.called );
-		assert.ok( $( '#simple-field' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/unique-field.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_username': 'apple' } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'form initialisation with action', function( assert ) {
+	QUnit.test( 'Simple form', function( assert ) {
+		assert.expect( 6 );
+
 		$( '#multiple-fields-name' )
 			.val( 'apple' )
 			.trigger( 'blur' );
 
 		assert.ok( spy.called );
-		assert.ok( $( '#multiple-fields-name' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/multiple-fields.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_name': 'apple' } } ) );
 
@@ -45,20 +89,20 @@ $( document ).ready( function() {
 			.trigger( 'blur' );
 
 		assert.ok( spy.called );
-		assert.ok( $( '#multiple-fields-phone' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/multiple-fields.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_phone': 'orange' } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'form initialisation with overwriting action', function( assert ) {
+	QUnit.test( 'Overwriting action', function( assert ) {
+		assert.expect( 6 );
+
 		$( '#overwrite-action-city' )
 			.val( 'avocado' )
 			.trigger( 'blur' );
 
 		assert.ok( spy.called );
-		assert.ok( $( '#overwrite-action-city' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/multiple-fields.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_city': 'avocado' } } ) );
 
@@ -69,19 +113,19 @@ $( document ).ready( function() {
 			.trigger( 'blur' );
 
 		assert.ok( spy.called );
-		assert.ok( $( '#overwrite-action-province' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/overwrite-action.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_province': 'blueberrie' } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'checkbox list', function( assert ) {
+	QUnit.test( 'Checkbox', function( assert ) {
+		assert.expect( 8 );
+
 		$( '#checkbox-bike' ).trigger( 'click' );
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $( '#checkbox-bike' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/checkbox.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_vehicule': [ 'bike' ] } } ) );
 
@@ -89,7 +133,6 @@ $( document ).ready( function() {
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $( '#checkbox-car' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/checkbox.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_vehicule': [ 'bike', 'car' ] } } ) );
 
@@ -100,12 +143,13 @@ $( document ).ready( function() {
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_vehicule': [ 'car' ] } } ) );
 	} );
 
-	QUnit.test( 'radio list', function( assert ) {
+	QUnit.test( 'Radio', function( assert ) {
+		assert.expect( 9 );
+
 		$( '#radio-male' ).trigger( 'click' );
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $( '#radio-male' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/radio.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_gender': 'Male' } } ) );
 
@@ -113,7 +157,6 @@ $( document ).ready( function() {
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $( '#radio-female' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/radio.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_gender': 'Female' } } ) );
 
@@ -121,43 +164,45 @@ $( document ).ready( function() {
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $( '#radio-other' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/radio.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_gender': 'Other' } } ) );
 	} );
 
-	QUnit.test( 'select', function( assert ) {
+	QUnit.test( 'Select', function( assert ) {
+		assert.expect( 3 );
+
 		$( '#select-car' ).val( 'audi' );
 		$( '#select-car' ).trigger( 'change' );
 
 		assert.ok( spy.called );
-		assert.ok( $( '#select-car' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/select.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_car': 'audi' } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'select with multiple attribute', function( assert ) {
+	QUnit.test( 'Select with multiple attribute', function( assert ) {
+		assert.expect( 3 );
+
 		$( '#select-multiple-car [value="audi"]' ).attr( 'selected', true );
 		$( '#select-multiple-car [value="volvo"]' ).attr( 'selected', true );
 		$( '#select-multiple-car' ).trigger( 'change' );
 
 		assert.ok( spy.called );
-		assert.ok( $( '#select-car' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/select-multiple.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_car': [ 'volvo', 'audi' ] } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'send inputs as a group', function( assert ) {
+	QUnit.test( 'Send inputs as a group', function( assert ) {
+		assert.expect( 3 );
+
 		$( '#group-password' )
 			.val( 'orange' )
 			.trigger( 'blur' );
 
 		assert.ok( spy.called );
-		assert.ok( $( '#group-password' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/group.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( {
 			data: { 'xs_password': 'orange', 'xs_redirection': 'index.html' }
@@ -166,22 +211,26 @@ $( document ).ready( function() {
 		server.respond();
 	} );
 
-	QUnit.test( 'contenteditable', function( assert ) {
+	QUnit.test( 'Contenteditable', function( assert ) {
+		assert.expect( 3 );
+
 		$( '#contenteditable' )
 			.html( 'mango' )
 			.trigger( 'blur' );
 
 		assert.ok( spy.called );
-		assert.ok( $( '#contenteditable' ).data( 'autosave-element' ) !== undefined );
 		assert.ok( $.ajax.calledWithMatch( { url: '/action/contenteditable.html' } ) );
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_content': 'mango' } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'complexe name', function( assert ) {
+	QUnit.test( 'Complexe name', function( assert ) {
+		assert.expect( 6 );
+
 		$( '#checkbox-complexe-name-bike' ).trigger( 'click' );
 		server.respond();
+
 		assert.ok( spy.called );
 		assert.ok( $.ajax.calledWithMatch( {
 			data: { 'xs_vehicule[][data]': [ 'bike' ] }
@@ -189,6 +238,7 @@ $( document ).ready( function() {
 
 		$( '#checkbox-complexe-name-car' ).trigger( 'click' );
 		server.respond();
+
 		assert.ok( spy.called );
 		assert.ok( $.ajax.calledWithMatch( {
 			data: { 'xs_vehicule[][data]': [ 'bike', 'car' ] }
@@ -196,23 +246,14 @@ $( document ).ready( function() {
 
 		$( '#checkbox-complexe-name-walk' ).trigger( 'click' );
 		server.respond();
+
 		assert.ok( spy.called );
 		assert.ok( $.ajax.calledWithMatch( {
 			data: { 'xs_vehicule[][][][data]': 'walk' }
 		} ) );
 	} );
 
-	QUnit.test( 'disabled', function( assert ) {
-		assert.ok( $( '#address-disabled-field' ).data( 'autosave-element' ) === undefined );
-		assert.ok( $( '#city-disabled-field' ).data( 'autosave-element' ) === undefined );
-		assert.ok( $( '#reset-disabled-field' ).data( 'autosave-element' ) === undefined );
-		assert.ok( $( '#submit-disabled-field' ).data( 'autosave-element' ) === undefined );
-		assert.ok( $( '#image-disabled-field' ).data( 'autosave-element' ) === undefined );
-
-		server.respond();
-	} );
-
-	QUnit.module( 'Advanced Options', {
+	QUnit.module( 'Autosave advanced options', {
 		beforeEach: function() {
 			spy = sinon.spy( $, 'ajax' );
 			server = sinon.fakeServer.create();
@@ -245,7 +286,9 @@ $( document ).ready( function() {
 		}
 	} );
 
-	QUnit.test( 'before function', function( assert ) {
+	QUnit.test( 'Before function', function( assert ) {
+		assert.expect( 3 );
+
 		$( '#simple-field' )
 			.val( 'cantaloupe' )
 			.trigger( 'blur' );
@@ -260,7 +303,9 @@ $( document ).ready( function() {
 		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_username': 'carambola' } } ) );
 	} );
 
-	QUnit.test( 'success function', function( assert ) {
+	QUnit.test( 'Success function', function( assert ) {
+		assert.expect( 1 );
+
 		$( '#simple-field' )
 			.val( 'clementine' )
 			.trigger( 'blur' );
@@ -271,7 +316,9 @@ $( document ).ready( function() {
 		assert.ok( $( '#simple-field' ).hasClass( 'success' ) );
 	} );
 
-	QUnit.test( 'fake a fail response by redirecting', function( assert ) {
+	QUnit.test( 'Fake a fail response by redirecting', function( assert ) {
+		assert.expect( 1 );
+
 		$( '#simple-field' )
 			.val( 'durian' )
 			.trigger( 'blur' );
@@ -282,7 +329,9 @@ $( document ).ready( function() {
 		assert.ok( $( '#simple-field' ).hasClass( 'fail' ) );
 	} );
 
-	QUnit.test( 'fail function', function( assert ) {
+	QUnit.test( 'Fail function', function( assert ) {
+		assert.expect( 1 );
+
 		$( '#simple-field' )
 			.val( 'durian' )
 			.trigger( 'blur' );
@@ -293,7 +342,9 @@ $( document ).ready( function() {
 		assert.ok( $( '#simple-field' ).hasClass( 'fail' ) );
 	} );
 
-	QUnit.test( 'retry link', function( assert ) {
+	QUnit.test( 'Retry link', function( assert ) {
+		assert.expect( 2 );
+
 		$( '#simple-field' )
 			.val( 'strawberries' )
 			.trigger( 'blur' );
@@ -308,7 +359,9 @@ $( document ).ready( function() {
 		assert.ok( $( '#simple-field' ).hasClass( 'success' ) );
 	} );
 
-	QUnit.test( 'destroy', function( assert ) {
+	QUnit.test( 'Destroy', function( assert ) {
+		assert.expect( 4 );
+
 		autosave.destroy();
 
 		assert.ok( $( '#simple-field' ).data( 'autosave-element' ) === undefined );
