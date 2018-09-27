@@ -3,47 +3,46 @@
 	<head>
 		<meta charset="utf-8">
 		<title>JavaScript Autosave Test Suite</title>
-		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css">
-		<script src="jquery.js"></script>
+		<link rel="stylesheet" href="../node_modules/qunit/qunit/qunit.css">
+		<script src="./jquery.js"></script>
+		<script src="../node_modules/sinon/pkg/sinon.js"></script>
+		<script src="../node_modules/qunit/qunit/qunit.js"></script>
+		<script src="../src/js.autosave.js"></script>
 	</head>
-	<body>
+	<body id="body">
 		<div id="qunit"></div>
 		<div id="qunit-fixture">
+			<h2>JavaScript Autosave Tests Cases</h2>
 			<div class="test-case">
-				<h2>Unique field</h2>
+				<h3>Unique field</h3>
 				<input type="text" name="xs_username" data-action="/action/unique-field.html" id="simple-field" class="exemple">
-			</div>
-			<div class="test-case">
-				<h2>Multiple fields</h2>
+
+				<h3>Multiple fields</h3>
 				<form action="/action/multiple-fields.html" method="post" class="exemple">
 					<input type="text" name="xs_name"  id="multiple-fields-name">
 					<input type="text" name="xs_phone" id="multiple-fields-phone">
 				</form>
-			</div>
-			<div class="test-case">
-				<h2>Overwrite action in multiple fields</h2>
+
+				<h3>Overwrite action in multiple fields</h3>
 				<form action="/action/multiple-fields.html" method="post" class="exemple">
 					<input type="text" name="xs_city" id="overwrite-action-city">
 					<input type="text" name="xs_province" id="overwrite-action-province" data-action="/action/overwrite-action.html">
 				</form>
-			</div>
-			<div class="test-case">
-				<h2>Checkbox</h2>
+
+				<h3>Checkbox</h3>
 				<form action="/action/checkbox.html" method="post" class="exemple">
 					<input type="checkbox" name="xs_vehicule[]" id="checkbox-bike" value="bike">
 					<input type="checkbox" name="xs_vehicule[]" id="checkbox-car" value="car">
 				</form>
-			</div>
-			<div class="test-case">
-				<h2>Radio</h2>
+
+				<h3>Radio</h3>
 				<form action="/action/radio.html" method="post" class="exemple">
 					<input type="radio" name="xs_gender" id="radio-male" value="Male">
 					<input type="radio" name="xs_gender" id="radio-female" value="Female">
 					<input type="radio" name="xs_gender" id="radio-other" value="Other">
 				</form>
-			</div>
-			<div class="test-case">
-				<h2>Select</h2>
+
+				<h3>Select</h3>
 				<form action="/action/select.html" method="post" class="exemple">
 					<select name="xs_car" id="select-car">
 						<option value="volvo">Volvo</option>
@@ -51,9 +50,8 @@
 						<option value="audi">Audi</option>
 					</select>
 				</form>
-			</div>
-			<div class="test-case">
-				<h2>Select with multiple attribute</h2>
+
+				<h3>Select with multiple attribute</h3>
 				<form action="/action/select-multiple.html" method="post" class="exemple">
 					<select name="xs_car" id="select-multiple-car" multiple="multiple">
 						<option value="volvo">Volvo</option>
@@ -61,30 +59,26 @@
 						<option value="audi">Audi</option>
 					</select>
 				</form>
-			</div>
-			<div class="test-case">
-				<h2>Send inputs as a group</h2>
+
+				<h3>Send inputs as a group</h3>
 				<form action="/action/group.html" method="post" class="exemple">
 					<input type="text" name="xs_password" id="group-password" data-autosave-group="xs_password,xs_redirection">
 					<input type="hidden" name="xs_redirection" id="group-redirection" value="index.html" data-autosave-group="xs_password,xs_redirection">
 				</form>
-			</div>
-			<div class="test-case">
-				<h2>Contenteditable</h2>
+
+				<h3>Contenteditable</h3>
 				<form action="/action/contenteditable.html" method="post" class="exemple">
 					<div contenteditable="true" id="contenteditable" data-name="xs_content"></div>
 				</form>
-			</div>
-			<div class="test-case">
-				<h2>Complexe name</h2>
+
+				<h3>Complexe name</h3>
 				<form action="/action/complexe-name.html" method="post" class="exemple">
 					<input type="checkbox" name="xs_vehicule[][data][]" id="checkbox-complexe-name-bike" value="bike">
 					<input type="checkbox" name="xs_vehicule[][data][]" id="checkbox-complexe-name-car" value="car">
 					<input type="checkbox" name="xs_vehicule[][][][data]" id="checkbox-complexe-name-walk" value="walk">
 				</form>
-			</div>
-			<div class="test-case">
-				<h2>Disbaled</h2>
+
+				<h3>Disbaled</h3>
 				<form action="/action/disabled.html" method="post" class="exemple">
 					<input type="text" name="xs_address" id="address-disabled-field" disabled>
 					<input type="text" name="xs_city" id="city-disabled-field" data-disabled-autosave>
@@ -92,12 +86,11 @@
 					<input type="submit" name="xs_submit" id="submit-disabled-field">
 					<input type="image" name="xs_image" id="image-disabled-field" alt="">
 				</form>
+
+				<h3>Retry</h3>
+				<div id="test-case-retry"></div>
 			</div>
-			<div id="test-case-retry"></div>
 		</div>
-		<script src="http://code.jquery.com/qunit/qunit-2.6.2.js"></script>
-		<script src="https://sinonjs.org/releases/sinon-6.1.5.js"></script>
-		<script src="../src/js.autosave.js"></script>
-		<script src="tests.js"></script>
+		<script src="./tests.js"></script>
 	</body>
 </html>
