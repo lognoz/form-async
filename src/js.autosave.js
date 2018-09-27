@@ -77,7 +77,7 @@
 				} else {
 					return $( this.form )
 						.find( valid )
-						.not( ':submit, :reset, :image, :disabled' );
+						.not( ':submit, :reset, :image, :disabled, [data-disabled-autosave]' )
 				}
 			},
 			data: function( element, id ) {
