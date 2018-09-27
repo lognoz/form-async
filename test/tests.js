@@ -202,6 +202,16 @@ $( document ).ready( function() {
 		} ) );
 	} );
 
+	QUnit.test( 'disabled', function( assert ) {
+		assert.ok( $( '#address-disabled-field' ).data( 'autosave-element' ) === undefined );
+		assert.ok( $( '#city-disabled-field' ).data( 'autosave-element' ) === undefined );
+		assert.ok( $( '#reset-disabled-field' ).data( 'autosave-element' ) === undefined );
+		assert.ok( $( '#submit-disabled-field' ).data( 'autosave-element' ) === undefined );
+		assert.ok( $( '#image-disabled-field' ).data( 'autosave-element' ) === undefined );
+
+		server.respond();
+	} );
+
 	QUnit.module( 'Advanced Options', {
 		beforeEach: function() {
 			spy = sinon.spy( $, 'ajax' );

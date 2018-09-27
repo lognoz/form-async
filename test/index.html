@@ -83,6 +83,16 @@
 					<input type="checkbox" name="xs_vehicule[][][][data]" id="checkbox-complexe-name-walk" value="walk">
 				</form>
 			</div>
+			<div class="test-case">
+				<h2>Disbaled</h2>
+				<form action="/action/disabled.html" method="post" class="exemple">
+					<input type="text" name="xs_address" id="address-disabled-field" disabled>
+					<input type="text" name="xs_city" id="city-disabled-field" data-disabled-autosave>
+					<input type="reset" name="xs_reset" id="reset-disabled-field">
+					<input type="submit" name="xs_submit" id="submit-disabled-field">
+					<input type="image" name="xs_image" id="image-disabled-field" alt="">
+				</form>
+			</div>
 			<div id="test-case-retry"></div>
 		</div>
 		<script src="http://code.jquery.com/qunit/qunit-2.6.2.js"></script>
