@@ -14,16 +14,16 @@
 		<div id="qunit-fixture">
 			<h2>JavaScript Autosave Tests Cases</h2>
 			<div class="test-case">
-				<h3>Unique field</h3>
+				<h3>Self initialisation</h3>
 				<input type="text" name="xs_username" data-action="/action/unique-field.html" id="simple-field" class="exemple">
 
-				<h3>Multiple fields</h3>
+				<h3>Simple form</h3>
 				<form action="/action/multiple-fields.html" method="post" class="exemple">
 					<input type="text" name="xs_name"  id="multiple-fields-name">
 					<input type="text" name="xs_phone" id="multiple-fields-phone">
 				</form>
 
-				<h3>Overwrite action in multiple fields</h3>
+				<h3>Overwrite action</h3>
 				<form action="/action/multiple-fields.html" method="post" class="exemple">
 					<input type="text" name="xs_city" id="overwrite-action-city">
 					<input type="text" name="xs_province" id="overwrite-action-province" data-action="/action/overwrite-action.html">
