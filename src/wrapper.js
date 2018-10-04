@@ -1,8 +1,8 @@
 /*!
- * JavaScript Autosave v<%= version %>
+ * JavaScript Autosave v@version
  * https://github.com/lognoz/js-autosave
  *
- * Copyright 2018, <%= years %> Marc-Antoine Loignon
+ * Copyright 2018, @years Marc-Antoine Loignon
  * Released under the MIT license
  */
 ( function( factory ) {
@@ -16,5 +16,5 @@
 } )( function( $ ) {
 	'use strict';
 
-	// <%= code %>
+	// @code
 } );
