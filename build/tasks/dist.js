@@ -1,13 +1,7 @@
 module.exports = function( grunt ) {
 	var package = grunt.file.readJSON( 'package.json' );
 
-	function getBuild() {
-		return {
-			'dist/form-async.min.js': 'dist/form-async.js'
-		};
-	}
-
-	function getCompareSize() {
+	function compare_size() {
 		return {
 			files: [ 'dist/form-async.min.js', 'dist/form-async.js' ],
 			options: {
@@ -21,7 +15,7 @@ module.exports = function( grunt ) {
 		};
 	}
 
-	function getUglify() {
+	function uglify() {
 		return {
 			options: {
 				compress: {
@@ -32,14 +26,14 @@ module.exports = function( grunt ) {
 					'(c) Marc-Antoine Loignon and other contributors */'
 			},
 			build: {
-				files: getBuild()
+				'dist/form-async.min.js': 'dist/form-async.js'
 			}
 		};
 	}
 
 	grunt.registerTask('dist', [], function () {
-		grunt.config( 'uglify', getUglify() );
-		grunt.config( 'compare_size', getCompareSize() );
+		grunt.config( 'uglify', uglify() );
+		grunt.config( 'compare_size', compare_size() );
 		grunt.task.run( [ 'uglify', 'compare_size' ] );
 	} );
 };
