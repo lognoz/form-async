@@ -1,8 +1,8 @@
 define( function() {
-	'use strict';
+	"use strict";
 
 	return function( selector ) {
-		var data = selector.getAttribute( 'data-autosave-group' );
-		return data ? data.replace( /\s/g, '' ).split( ',' ) : null;
+		var data = selector.getAttribute( "data-autosave-group" );
+		return data ? data.replace( /\s/g, "" ).split( "," ) : null;
 	};
 } );

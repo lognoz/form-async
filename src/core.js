@@ -1,18 +1,18 @@
 define( [
-	'jquery',
-	'./var/getAction',
-	'./var/getValue',
-	'./var/getState',
-	'./var/getGroup',
-	'./var/getHandler',
-	'./var/getName',
-	'./var/getTag',
-	'./var/getType',
-], function( $, getAction, getValue, getState, getGroup, getHandler, getName, getTag, getType ) {
-	'use strict';
+	"jquery",
+	"./var/action",
+	"./var/value",
+	"./var/state",
+	"./var/group",
+	"./var/handler",
+	"./var/name",
+	"./var/tag",
+	"./var/type",
+], function( $, action, value, state, group, handler, name, tag, type ) {
+	"use strict";
 
 	$.autosave = function( form, callbacks ) {
-		this.action = getAction( form );
+		this.action = action( form );
 		this.callbacks = callbacks;
 		this.elements = [];
 		this.form = form;
@@ -22,13 +22,13 @@ define( [
 	$.extend( $.autosave, {
 		prototype: {
 			targets: function() {
-				var valid = 'select, input, textarea, [contentEditable]';
+				var valid = "select, input, textarea, [contentEditable]";
 				if ( this.form.children.length === 0 && $( this.form ).is( valid ) ) {
 					return [ this.form ];
 				} else {
 					return $( this.form )
 						.find( valid )
-						.not( ':submit, :reset, :image, :disabled, [data-disabled-autosave]' );
+						.not( ":submit, :reset, :image, :disabled, [data-disabled-autosave]" );
 				}
 			},
 			data: function( element, id ) {
@@ -40,13 +40,13 @@ define( [
 				$.each( dependency, function( index, id ) {
 					var element = t.elements[ id ],
 						name = element.name,
-						value = getValue( element, element.selector );
+						value = value( element, element.selector );
 
-					if ( name.substr( -2 ) === '[]' ) {
+					if ( name.substr( -2 ) === "[]" ) {
 						name = name.substr( 0, name.length - 2 );
 						data[ name ] = data[ name ] || [];
 
-						if ( value !== '' ) {
+						if ( value !== "" ) {
 							data[ name ].push( value );
 						}
 					} else {
@@ -55,7 +55,7 @@ define( [
 
 					for ( key in data ) {
 						if ( data[ key ] instanceof Array && data[ key ].length === 0 ) {
-							data[ key ] = '';
+							data[ key ] = "";
 						}
 					}
 				} );
@@ -82,7 +82,7 @@ define( [
 						}
 					};
 
-				if ( typeof callbacks.before == 'function' ) {
+				if ( typeof callbacks.before == "function" ) {
 					callbacks.before.call( element.selector, request );
 				}
 
@@ -93,14 +93,14 @@ define( [
 				delete request.abort;
 
 				$.extend( request, {
-					response: '',
+					response: "",
 					success: function() {
-						if ( typeof callbacks.success == 'function' ) {
+						if ( typeof callbacks.success == "function" ) {
 							callbacks.success.call( element.selector, request.response, request );
 						}
 					},
 					fail: function() {
-						if ( typeof callbacks.fail == 'function' ) {
+						if ( typeof callbacks.fail == "function" ) {
 							callbacks.fail.call( element.selector, request );
 						}
 					},
@@ -110,12 +110,12 @@ define( [
 				} );
 
 				$.ajax( {
-					method: 'POST',
+					method: "POST",
 					url: action,
 					data: data,
 					context: element.selector,
 					success: function( response ) {
-						$( element.selector ).data( 'previous-state', state );
+						$( element.selector ).data( "previous-state", state );
 						request.response = response;
 						request.success();
 					},
@@ -136,7 +136,7 @@ define( [
 				return data;
 			},
 			dependency: function( element, id ) {
-				if ( element.type === 'checkbox' ) {
+				if ( element.type === "checkbox" ) {
 					return this.find( this.elements, [ element.name ] );
 				} else if ( element.group ) {
 					return this.find( this.elements, element.group );
@@ -145,13 +145,13 @@ define( [
 				}
 			},
 			destroy: function() {
-				$( this.form ).removeData( 'autosave' );
+				$( this.form ).removeData( "autosave" );
 
 				$.each( this.elements, function( index, properties ) {
 					$( properties.selector )
 						.off( properties.handler )
-						.removeData( 'autosave-element' )
-						.removeData( 'previous-state' );
+						.removeData( "autosave-element" )
+						.removeData( "previous-state" );
 				} );
 			},
 			init: function() {
@@ -160,11 +160,11 @@ define( [
 
 				function save( event ) {
 					var target = event.target,
-						id = $.data( target, 'autosave-element' ),
+						id = $.data( target, "autosave-element" ),
 						element = t.elements[ id ],
-						state = getState( target );
+						state = state( target );
 
-					if ( $.data( target, 'previous-state' ) !== state ) {
+					if ( $.data( target, "previous-state" ) !== state ) {
 						t.call( element, state, id );
 					}
 				}
@@ -172,18 +172,18 @@ define( [
 				$.each( targets, function( key, target ) {
 					t.elements.push( {
 						selector: target,
-						action: getAction( target ),
-						group: getGroup( target ),
-						handler: getHandler( target ),
-						name: getName( target ),
-						tag: getTag( target ),
-						type: getType( target )
+						action: action( target ),
+						group: group( target ),
+						handler: handler( target ),
+						name: name( target ),
+						tag: tag( target ),
+						type: type( target )
 					} );
 
 					$( target )
-						.on( getHandler( target ), save )
-						.data( 'autosave-element', t.elements.length - 1 )
-						.data( 'previous-state', getState( target ) );
+						.on( handler( target ), save )
+						.data( "autosave-element", t.elements.length - 1 )
+						.data( "previous-state", state( target ) );
 				} );
 			}
 		}
@@ -195,7 +195,7 @@ define( [
 
 			$( this ).each( function() {
 				constructor.push( new $.autosave( this, options ) );
-				return $( this ).data( 'autosave', constructor[ constructor.length - 1 ] );
+				return $( this ).data( "autosave", constructor[ constructor.length - 1 ] );
 			} );
 
 			return {

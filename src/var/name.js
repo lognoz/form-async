@@ -1,7 +1,7 @@
 define( function() {
-	'use strict';
+	"use strict";
 
 	return function( selector ) {
-		return selector.getAttribute( 'name' ) || selector.getAttribute( 'data-name' );
+		return selector.getAttribute( "name" ) || selector.getAttribute( "data-name" );
 	};
 } );

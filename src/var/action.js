@@ -1,8 +1,8 @@
 define( function() {
-	'use strict';
+	"use strict";
 
 	return function( selector ) {
-		return selector.getAttribute( 'action' ) ||
-			selector.getAttribute( 'data-action' ) || null;
+		return selector.getAttribute( "action" ) ||
+			selector.getAttribute( "data-action" ) || null;
 	};
 } );

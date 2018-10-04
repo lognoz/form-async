@@ -1,7 +1,7 @@
 define( function() {
-	'use strict';
+	"use strict";
 
 	return function( selector ) {
-		return selector.getAttribute( 'type' ) || null;
+		return selector.getAttribute( "type" ) || null;
 	};
 } );
