@@ -17,16 +17,21 @@ module.exports = function( grunt ) {
 
 	function uglify() {
 		return {
-			options: {
-				compress: {
-					unsafe: true
+			all: {
+				files: {
+					"dist/form-async.min.js": "dist/form-async.js"
 				},
-				screwIE8: false,
-				banner: '/*! ' + package.name + ' v' + package.version + ' | ' +
-					'(c) Marc-Antoine Loignon and other contributors */'
-			},
-			build: {
-				'dist/form-async.min.js': 'dist/form-async.js'
+				options: {
+					banner: '/*! Form Async - v' + package.version + ' | ' +
+						'(c) Form Async and other contributors */',
+					compress: {
+						unsafe: true
+					},
+					preserveComments: false,
+					screwIE8: false,
+					sourceMap: true,
+					sourceMapName: "dist/form-async.min.map"
+				}
 			}
 		};
 	}
