@@ -39,7 +39,7 @@ module.exports = function( grunt ) {
 		};
 	}
 
-	function getRequirements() {
+	function requirejs() {
 		var sources = grunt.config.data.build;
 		var requirements = {};
 
@@ -92,8 +92,7 @@ module.exports = function( grunt ) {
 	}
 
 	grunt.registerTask('build', [], function () {
-		grunt.config( 'requirejs', getRequirements() );
-		grunt.loadNpmTasks( 'grunt-contrib-requirejs' );
+		grunt.config( 'requirejs', requirejs() );
 		grunt.task.run( 'requirejs' );
 	} );
 };
