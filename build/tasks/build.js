@@ -39,6 +39,38 @@ module.exports = function( grunt ) {
 		};
 	}
 
+	function getRequirements() {
+		var sources = grunt.config.data.build;
+		var requirements = {};
+
+		for ( var src in sources ) {
+			requirements[ src ] = {
+				options: {
+					baseUrl: '.',
+					exclude: [ 'jquery' ],
+					include: [ src ],
+					paths: {
+						jquery: 'node_modules/jquery/dist/jquery',
+					},
+					onBuildWrite: build,
+					optimize: 'none',
+					skipSemiColonInsertion: true,
+					useStrict: true,
+					out: function( code ) {
+						var wrapper = getWrapper();
+						grunt.file.write( sources[ src ],
+							( wrapper.start + "\t" + code.trim() + "\n" + wrapper.end )
+								.replace( regex.version, '1.0.0' )
+								.replace( regex.years, grunt.template.today( 'yyyy' ) )
+						);
+					}
+				}
+			};
+		}
+
+		return requirements;
+	}
+
 	function format( content ) {
 		content = content.trim();
 		return content !== '' ? "\n\t" + content : content;
@@ -60,42 +92,8 @@ module.exports = function( grunt ) {
 	}
 
 	grunt.registerTask('build', [], function () {
-		grunt.config('requirejs', {
-			compile: {
-				options: {
-					baseUrl: '.',
-					exclude: [ 'jquery' ],
-					include: [ 'src/core.js' ],
-					paths: {
-						jquery: 'node_modules/jquery/dist/jquery',
-					},
-
-					//Additional processing
-					onBuildWrite: build,
-
-					// Allow strict mode
-					useStrict: true,
-
-					// Avoid breaking semicolons
-					skipSemiColonInsertion: true,
-
-					// No minification
-					optimize: 'none',
-
-					// Write file
-					out: function( code ) {
-						var wrapper = getWrapper();
-						var content = ( wrapper.start + "\t" + code.trim() + "\n" + wrapper.end )
-							.replace( regex.version, '1.0.0' )
-							.replace( regex.years, grunt.template.today( 'yyyy' ) );
-
-						grunt.file.write( 'dist/form-async.js', content );
-					}
-				}
-			}
-		} );
-
-		grunt.loadNpmTasks('grunt-contrib-requirejs');
+		grunt.config( 'requirejs', getRequirements() );
+		grunt.loadNpmTasks( 'grunt-contrib-requirejs' );
 		grunt.task.run( 'requirejs' );
 	} );
-}
+};
