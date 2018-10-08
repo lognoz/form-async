@@ -82,12 +82,8 @@ module.exports = function( grunt ) {
 				return convertToVariable( name, content );
 				break;
 
-			case name.indexOf( 'src/core.js' ) !== 0:
-				return convertToStatement( content );
-				break;
-
 			default:
-				return '';
+				return convertToStatement( content );
 		};
 	}
 
