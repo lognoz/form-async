@@ -1,5 +1,5 @@
 define( [
-	"./isFunction",
+	"./isFunction"
 ], function( isFunction ) {
 	"use strict";
 
