@@ -4,6 +4,6 @@ define( [
 	"use strict";
 
 	return function( type, callbacks ) {
-		return isFunction( callbacks[ type ] ) ? callbacks[ type ] : function(){};
+		return isFunction( callbacks[ type ] ) ? callbacks[ type ] : new Function();
 	};
 } );
