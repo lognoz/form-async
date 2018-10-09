@@ -2,7 +2,7 @@ define( [
 	"jquery",
 	"./core",
 	"./var/attr"
-], function( $, Async ) {
+], function( $, Async, attr ) {
 	"use strict";
 
 	$.extend( Async.prototype, {
