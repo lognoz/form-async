@@ -3,7 +3,7 @@ define( [
 	"./var/attr",
 	"./var/callback",
 	"./var/data"
-], function( $, data ) {
+], function( $, attr, callback, data ) {
 	"use strict";
 
 	var Async = function( form, callbacks ) {
