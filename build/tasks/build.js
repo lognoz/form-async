@@ -5,9 +5,9 @@ module.exports = function( grunt ) {
 		functionReturn:  /\s*return\s+[^\}]+(\}\s*?\);[^\w\}]*)$/,
 		variableDefine:  /define\([\w\W]*?return/,
 		variableName:    /var\/([\w-]+)/,
-		version:         /@version/g,
-		wrapper:         /[\x20\t]*\/\/ @code\n(?:[\x20\t]*\/\/[^\n]+\n)*/,
-		years:           /@years/g
+		version:         /@VERSION/g,
+		wrapper:         /[\x20\t]*\/\/ @CODE\n(?:[\x20\t]*\/\/[^\n]+\n)*/,
+		years:           /@YEARS/g
 	};
 
 	function convertToStatement( content ) {

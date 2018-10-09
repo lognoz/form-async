@@ -21,7 +21,7 @@ define( [
 	};
 
 	$.async = {
-		version: "@version",
+		version: "@VERSION",
 		data: {
 			form: "async",
 			elements: "async-element",
