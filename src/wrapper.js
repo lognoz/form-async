@@ -1,8 +1,9 @@
 /*!
- * JavaScript Autosave v@VERSION
- * https://github.com/lognoz/js-autosave
+ * Form Async v@VERSION
+ * https://github.com/form-async/form-async
  *
- * Copyright 2018, @YEARS Marc-Antoine Loignon
+ * Copyright 2018, @YEARS
+ * Form Async and other contributors
  * Released under the MIT license
  */
 ( function( factory ) {
