@@ -1,7 +1,7 @@
 define( [
 	"jquery",
 	"./var/data"
-], function( $ ) {
+], function( $, data ) {
 	"use strict";
 
 	var Request = function( options ) {
@@ -59,7 +59,7 @@ define( [
 			} );
 		},
 		success: function( response ) {
-			$.data( this.context, data( 'state' ), this.state);
+			$.data( this.context, data( "state" ), this.state );
 
 			this.callbacks.success
 				.bind( this.context )( response, this.request );
