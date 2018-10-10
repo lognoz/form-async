@@ -11,7 +11,6 @@ $( document ).ready( function() {
 		afterEach: function() {
 			spy.restore();
 			server.restore();
-			async.destroy();
 		}
 	} );
 
@@ -356,21 +355,5 @@ $( document ).ready( function() {
 		server.respondWith( 'success' );
 		server.respond();
 		assert.ok( $( '#simple-field' ).hasClass( 'success' ) );
-	} );
-
-	QUnit.test( 'Destroy', function( assert ) {
-		assert.expect( 4 );
-
-		async.destroy();
-
-		assert.ok( $( '#simple-field' ).data( 'autosave-element' ) === undefined );
-		assert.ok( $( '#simple-field' ).data( 'previous-state' ) === undefined );
-		assert.ok( $( '#simple-field' ).data( 'autosave' ) === undefined );
-
-		$( '#simple-field' )
-			.val( 'chili pepper' )
-			.trigger( 'blur' );
-
-		assert.ok( !spy.called );
 	} );
 } );
