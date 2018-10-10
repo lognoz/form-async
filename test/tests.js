@@ -1,9 +1,9 @@
 $( document ).ready( function() {
-	var server, spy, autosave;
+	var server, spy, async;
 
 	QUnit.module( 'Autosave functionalities', {
 		beforeEach: function() {
-			autosave = $( '.exemple' ).autosave();
+			async = $( '.exemple' ).async();
 			spy = sinon.spy( $, 'ajax' );
 			server = sinon.fakeServer.create();
 			server.respondWith( 'response' );
@@ -11,7 +11,7 @@ $( document ).ready( function() {
 		afterEach: function() {
 			spy.restore();
 			server.restore();
-			autosave.destroy();
+			async.destroy();
 		}
 	} );
 
@@ -47,12 +47,12 @@ $( document ).ready( function() {
 
 		$.each( elements, function( target, expected ) {
 			assert.ok(
-				( $( '#' + target ).data( 'autosave-element' ) !== undefined ) === expected
+				( $( '#' + target ).data( 'async-element' ) !== undefined ) === expected
 			);
 		} );
 
 		$.each( form, function( index, target ) {
-			assert.ok( $( target ).data( 'autosave' ) !== undefined );
+			assert.ok( $( target ).data( 'async' ) !== undefined );
 		} );
 	} );
 
@@ -257,7 +257,7 @@ $( document ).ready( function() {
 		beforeEach: function() {
 			spy = sinon.spy( $, 'ajax' );
 			server = sinon.fakeServer.create();
-			autosave = $( '.exemple' ).autosave( {
+			async = $( '.exemple' ).async( {
 				before: function( request ) {
 					if ( request.data.xs_username === 'cantaloupe' ) {
 						request.abort();
@@ -265,12 +265,12 @@ $( document ).ready( function() {
 				},
 				success: function( response, request ) {
 					if ( response === 'redirect' ) {
-						return request.fail( request );
+						return request.error( request );
 					}
 
 					$( this ).addClass( 'success' );
 				},
-				fail: function( request ) {
+				error: function( request ) {
 					$( this ).addClass( 'fail' );
 
 					$( '#test-case-retry' ).on( 'click', function() {
@@ -282,7 +282,6 @@ $( document ).ready( function() {
 		afterEach: function() {
 			spy.restore();
 			server.restore();
-			autosave.destroy();
 		}
 	} );
 
@@ -362,7 +361,7 @@ $( document ).ready( function() {
 	QUnit.test( 'Destroy', function( assert ) {
 		assert.expect( 4 );
 
-		autosave.destroy();
+		async.destroy();
 
 		assert.ok( $( '#simple-field' ).data( 'autosave-element' ) === undefined );
 		assert.ok( $( '#simple-field' ).data( 'previous-state' ) === undefined );
