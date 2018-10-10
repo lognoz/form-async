@@ -1,12 +1,12 @@
 $( document ).ready( function() {
 	var server, spy, async;
 
-	QUnit.module( 'Autosave functionalities', {
+	QUnit.module( "Autosave functionalities", {
 		beforeEach: function() {
-			async = $( '.exemple' ).async();
-			spy = sinon.spy( $, 'ajax' );
+			async = $( ".exemple" ).async();
+			spy = sinon.spy( $, "ajax" );
 			server = sinon.fakeServer.create();
-			server.respondWith( 'response' );
+			server.respondWith( "response" );
 		},
 		afterEach: function() {
 			spy.restore();
@@ -14,265 +14,265 @@ $( document ).ready( function() {
 		}
 	} );
 
-	QUnit.test( 'Basic requirements', function( assert ) {
+	QUnit.test( "Basic requirements", function( assert ) {
 		assert.expect( 34 );
 
-		var form = $( '.exemple' ),
+		var form = $( ".exemple" ),
 			elements = {
-				'simple-field': true,
-				'multiple-fields-name': true,
-				'multiple-fields-phone': true,
-				'overwrite-action-city': true,
-				'overwrite-action-province': true,
-				'checkbox-bike': true,
-				'checkbox-car': true,
-				'radio-male': true,
-				'radio-female': true,
-				'radio-other': true,
-				'select-car': true,
-				'select-multiple-car': true,
-				'group-password': true,
-				'group-redirection': true,
-				'contenteditable': true,
-				'checkbox-complexe-name-bike': true,
-				'checkbox-complexe-name-car': true,
-				'checkbox-complexe-name-walk': true,
-				'address-disabled-field': false,
-				'city-disabled-field': false,
-				'reset-disabled-field': false,
-				'submit-disabled-field': false,
-				'image-disabled-field': false
+				"simple-field": true,
+				"multiple-fields-name": true,
+				"multiple-fields-phone": true,
+				"overwrite-action-city": true,
+				"overwrite-action-province": true,
+				"checkbox-bike": true,
+				"checkbox-car": true,
+				"radio-male": true,
+				"radio-female": true,
+				"radio-other": true,
+				"select-car": true,
+				"select-multiple-car": true,
+				"group-password": true,
+				"group-redirection": true,
+				"contenteditable": true,
+				"checkbox-complexe-name-bike": true,
+				"checkbox-complexe-name-car": true,
+				"checkbox-complexe-name-walk": true,
+				"address-disabled-field": false,
+				"city-disabled-field": false,
+				"reset-disabled-field": false,
+				"submit-disabled-field": false,
+				"image-disabled-field": false
 			};
 
 		$.each( elements, function( target, expected ) {
 			assert.ok(
-				( $( '#' + target ).data( 'async-element' ) !== undefined ) === expected
+				( $( "#" + target ).data( "async-element" ) !== undefined ) === expected
 			);
 		} );
 
 		$.each( form, function( index, target ) {
-			assert.ok( $( target ).data( 'async' ) !== undefined );
+			assert.ok( $( target ).data( "async" ) !== undefined );
 		} );
 	} );
 
 
-	QUnit.test( 'Self initialisation', function( assert ) {
+	QUnit.test( "Self initialisation", function( assert ) {
 		assert.expect( 3 );
 
-		$( '#simple-field' )
-			.val( 'apple' )
-			.trigger( 'blur' );
+		$( "#simple-field" )
+			.val( "apple" )
+			.trigger( "blur" );
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/unique-field.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_username': 'apple' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/unique-field.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_username": "apple" } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'Simple form', function( assert ) {
+	QUnit.test( "Simple form", function( assert ) {
 		assert.expect( 6 );
 
-		$( '#multiple-fields-name' )
-			.val( 'apple' )
-			.trigger( 'blur' );
+		$( "#multiple-fields-name" )
+			.val( "apple" )
+			.trigger( "blur" );
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/multiple-fields.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_name': 'apple' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/multiple-fields.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_name": "apple" } } ) );
 
 		server.respond();
 
-		$( '#multiple-fields-phone' )
-			.val( 'orange' )
-			.trigger( 'blur' );
+		$( "#multiple-fields-phone" )
+			.val( "orange" )
+			.trigger( "blur" );
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/multiple-fields.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_phone': 'orange' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/multiple-fields.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_phone": "orange" } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'Overwriting action', function( assert ) {
+	QUnit.test( "Overwriting action", function( assert ) {
 		assert.expect( 6 );
 
-		$( '#overwrite-action-city' )
-			.val( 'avocado' )
-			.trigger( 'blur' );
+		$( "#overwrite-action-city" )
+			.val( "avocado" )
+			.trigger( "blur" );
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/multiple-fields.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_city': 'avocado' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/multiple-fields.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_city": "avocado" } } ) );
 
 		server.respond();
 
-		$( '#overwrite-action-province' )
-			.val( 'blueberrie' )
-			.trigger( 'blur' );
+		$( "#overwrite-action-province" )
+			.val( "blueberrie" )
+			.trigger( "blur" );
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/overwrite-action.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_province': 'blueberrie' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/overwrite-action.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_province": "blueberrie" } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'Checkbox', function( assert ) {
+	QUnit.test( "Checkbox", function( assert ) {
 		assert.expect( 8 );
 
-		$( '#checkbox-bike' ).trigger( 'click' );
+		$( "#checkbox-bike" ).trigger( "click" );
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/checkbox.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_vehicule': [ 'bike' ] } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/checkbox.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_vehicule": [ "bike" ] } } ) );
 
-		$( '#checkbox-car' ).trigger( 'click' );
+		$( "#checkbox-car" ).trigger( "click" );
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/checkbox.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_vehicule': [ 'bike', 'car' ] } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/checkbox.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_vehicule": [ "bike", "car" ] } } ) );
 
-		$( '#checkbox-bike' ).trigger( 'click' );
+		$( "#checkbox-bike" ).trigger( "click" );
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_vehicule': [ 'car' ] } } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_vehicule": [ "car" ] } } ) );
 	} );
 
-	QUnit.test( 'Radio', function( assert ) {
+	QUnit.test( "Radio", function( assert ) {
 		assert.expect( 9 );
 
-		$( '#radio-male' ).trigger( 'click' );
+		$( "#radio-male" ).trigger( "click" );
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/radio.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_gender': 'Male' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/radio.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_gender": "Male" } } ) );
 
-		$( '#radio-female' ).trigger( 'click' );
+		$( "#radio-female" ).trigger( "click" );
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/radio.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_gender': 'Female' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/radio.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_gender": "Female" } } ) );
 
-		$( '#radio-other' ).trigger( 'click' );
+		$( "#radio-other" ).trigger( "click" );
 		server.respond();
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/radio.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_gender': 'Other' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/radio.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_gender": "Other" } } ) );
 	} );
 
-	QUnit.test( 'Select', function( assert ) {
+	QUnit.test( "Select", function( assert ) {
 		assert.expect( 3 );
 
-		$( '#select-car' ).val( 'audi' );
-		$( '#select-car' ).trigger( 'change' );
+		$( "#select-car" ).val( "audi" );
+		$( "#select-car" ).trigger( "change" );
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/select.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_car': 'audi' } } ) );
-
-		server.respond();
-	} );
-
-	QUnit.test( 'Select with multiple attribute', function( assert ) {
-		assert.expect( 3 );
-
-		$( '#select-multiple-car [value="audi"]' ).attr( 'selected', true );
-		$( '#select-multiple-car [value="volvo"]' ).attr( 'selected', true );
-		$( '#select-multiple-car' ).trigger( 'change' );
-
-		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/select-multiple.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_car': [ 'volvo', 'audi' ] } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/select.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_car": "audi" } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'Send inputs as a group', function( assert ) {
+	QUnit.test( "Select with multiple attribute", function( assert ) {
 		assert.expect( 3 );
 
-		$( '#group-password' )
-			.val( 'orange' )
-			.trigger( 'blur' );
+		$( "#select-multiple-car [value=\"audi\"]" ).attr( "selected", true );
+		$( "#select-multiple-car [value=\"volvo\"]" ).attr( "selected", true );
+		$( "#select-multiple-car" ).trigger( "change" );
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/group.html' } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/select-multiple.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_car": [ "volvo", "audi" ] } } ) );
+
+		server.respond();
+	} );
+
+	QUnit.test( "Send inputs as a group", function( assert ) {
+		assert.expect( 3 );
+
+		$( "#group-password" )
+			.val( "orange" )
+			.trigger( "blur" );
+
+		assert.ok( spy.called );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/group.html" } ) );
 		assert.ok( $.ajax.calledWithMatch( {
-			data: { 'xs_password': 'orange', 'xs_redirection': 'index.html' }
+			data: { "xs_password": "orange", "xs_redirection": "index.html" }
 		} ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'Contenteditable', function( assert ) {
+	QUnit.test( "Contenteditable", function( assert ) {
 		assert.expect( 3 );
 
-		$( '#contenteditable' )
-			.html( 'mango' )
-			.trigger( 'blur' );
+		$( "#contenteditable" )
+			.html( "mango" )
+			.trigger( "blur" );
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { url: '/action/contenteditable.html' } ) );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_content': 'mango' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { url: "/action/contenteditable.html" } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_content": "mango" } } ) );
 
 		server.respond();
 	} );
 
-	QUnit.test( 'Complexe name', function( assert ) {
+	QUnit.test( "Complexe name", function( assert ) {
 		assert.expect( 6 );
 
-		$( '#checkbox-complexe-name-bike' ).trigger( 'click' );
+		$( "#checkbox-complexe-name-bike" ).trigger( "click" );
 		server.respond();
 
 		assert.ok( spy.called );
 		assert.ok( $.ajax.calledWithMatch( {
-			data: { 'xs_vehicule[][data]': [ 'bike' ] }
+			data: { "xs_vehicule[][data]": [ "bike" ] }
 		} ) );
 
-		$( '#checkbox-complexe-name-car' ).trigger( 'click' );
+		$( "#checkbox-complexe-name-car" ).trigger( "click" );
 		server.respond();
 
 		assert.ok( spy.called );
 		assert.ok( $.ajax.calledWithMatch( {
-			data: { 'xs_vehicule[][data]': [ 'bike', 'car' ] }
+			data: { "xs_vehicule[][data]": [ "bike", "car" ] }
 		} ) );
 
-		$( '#checkbox-complexe-name-walk' ).trigger( 'click' );
+		$( "#checkbox-complexe-name-walk" ).trigger( "click" );
 		server.respond();
 
 		assert.ok( spy.called );
 		assert.ok( $.ajax.calledWithMatch( {
-			data: { 'xs_vehicule[][][][data]': 'walk' }
+			data: { "xs_vehicule[][][][data]": "walk" }
 		} ) );
 	} );
 
-	QUnit.module( 'Autosave advanced options', {
+	QUnit.module( "Autosave advanced options", {
 		beforeEach: function() {
-			spy = sinon.spy( $, 'ajax' );
+			spy = sinon.spy( $, "ajax" );
 			server = sinon.fakeServer.create();
-			async = $( '.exemple' ).async( {
+			async = $( ".exemple" ).async( {
 				before: function( request ) {
-					if ( request.data.xs_username === 'cantaloupe' ) {
+					if ( request.data.xs_username === "cantaloupe" ) {
 						request.abort();
 					}
 				},
 				success: function( response, request ) {
-					if ( response === 'redirect' ) {
+					if ( response === "redirect" ) {
 						return request.error( request );
 					}
 
-					$( this ).addClass( 'success' );
+					$( this ).addClass( "success" );
 				},
 				error: function( request ) {
-					$( this ).addClass( 'fail' );
+					$( this ).addClass( "fail" );
 
-					$( '#test-case-retry' ).on( 'click', function() {
+					$( "#test-case-retry" ).on( "click", function() {
 						request.retry();
 					} );
 				}
@@ -284,76 +284,76 @@ $( document ).ready( function() {
 		}
 	} );
 
-	QUnit.test( 'Before function', function( assert ) {
+	QUnit.test( "Before function", function( assert ) {
 		assert.expect( 3 );
 
-		$( '#simple-field' )
-			.val( 'cantaloupe' )
-			.trigger( 'blur' );
+		$( "#simple-field" )
+			.val( "cantaloupe" )
+			.trigger( "blur" );
 
 		assert.ok( !spy.called );
 
-		$( '#simple-field' )
-			.val( 'carambola' )
-			.trigger( 'blur' );
+		$( "#simple-field" )
+			.val( "carambola" )
+			.trigger( "blur" );
 
 		assert.ok( spy.called );
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_username': 'carambola' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_username": "carambola" } } ) );
 	} );
 
-	QUnit.test( 'Success function', function( assert ) {
+	QUnit.test( "Success function", function( assert ) {
 		assert.expect( 1 );
 
-		$( '#simple-field' )
-			.val( 'clementine' )
-			.trigger( 'blur' );
+		$( "#simple-field" )
+			.val( "clementine" )
+			.trigger( "blur" );
 
-		server.respondWith( 'success' );
+		server.respondWith( "success" );
 		server.respond();
 
-		assert.ok( $( '#simple-field' ).hasClass( 'success' ) );
+		assert.ok( $( "#simple-field" ).hasClass( "success" ) );
 	} );
 
-	QUnit.test( 'Fake a fail response by redirecting', function( assert ) {
+	QUnit.test( "Fake a fail response by redirecting", function( assert ) {
 		assert.expect( 1 );
 
-		$( '#simple-field' )
-			.val( 'durian' )
-			.trigger( 'blur' );
+		$( "#simple-field" )
+			.val( "durian" )
+			.trigger( "blur" );
 
-		server.respondWith( 'redirect' );
+		server.respondWith( "redirect" );
 		server.respond();
 
-		assert.ok( $( '#simple-field' ).hasClass( 'fail' ) );
+		assert.ok( $( "#simple-field" ).hasClass( "fail" ) );
 	} );
 
-	QUnit.test( 'Fail function', function( assert ) {
+	QUnit.test( "Fail function", function( assert ) {
 		assert.expect( 1 );
 
-		$( '#simple-field' )
-			.val( 'durian' )
-			.trigger( 'blur' );
+		$( "#simple-field" )
+			.val( "durian" )
+			.trigger( "blur" );
 
-		server.respondWith( [ 404, {}, '' ] );
+		server.respondWith( [ 404, {}, "" ] );
 		server.respond();
 
-		assert.ok( $( '#simple-field' ).hasClass( 'fail' ) );
+		assert.ok( $( "#simple-field" ).hasClass( "fail" ) );
 	} );
 
-	QUnit.test( 'Retry link', function( assert ) {
+	QUnit.test( "Retry link", function( assert ) {
 		assert.expect( 2 );
 
-		$( '#simple-field' )
-			.val( 'strawberries' )
-			.trigger( 'blur' );
+		$( "#simple-field" )
+			.val( "strawberries" )
+			.trigger( "blur" );
 
-		server.respondWith( [ 404, {}, '' ] );
+		server.respondWith( [ 404, {}, "" ] );
 		server.respond();
-		assert.ok( $.ajax.calledWithMatch( { data: { 'xs_username': 'strawberries' } } ) );
+		assert.ok( $.ajax.calledWithMatch( { data: { "xs_username": "strawberries" } } ) );
 
-		$( '#test-case-retry' ).trigger( 'click' );
-		server.respondWith( 'success' );
+		$( "#test-case-retry" ).trigger( "click" );
+		server.respondWith( "success" );
 		server.respond();
-		assert.ok( $( '#simple-field' ).hasClass( 'success' ) );
+		assert.ok( $( "#simple-field" ).hasClass( "success" ) );
 	} );
 } );
