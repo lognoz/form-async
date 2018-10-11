@@ -1,16 +1,16 @@
 module.exports = function( grunt ) {
-	var package = grunt.file.readJSON( 'package.json' );
+	var package = grunt.file.readJSON( "package.json" );
 
-	function compare_size() {
+	function compareSize() {
 		return {
-			files: [ 'dist/form-async.min.js', 'dist/form-async.js' ],
+			files: [ "dist/form-async.min.js", "dist/form-async.js" ],
 			options: {
 				compress: {
 					gz: function( contents ) {
-						return require( 'gzip-js' ).zip( contents, {} ).length;
+						return require( "gzip-js" ).zip( contents, {} ).length;
 					}
 				},
-				cache: 'build/.sizecache.json'
+				cache: "build/.sizecache.json"
 			}
 		};
 	}
@@ -22,8 +22,8 @@ module.exports = function( grunt ) {
 					"dist/form-async.min.js": "dist/form-async.js"
 				},
 				options: {
-					banner: '/*! Form Async - v' + package.version + ' | ' +
-						'(c) Form Async and other contributors */',
+					banner: "/*! Form Async - v" + package.version + " | " +
+						"(c) Form Async and other contributors */",
 					compress: {
 						unsafe: true
 					},
@@ -36,9 +36,9 @@ module.exports = function( grunt ) {
 		};
 	}
 
-	grunt.registerTask('dist', [], function () {
-		grunt.config( 'uglify', uglify() );
-		grunt.config( 'compare_size', compare_size() );
-		grunt.task.run( [ 'uglify', 'compare_size' ] );
+	grunt.registerTask( "dist", [], function() {
+		grunt.config( "uglify", uglify() );
+		grunt.config( "compare_size", compareSize() );
+		grunt.task.run( [ "uglify", "compare_size" ] );
 	} );
 };
