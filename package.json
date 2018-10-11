@@ -2,7 +2,7 @@
   "name": "form-async",
   "version": "1.0.0",
   "description": "The simplest, fastest way to send ajax request when form changes.",
-  "main": "src/js.autosave.js",
+  "main": "dist/form-async.js",
   "directories": {
     "test": "test"
   },
@@ -19,12 +19,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/lognoz/js-autosave.git"
+    "url": "https://github.com/form-async/form-async.git"
   },
   "scripts": {
     "test": "grunt test"
   },
-  "author": "Marc-Antoine Loignon",
+  "author": "Form Async and other contributors",
   "license": "MIT",
   "dependencies": {
     "jquery": "~3.0.0"
