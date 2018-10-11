@@ -1,5 +1,5 @@
 {
-  "name": "js-autosave",
+  "name": "form-async",
   "version": "1.0.0",
   "description": "The simplest, fastest way to send ajax request when form changes.",
   "main": "src/js.autosave.js",
