@@ -43,7 +43,7 @@
     "no-caller": "error",
     "quotes": [
       "error",
-      "single"
+      "double"
     ],
     "no-undef": "error",
     "no-unused-vars": "error",
@@ -108,8 +108,6 @@
     "semi-spacing": [
       "error",
       {
-        // Because of the `for ( ; ...)` requirement
-        // "before": true,
         "after": true
       }
     ],
