@@ -7,5 +7,5 @@ module.exports = function( grunt ) {
 
 	grunt.loadTasks( "build/tasks" );
 	grunt.registerTask( "dev", [ "build", "dist" ] );
-	grunt.registerTask( "default", [ "dev" ] );
+	grunt.registerTask( "default", [ "dev", "test" ] );
 };
