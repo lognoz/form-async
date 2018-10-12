@@ -3,14 +3,11 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Form Async Test Suite</title>
-		<link rel="stylesheet" href="../node_modules/qunit/qunit/qunit.css">
-		<script src="./jquery.js"></script>
-		<script src="../node_modules/sinon/pkg/sinon.js"></script>
-		<script src="../node_modules/qunit/qunit/qunit.js"></script>
-		<script src="../dist/form-async.js"></script>
-		<script src="./tests.js"></script>
+		<link rel="stylesheet" href="lib/qunit/qunit.css">
+		<script src="lib/requirejs/require.js"></script>
+		<script src="lib/bootstrap.js"></script>
 	</head>
-	<body>
+	<body id="body">
 		<div id="qunit"></div>
 		<div id="qunit-fixture">
 			<input type="text" name="xs_username" data-action="/action/unique-field.html" id="simple-field" class="exemple">
