@@ -1,7 +1,7 @@
 $( document ).ready( function() {
 	var server, spy, async;
 
-	QUnit.module( "Autosave functionalities", {
+	QUnit.module( "Functionalities", {
 		beforeEach: function() {
 			async = $( ".exemple" ).async();
 			spy = sinon.spy( $, "ajax" );
@@ -252,7 +252,7 @@ $( document ).ready( function() {
 		} ) );
 	} );
 
-	QUnit.module( "Autosave advanced options", {
+	QUnit.module( "Callbacks", {
 		beforeEach: function() {
 			spy = sinon.spy( $, "ajax" );
 			server = sinon.fakeServer.create();
