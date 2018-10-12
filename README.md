@@ -38,7 +38,7 @@ Include jQuery and the plugin on a page. Then select a form to synchronise and c
 
 Alternatively include jQuery and the plugin via requirejs in your module.
 
-```html
+```js
 define( [ "jquery", "form-async" ], function( $ ) {
    $( "form" ).async();
 } );
