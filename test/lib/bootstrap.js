@@ -9,7 +9,8 @@
 			"async": "async",
 			"jquery": test( "/lib/jquery/jquery" ),
 			"qunit": test( "/lib/qunit/qunit" ),
-			"sinon": test( "/lib/sinon/sinon" )
+			"sinon": test( "/lib/sinon/sinon" ),
+			"unit" : test( "/unit" )
 		}
 	} );
 
