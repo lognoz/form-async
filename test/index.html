@@ -8,88 +8,74 @@
 		<script src="../node_modules/sinon/pkg/sinon.js"></script>
 		<script src="../node_modules/qunit/qunit/qunit.js"></script>
 		<script src="../dist/form-async.js"></script>
+		<script src="./tests.js"></script>
 	</head>
-	<body id="body">
+	<body>
 		<div id="qunit"></div>
 		<div id="qunit-fixture">
-			<div class="test-case">
-				<h3>Self initialisation</h3>
-				<input type="text" name="xs_username" data-action="/action/unique-field.html" id="simple-field" class="exemple">
+			<input type="text" name="xs_username" data-action="/action/unique-field.html" id="simple-field" class="exemple">
 
-				<h3>Simple form</h3>
-				<form action="/action/multiple-fields.html" method="post" class="exemple">
-					<input type="text" name="xs_name"  id="multiple-fields-name">
-					<input type="text" name="xs_phone" id="multiple-fields-phone">
-				</form>
+			<form action="/action/multiple-fields.html" method="post" class="exemple">
+				<input type="text" name="xs_name"  id="multiple-fields-name">
+				<input type="text" name="xs_phone" id="multiple-fields-phone">
+			</form>
 
-				<h3>Overwrite action</h3>
-				<form action="/action/multiple-fields.html" method="post" class="exemple">
-					<input type="text" name="xs_city" id="overwrite-action-city">
-					<input type="text" name="xs_province" id="overwrite-action-province" data-action="/action/overwrite-action.html">
-				</form>
+			<form action="/action/multiple-fields.html" method="post" class="exemple">
+				<input type="text" name="xs_city" id="overwrite-action-city">
+				<input type="text" name="xs_province" id="overwrite-action-province" data-action="/action/overwrite-action.html">
+			</form>
 
-				<h3>Checkbox</h3>
-				<form action="/action/checkbox.html" method="post" class="exemple">
-					<input type="checkbox" name="xs_vehicule[]" id="checkbox-bike" value="bike">
-					<input type="checkbox" name="xs_vehicule[]" id="checkbox-car" value="car">
-				</form>
+			<form action="/action/checkbox.html" method="post" class="exemple">
+				<input type="checkbox" name="xs_vehicule[]" id="checkbox-bike" value="bike">
+				<input type="checkbox" name="xs_vehicule[]" id="checkbox-car" value="car">
+			</form>
 
-				<h3>Radio</h3>
-				<form action="/action/radio.html" method="post" class="exemple">
-					<input type="radio" name="xs_gender" id="radio-male" value="Male">
-					<input type="radio" name="xs_gender" id="radio-female" value="Female">
-					<input type="radio" name="xs_gender" id="radio-other" value="Other">
-				</form>
+			<form action="/action/radio.html" method="post" class="exemple">
+				<input type="radio" name="xs_gender" id="radio-male" value="Male">
+				<input type="radio" name="xs_gender" id="radio-female" value="Female">
+				<input type="radio" name="xs_gender" id="radio-other" value="Other">
+			</form>
 
-				<h3>Select</h3>
-				<form action="/action/select.html" method="post" class="exemple">
-					<select name="xs_car" id="select-car">
-						<option value="volvo">Volvo</option>
-						<option value="mercedes">Mercedes</option>
-						<option value="audi">Audi</option>
-					</select>
-				</form>
+			<form action="/action/select.html" method="post" class="exemple">
+				<select name="xs_car" id="select-car">
+					<option value="volvo">Volvo</option>
+					<option value="mercedes">Mercedes</option>
+					<option value="audi">Audi</option>
+				</select>
+			</form>
 
-				<h3>Select with multiple attribute</h3>
-				<form action="/action/select-multiple.html" method="post" class="exemple">
-					<select name="xs_car" id="select-multiple-car" multiple="multiple">
-						<option value="volvo">Volvo</option>
-						<option value="mercedes">Mercedes</option>
-						<option value="audi">Audi</option>
-					</select>
-				</form>
+			<form action="/action/select-multiple.html" method="post" class="exemple">
+				<select name="xs_car" id="select-multiple-car" multiple="multiple">
+					<option value="volvo">Volvo</option>
+					<option value="mercedes">Mercedes</option>
+					<option value="audi">Audi</option>
+				</select>
+			</form>
 
-				<h3>Send inputs as a group</h3>
-				<form action="/action/group.html" method="post" class="exemple">
-					<input type="text" name="xs_password" id="group-password" data-autosave-group="xs_password,xs_redirection">
-					<input type="hidden" name="xs_redirection" id="group-redirection" value="index.html" data-autosave-group="xs_password,xs_redirection">
-				</form>
+			<form action="/action/group.html" method="post" class="exemple">
+				<input type="text" name="xs_password" id="group-password" data-autosave-group="xs_password,xs_redirection">
+				<input type="hidden" name="xs_redirection" id="group-redirection" value="index.html" data-autosave-group="xs_password,xs_redirection">
+			</form>
 
-				<h3>Contenteditable</h3>
-				<form action="/action/contenteditable.html" method="post" class="exemple">
-					<div contenteditable="true" id="contenteditable" data-name="xs_content"></div>
-				</form>
+			<form action="/action/contenteditable.html" method="post" class="exemple">
+				<div contenteditable="true" id="contenteditable" data-name="xs_content"></div>
+			</form>
 
-				<h3>Complexe name</h3>
-				<form action="/action/complexe-name.html" method="post" class="exemple">
-					<input type="checkbox" name="xs_vehicule[][data][]" id="checkbox-complexe-name-bike" value="bike">
-					<input type="checkbox" name="xs_vehicule[][data][]" id="checkbox-complexe-name-car" value="car">
-					<input type="checkbox" name="xs_vehicule[][][][data]" id="checkbox-complexe-name-walk" value="walk">
-				</form>
+			<form action="/action/complexe-name.html" method="post" class="exemple">
+				<input type="checkbox" name="xs_vehicule[][data][]" id="checkbox-complexe-name-bike" value="bike">
+				<input type="checkbox" name="xs_vehicule[][data][]" id="checkbox-complexe-name-car" value="car">
+				<input type="checkbox" name="xs_vehicule[][][][data]" id="checkbox-complexe-name-walk" value="walk">
+			</form>
 
-				<h3>Disbaled</h3>
-				<form action="/action/disabled.html" method="post" class="exemple">
-					<input type="text" name="xs_address" id="address-disabled-field" disabled>
-					<input type="text" name="xs_city" id="city-disabled-field" data-disabled-autosave>
-					<input type="reset" name="xs_reset" id="reset-disabled-field">
-					<input type="submit" name="xs_submit" id="submit-disabled-field">
-					<input type="image" name="xs_image" id="image-disabled-field" alt="">
-				</form>
+			<form action="/action/disabled.html" method="post" class="exemple">
+				<input type="text" name="xs_address" id="address-disabled-field" disabled>
+				<input type="text" name="xs_city" id="city-disabled-field" data-disabled-autosave>
+				<input type="reset" name="xs_reset" id="reset-disabled-field">
+				<input type="submit" name="xs_submit" id="submit-disabled-field">
+				<input type="image" name="xs_image" id="image-disabled-field" alt="">
+			</form>
 
-				<h3>Retry</h3>
-				<div id="test-case-retry"></div>
-			</div>
+			<div id="test-case-retry"></div>
 		</div>
-		<script src="./tests.js"></script>
 	</body>
 </html>
