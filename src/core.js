@@ -29,15 +29,13 @@ define( [
 		}
 	};
 
-	$.extend( $.fn, {
-		async: function( options ) {
-			options = options || {};
+	$.fn.async = function( options ) {
+		options = options || {};
 
-			$( this ).each( function() {
-				return $( this ).data( data( "form" ), new Async( this, options ) );
-			} );
-		}
-	} );
+		$( this ).each( function() {
+			return $( this ).data( data( "form" ), new Async( this, options ) );
+		} );
+	};
 
 	return Async;
 } );
