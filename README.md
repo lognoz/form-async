@@ -16,19 +16,32 @@ Making good form that improves user experience is not supposed to be hard to do.
 
 ## Getting Started
 
-1. Download the [latest release](https://github.com/lognoz/js-autosave/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/js-autosave) or [bower](https://bower.io/search/?q=js-autosave).
+### Installation
 
-2. Add the plugin script and initialise it on your form.
+Download the [latest release](https://github.com/form-async/form-async/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/form-async) or [bower](https://bower.io/search/?q=form-async).
+
+### Including it on your page
+
+Include jQuery and the plugin on a page. Then select a form to synchronise and call the `async` method.
+
 ```html
-<form action="/path/to/ajax.html" method="post" id="exemple">
-  <input type="text" name="xs_username">
+<form action="ajax.html">
+   <input name="xs_username">
 </form>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="path/to/js-autosave.js"></script>
+<script src="jquery.js"></script>
+<script src="form-async.js"></script>
 <script>
-  $("#exemple").autosave();
+  $( "form" ).async();
 </script>
+```
+
+Alternatively include jQuery and the plugin via requirejs in your module.
+
+```html
+define( [ "jquery", "form-async" ], function( $ ) {
+   $( "form" ).async();
+} );
 ```
 
 ## Callbacks
