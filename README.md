@@ -8,10 +8,9 @@ Making good form that improves user experience is not supposed to be hard to do.
 * Saves any HTML form element.
 * Support content editable property.
 * Full customization.
-* Clear the field if it not matches support.
-* Retry functionality if ajax call fail.
+* Retry functionality if ajax request fail.
 * Send form elements as group of field.
-* Provide the way to validate changes before sending ajax call.
+* Provide the way to validate changes before sending ajax request.
 * Heavily tested.
 
 ## Getting Started
@@ -46,14 +45,42 @@ define( [ "jquery", "form-async" ], function( $ ) {
 
 ## Callbacks
 
-**before**  
-Type: `Function` Default: `null`  
+### before
 A pre-request callback function that can be use to validate data before it is sent. Must return `true` to establish ajax request.
 
-**success**  
-Type: `Function` Default: `null`  
+```js
+$( "form" ).async( {
+  before: function( request ) {
+    if( /[^a-zA-Z0-9]/.test( $( this.value ) ) {
+      request.abort();
+    }
+  }
+} );
+```
+
+### success
 A callback function invoked if the request succeeds. The function gets passed one argument: the data returned from the server.
 
-**fail**  
-Type: `Function` Default: `null`  
+```js
+$( "form" ).async( {
+  success: function( response, request ) {
+    $( this ).addClass( "success" );
+  }
+} );
+```
+
+### error
 A callback function invoked if the request fails.
+
+```js
+$( "form" ).async( {
+  success: function( response, request ) {
+    if ( response === "error" ) {
+      request.error();
+    }
+  },
+  error: function( request ) {
+    $( this ).addClass( "error" );
+  }
+} );
+```
