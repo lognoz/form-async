@@ -2,24 +2,10 @@ define( [
 	"jquery",
 	"qunit",
 	"sinon",
+	"unit/module",
 	"async"
-], function( $, QUnit, sinon ) {
-	var server, spy, async;
-
-	QUnit.start();
-
-	QUnit.module( "Functionalities", {
-		beforeEach: function() {
-			async = $( ".exemple" ).async();
-			spy = sinon.spy( $, "ajax" );
-			server = sinon.fakeServer.create();
-			server.respondWith( "response" );
-		},
-		afterEach: function() {
-			spy.restore();
-			server.restore();
-		}
-	} );
+], function( $, QUnit, sinon, module ) {
+	QUnit.module( "Functionalities", module );
 
 	QUnit.test( "Basic requirements", function( assert ) {
 		assert.expect( 34 );
