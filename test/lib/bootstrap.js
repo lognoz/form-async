@@ -1,4 +1,9 @@
 ( function() {
+	window.async = null;
+	window.server = null;
+	window.spy = null;
+	window.started = false;
+
 	function test( path ) {
 		return "../test" + path;
 	}
