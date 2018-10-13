@@ -21,6 +21,6 @@
 
 	requirejs( [
 		test( "/unit/core" ),
-		test( "/unit/form-elements" )
+		test( "/unit/events" )
 	] );
 } )();
