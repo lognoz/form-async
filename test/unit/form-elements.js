@@ -5,9 +5,9 @@ define( [
 	"unit/module",
 	"async"
 ], function( $, QUnit, sinon, module ) {
-	QUnit.module( "Functionalities", module );
+	QUnit.module( "async - events", module );
 
-	QUnit.test( "Self initialisation", function( assert ) {
+	QUnit.test( "self initialisation", function( assert ) {
 		assert.expect( 3 );
 
 		$( "#simple-field" )
@@ -21,7 +21,7 @@ define( [
 		server.respond();
 	} );
 
-	QUnit.test( "Simple form", function( assert ) {
+	QUnit.test( "simple form", function( assert ) {
 		assert.expect( 6 );
 
 		$( "#multiple-fields-name" )
@@ -45,7 +45,7 @@ define( [
 		server.respond();
 	} );
 
-	QUnit.test( "Overwriting action", function( assert ) {
+	QUnit.test( "overwriting action", function( assert ) {
 		assert.expect( 6 );
 
 		$( "#overwrite-action-city" )
@@ -69,7 +69,7 @@ define( [
 		server.respond();
 	} );
 
-	QUnit.test( "Checkbox", function( assert ) {
+	QUnit.test( "checkbox", function( assert ) {
 		assert.expect( 8 );
 
 		$( "#checkbox-bike" ).trigger( "click" );
@@ -93,7 +93,7 @@ define( [
 		assert.ok( $.ajax.calledWithMatch( { data: { "xs_vehicule": [ "car" ] } } ) );
 	} );
 
-	QUnit.test( "Radio", function( assert ) {
+	QUnit.test( "radio", function( assert ) {
 		assert.expect( 9 );
 
 		$( "#radio-male" ).trigger( "click" );
@@ -118,7 +118,7 @@ define( [
 		assert.ok( $.ajax.calledWithMatch( { data: { "xs_gender": "Other" } } ) );
 	} );
 
-	QUnit.test( "Select", function( assert ) {
+	QUnit.test( "select", function( assert ) {
 		assert.expect( 3 );
 
 		$( "#select-car" ).val( "audi" );
@@ -131,7 +131,7 @@ define( [
 		server.respond();
 	} );
 
-	QUnit.test( "Select with multiple attribute", function( assert ) {
+	QUnit.test( "select with multiple attribute", function( assert ) {
 		assert.expect( 3 );
 
 		$( "#select-multiple-car [value=\"audi\"]" ).attr( "selected", true );
@@ -145,7 +145,7 @@ define( [
 		server.respond();
 	} );
 
-	QUnit.test( "Send inputs as a group", function( assert ) {
+	QUnit.test( "group", function( assert ) {
 		assert.expect( 3 );
 
 		$( "#group-password" )
@@ -161,7 +161,7 @@ define( [
 		server.respond();
 	} );
 
-	QUnit.test( "Contenteditable", function( assert ) {
+	QUnit.test( "contenteditable", function( assert ) {
 		assert.expect( 3 );
 
 		$( "#contenteditable" )
@@ -175,7 +175,7 @@ define( [
 		server.respond();
 	} );
 
-	QUnit.test( "Complexe name", function( assert ) {
+	QUnit.test( "complexe name", function( assert ) {
 		assert.expect( 6 );
 
 		$( "#checkbox-complexe-name-bike" ).trigger( "click" );
