@@ -20,6 +20,7 @@
 	} );
 
 	requirejs( [
+		test( "/unit/core" ),
 		test( "/unit/form-elements" )
 	] );
 } )();
