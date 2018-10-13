@@ -7,47 +7,6 @@ define( [
 ], function( $, QUnit, sinon, module ) {
 	QUnit.module( "Functionalities", module );
 
-	QUnit.test( "Basic requirements", function( assert ) {
-		assert.expect( 34 );
-
-		var form = $( ".exemple" ),
-			elements = {
-				"simple-field": true,
-				"multiple-fields-name": true,
-				"multiple-fields-phone": true,
-				"overwrite-action-city": true,
-				"overwrite-action-province": true,
-				"checkbox-bike": true,
-				"checkbox-car": true,
-				"radio-male": true,
-				"radio-female": true,
-				"radio-other": true,
-				"select-car": true,
-				"select-multiple-car": true,
-				"group-password": true,
-				"group-redirection": true,
-				"contenteditable": true,
-				"checkbox-complexe-name-bike": true,
-				"checkbox-complexe-name-car": true,
-				"checkbox-complexe-name-walk": true,
-				"address-disabled-field": false,
-				"city-disabled-field": false,
-				"reset-disabled-field": false,
-				"submit-disabled-field": false,
-				"image-disabled-field": false
-			};
-
-		$.each( elements, function( target, expected ) {
-			assert.ok(
-				( $( "#" + target ).data( "async-element" ) !== undefined ) === expected
-			);
-		} );
-
-		$.each( form, function( index, target ) {
-			assert.ok( $( target ).data( "async" ) !== undefined );
-		} );
-	} );
-
 	QUnit.test( "Self initialisation", function( assert ) {
 		assert.expect( 3 );
 
