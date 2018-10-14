@@ -2,10 +2,9 @@ define( [
 	"jquery",
 	"qunit",
 	"sinon",
-	"unit/module",
 	"async"
-], function( $, QUnit, sinon, module ) {
-	QUnit.module( "core: extensions", module );
+], function( $, QUnit, sinon ) {
+	QUnit.module( "core: extensions" );
 
 	QUnit.test( "$.async", function( assert ) {
 		assert.expect( 1 );
@@ -19,7 +18,7 @@ define( [
 		assert.ok( $.fn.async !== undefined );
 	} );
 
-	QUnit.module( "core: attributes", module );
+	QUnit.module( "core: attributes" );
 
 	QUnit.test( "async", function( assert ) {
 		assert.expect( 11 );
