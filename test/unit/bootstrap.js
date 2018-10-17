@@ -14,10 +14,15 @@
 	var script = scripts[ scripts.length - 1 ];
 
 	// Read the modules
-	var modules = script.getAttribute( "data-modules" );
+	var module = script.getAttribute( "data-modules" );
 
-	// Load test modules based on data attributes
+	// Load test environment
+	require( [ "qunit" ], function( QUnit ) {
+		QUnit.start();
+	} );
+
+	// Load test module based on data attributes
 	require( [
-		"unit/" + modules + "/core"
+		"unit/" + module + "/core"
 	] );
 } )();
