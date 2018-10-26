@@ -1,7 +1,7 @@
 define( [
 	"jquery",
-	"./core",
-	"./var/attr"
+	"./Async",
+	"../var/attr"
 ], function( $, Async, attr ) {
 	"use strict";
 
