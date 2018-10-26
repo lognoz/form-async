@@ -1,24 +1,9 @@
 define( [
 	"jquery",
-	"./var/attr",
-	"./var/callback",
+	"./core/Async",
 	"./var/data"
-], function( $, attr, callback, data ) {
+], function( $, Async, data ) {
 	"use strict";
-
-	var Async = function( form, callbacks ) {
-		this.action = attr.action( form );
-		this.callbacks = {
-			before: callback( "before", callbacks ),
-			error: callback( "error", callbacks ),
-			success: callback( "success", callbacks )
-		};
-
-		this.prototype = {};
-		this.elements = [];
-		this.form = form;
-		this.init();
-	};
 
 	$.async = {
 		version: "@VERSION",
@@ -36,6 +21,4 @@ define( [
 			return $( this ).data( data( "form" ), new Async( this, options ) );
 		} );
 	};
-
-	return Async;
 } );
