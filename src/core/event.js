@@ -7,7 +7,7 @@ define( [
 ], function( $, Async, Request, attr, data ) {
 	"use strict";
 
-	function targets( form ) {
+	function getTargets( form ) {
 		var valid = "select, input, textarea, [contentEditable]";
 		if ( form.children.length === 0 && $( form ).is( valid ) ) {
 			return [ form ];
@@ -22,7 +22,7 @@ define( [
 		init: function() {
 			var self = this;
 
-			$.each( targets( this.form ), function( key, target ) {
+			$.each( getTargets( this.form ), function( key, target ) {
 				self.elements.push( {
 					selector: target,
 					action: attr.action( target ),
