@@ -4,7 +4,7 @@ define( [
 ], function( $, data ) {
 	"use strict";
 
-	var Request = function( options ) {
+	function Request( options ) {
 		this.aborted = false;
 		this.options = options;
 		this.attribute = options.attribute;
@@ -15,7 +15,7 @@ define( [
 		this.init();
 	};
 
-	$.extend( Request.prototype, {
+	Request.prototype = {
 		abort: function() {
 			this.aborted = true;
 		},
@@ -68,7 +68,7 @@ define( [
 			this.callbacks.error
 				.bind( this.context )( this.request );
 		}
-	} );
+	};
 
 	return Request;
 } );
