@@ -1,11 +1,11 @@
 define( [
 	"jquery",
 	"./Async",
+	"./var/targets",
 	"../request/Request",
 	"../var/attr",
 	"../var/data",
-	"../var/targets",
-], function( $, Async, Request, attr, data, targets ) {
+], function( $, Async, targets, Request, attr, data ) {
 	"use strict";
 
 	$.extend( Async.prototype, {
