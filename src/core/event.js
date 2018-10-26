@@ -1,12 +1,22 @@
 define( [
 	"jquery",
 	"./Async",
-	"./var/targets",
 	"../request/Request",
 	"../var/attr",
 	"../var/data",
-], function( $, Async, targets, Request, attr, data ) {
+], function( $, Async, Request, attr, data ) {
 	"use strict";
+
+	function targets( form ) {
+		var valid = "select, input, textarea, [contentEditable]";
+		if ( form.children.length === 0 && $( form ).is( valid ) ) {
+			return [ form ];
+		} else {
+			return $( form )
+				.find( valid )
+				.not( ":submit, :reset, :image, :disabled, [data-disabled-autosave]" );
+		}
+	}
 
 	$.extend( Async.prototype, {
 		init: function() {
