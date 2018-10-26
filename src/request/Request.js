@@ -1,6 +1,6 @@
 define( [
 	"jquery",
-	"./var/data"
+	"../var/data"
 ], function( $, data ) {
 	"use strict";
 
