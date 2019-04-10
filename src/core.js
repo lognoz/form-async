@@ -1,8 +1,10 @@
 define( [
 	"jquery",
+	"./var/data",
 	"./core/Async",
-	"./var/data"
-], function( $, Async, data ) {
+	"./core/event",
+	"./core/data"
+], function( $, data, Async ) {
 	"use strict";
 
 	$.async = {
