@@ -5,7 +5,8 @@ define( [
 	"unit/module",
 	"async"
 ], function( $, QUnit, sinon, module ) {
-	QUnit.module( "async - events", module );
+
+	QUnit.module( "async: events", module );
 
 	QUnit.test( "self initialisation", function( assert ) {
 		assert.expect( 3 );
