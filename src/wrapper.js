@@ -1,6 +1,6 @@
 /*!
  * Form Async v@VERSION
- * https://github.com/form-async/form-async
+ * https://github.com/lognoz/form-async
  *
  * Copyright 2018, @YEARS
  * Form Async and other contributors
