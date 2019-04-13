@@ -6,7 +6,10 @@ module.exports = function( grunt ) {
 			},
 			target: [
 				"build/**/*.js",
-				"Gruntfile.js"
+				"src/**/*.js",
+				"test/**/*.js",
+				"Gruntfile.js",
+				"!src/wrapper.js"
 			]
 		};
 	}
