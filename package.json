@@ -1,6 +1,6 @@
 {
   "name": "form-async",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The simplest, fastest way to send ajax request when form changes.",
   "main": "dist/form-async.js",
   "directories": {
