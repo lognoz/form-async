@@ -19,10 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/form-async/form-async.git"
-  },
-  "scripts": {
-    "test": "grunt test"
+    "url": "https://github.com/lognoz/form-async.git"
   },
   "author": "Form Async and other contributors",
   "license": "MIT",
@@ -39,6 +36,7 @@
     "grunt-eslint": "^21.0.0",
     "grunt-template": "^0.2.3",
     "gzip-js": "0.3.2",
+    "load-grunt-config": "^1.0.1",
     "load-grunt-tasks": "^3.1.0",
     "qunit": "^2.6.2",
     "requirejs": "2.3.5",
