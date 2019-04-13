@@ -64,11 +64,13 @@ $.each( {
 	}
 }, function( type, options ) {
 	QUnit.test( "markup structure: " + type, function( assert ) {
-		assert.expect( 3 + ( options.elements * 2 ) );
+		assert.expect( 4 + ( options.elements * 2 ) );
+
 		var selector = $( options.selector ),
 			construct = selector.async(),
 			async = selector.data( "async" );
 
+		assert.equal( construct, undefined );
 		assert.equal( async.form, options.selector );
 		assert.equal( async.action, options.action );
 		assert.equal( async.elements.length, options.elements );

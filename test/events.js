@@ -1,6 +1,10 @@
+var server = null;
+var spy = null;
+
 QUnit.module( "async: events", {
 	beforeEach: function() {
-		async = $( ".exemple" ).async();
+		$( ".exemple" ).async();
+
 		spy = sinon.spy( $, "ajax" );
 		server = sinon.fakeServer.create();
 		server.respondWith( "response" );

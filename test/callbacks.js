@@ -1,3 +1,6 @@
+var server = null;
+var spy = null;
+
 function execute() {
 	QUnit.test( "before", function( assert ) {
 		assert.expect( 3 );
@@ -11,7 +14,7 @@ function execute() {
 				.val( value )
 				.trigger( "blur" );
 
-			assert.ok( spy.called == expected );
+			assert.ok( spy.called === expected );
 		} );
 	} );
 
@@ -71,10 +74,10 @@ var options = {
 		if ( response !== "error" ) {
 			$( this ).addClass( "success" );
 		} else {
-			request.error()
+			request.error();
 		}
 	},
-	error: function( request ) {
+	error: function() {
 		$( this ).addClass( "error" );
 	}
 };
@@ -83,7 +86,8 @@ QUnit.module( "callbacks: options", {
 	beforeEach: function() {
 		spy = sinon.spy( $, "ajax" );
 		server = sinon.fakeServer.create();
-		async = $( ".exemple" ).async( options );
+
+		$( ".exemple" ).async( options );
 	},
 	afterEach: function() {
 		spy.restore();
@@ -98,7 +102,8 @@ QUnit.module( "callbacks: defaults", {
 		$.async.defaults = options;
 		spy = sinon.spy( $, "ajax" );
 		server = sinon.fakeServer.create();
-		async = $( ".exemple" ).async();
+
+		$( ".exemple" ).async();
 	},
 	afterEach: function() {
 		spy.restore();

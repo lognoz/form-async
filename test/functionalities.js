@@ -1,3 +1,6 @@
+var spy = null;
+var server = null;
+
 QUnit.module( "functionalities", {
 	beforeEach: function() {
 		spy = sinon.spy( $, "ajax" );
@@ -21,7 +24,7 @@ QUnit.test( "retry", function( assert ) {
 				request.retry();
 			} );
 		},
-		success: function( response, request ) {
+		success: function() {
 			$( this ).removeClass( "error" );
 		}
 	} );
