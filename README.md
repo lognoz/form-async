@@ -17,7 +17,7 @@ Form Async is the simplest, fastest way to send ajax request when form changes.
 
 ### Installation
 
-Download the [latest release](https://github.com/lognoz/form-async/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/form-async) or.
+Download the [latest release](https://github.com/lognoz/form-async/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/form-async).
 
 ### Including it on your page
 
