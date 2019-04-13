@@ -1,6 +1,6 @@
-# Form Async [![travis-img-url](https://travis-ci.org/lognoz/js-autosave.svg?branch=master)](https://travis-ci.org/lognoz/js-autosave)
+# Form Async [![travis-img-url](https://travis-ci.org/lognoz/form-async.svg?branch=master)](https://travis-ci.org/lognoz/form-async)
 
-Making good form that improves user experience is not supposed to be hard to do. JavaScript Autosave is the simplest, fastest way to send ajax request when form changes.
+Form Async is the simplest, fastest way to send ajax request when form changes.
 
 ## Features
 
@@ -17,7 +17,7 @@ Making good form that improves user experience is not supposed to be hard to do.
 
 ### Installation
 
-Download the [latest release](https://github.com/form-async/form-async/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/form-async) or [bower](https://bower.io/search/?q=form-async).
+Download the [latest release](https://github.com/lognoz/form-async/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/form-async) or [bower](https://bower.io/search/?q=form-async).
 
 ### Including it on your page
 
