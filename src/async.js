@@ -1,6 +1,6 @@
 define( [
 	"jquery",
-	"./core",
+	"./core"
 ], function( Async ) {
 	"use strict";
 

@@ -3,7 +3,7 @@ define( [
 	"./Async",
 	"../request/Request",
 	"../var/attr",
-	"../var/data",
+	"../var/data"
 ], function( $, Async, Request, attr, data ) {
 	"use strict";
 

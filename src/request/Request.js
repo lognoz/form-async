@@ -13,7 +13,7 @@ define( [
 		this.state = options.state;
 
 		this.init();
-	};
+	}
 
 	Request.prototype = {
 		abort: function() {
