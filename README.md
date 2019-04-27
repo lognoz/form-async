@@ -51,7 +51,7 @@ A pre-request callback function that can be use to validate data before it is se
 ```js
 $( "form" ).async( {
   before: function( request ) {
-    if( /[^a-zA-Z0-9]/.test( $( this).val() ) {
+    if( /[^a-zA-Z0-9]/.test( $( this ).val() ) {
       request.abort();
     }
   }
