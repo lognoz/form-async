@@ -1,86 +1,55 @@
-# Form Async [![travis-img-url](https://travis-ci.org/lognoz/form-async.svg?branch=master)](https://travis-ci.org/lognoz/form-async)
+# Form Async
 
-Form Async is the simplest, fastest way to send ajax request when form changes.
+<a href="https://www.npmjs.com/package/form-async"><img src="https://img.shields.io/npm/v/form-async.svg?style=flat-square"></a>
+<a href="https://travis-ci.org/lognoz/form-async"><img src="https://img.shields.io/travis/lognoz/form-async/master.svg?style=flat-square" alt="Build Status"></a>
+
+Form Async is an easy-to-use library that provide acronymous sending on form changes. It's a great solution to preventing data loss when filling out a web form.
 
 ## Features
 
-* Lightweight (~1.5kb gziped).
-* Saves any HTML form element.
-* Support content editable property.
-* Full customization.
-* Retry functionality if ajax request fail.
-* Send form elements as group of field.
-* Provide the way to validate changes before sending ajax request.
-* Heavily tested.
+- Lightweight (~1.5kb gziped)
+- Saves any HTML form element
+- Support content editable property
+- Full customization
+- Retry functionality if ajax request fail
+- Send form elements as group of field
+- Provide the way to validate changes before sending ajax request
+- Heavily tested
 
-## Getting Started
+## Installation
 
-### Installation
+``` bash
+$ npm install form-async
+```
 
-Download the [latest release](https://github.com/lognoz/form-async/releases/latest), or better yet install it with [npm](https://www.npmjs.com/package/form-async).
+We recommend installing from npm and then using a module bundler such as [RequireJS](https://requirejs.org), [Webpack](https://webpack.js.org) or [Browserify](http://browserify.org).
 
-### Including it on your page
-
-Include jQuery and the plugin on a page. Then select a form to synchronise and call the `async` method.
+Alternatively, you can use [jsdelivr CDN](https://www.jsdelivr.com/package/npm/form-async) instead of npm.
 
 ```html
-<form action="ajax.html">
+<!-- 1. Add JS before the closing `</body>` -->
+<script src="jquery.js"></script>
+<script src="form-async.js"></script>
+
+<!-- 2. Initialize -->
+<form action="/ajax/account">
    <input name="xs_username">
 </form>
 
-<script src="jquery.js"></script>
-<script src="form-async.js"></script>
 <script>
-  $( "form" ).async();
+   $("form").async();
 </script>
 ```
+## Documentation
+**[Read the docs](https://code.lognoz.org/form-async/)** for more details on how to use Form Async.
 
-Alternatively include jQuery and the plugin via requirejs in your module.
+### Callbacks
+- [`before`](https://code.lognoz.org/form-async/callbacks/before/) — pre-request function that can be use to validate data before it is sent
+- [`success`](https://code.lognoz.org/form-async/callbacks/success/) — function invoked if the request succeeds
+- [`error`](https://code.lognoz.org/form-async/callbacks/error/) — function invoked if the request fails
 
-```js
-define( [ "jquery", "form-async" ], function( $ ) {
-   $( "form" ).async();
-} );
-```
-
-## Callbacks
-
-### before
-A pre-request callback function that can be use to validate data before it is sent.
-
-```js
-$( "form" ).async( {
-  before: function( request ) {
-    if( /[^a-zA-Z0-9]/.test( $( this ).val() ) {
-      request.abort();
-    }
-  }
-} );
-```
-
-### success
-A callback function invoked if the request succeeds. The function gets passed one argument: the data returned from the server.
-
-```js
-$( "form" ).async( {
-  success: function( response, request ) {
-    $( this ).addClass( "success" );
-  }
-} );
-```
-
-### error
-A callback function invoked if the request fails.
-
-```js
-$( "form" ).async( {
-  success: function( response, request ) {
-    if ( response === "error" ) {
-      request.error();
-    }
-  },
-  error: function( request ) {
-    $( this ).addClass( "error" );
-  }
-} );
-```
+## Software
+We use Browserstack for manual testing
+<a href="https://www.browserstack.com" target="_blank">
+  <img align="left" width="117" alt="BrowserStack logo" src="https://i.ibb.co/HDRDHmx/Browserstack-logo-2x.png">
+</a>
