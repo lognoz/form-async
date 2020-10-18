@@ -39,12 +39,17 @@ module.exports = function( grunt ) {
 		};
 	}
 
+	function getVersion() {
+		var config = require( __dirname + "/../package.json" );
+		return config.version;
+	}
+
 	function getOutput( dest ) {
 		return function( code ) {
 			var wrapper = getWrapper();
 			grunt.file.write( dest,
 				( wrapper.start + "\t" + code.trim() + "\n" + wrapper.end )
-					.replace( regex.version, "1.0.0" )
+					.replace( regex.version, getVersion() )
 					.replace( regex.years, grunt.template.today( "yyyy" ) )
 			);
 		};
