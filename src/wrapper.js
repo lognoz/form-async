@@ -2,7 +2,7 @@
  * Form Async v@VERSION
  * https://github.com/lognoz/form-async
  *
- * Copyright 2018, @YEARS
+ * Copyright 2018-@YEARS
  * Form Async and other contributors
  * Released under the MIT license
  */
