@@ -1,8 +1,8 @@
 /*!
- * Form Async v1.0.0
+ * Form Async v2.0.2
  * https://github.com/lognoz/form-async
  *
- * Copyright 2018, 2019
+ * Copyright 2018-2020
  * Form Async and other contributors
  * Released under the MIT license
  */
@@ -57,7 +57,7 @@
 		}
 	};
 
-	var isFunction = function isFunction( obj ) {
+	var isFunction = function( obj ) {
 		return typeof obj === "function" && typeof obj.nodeType !== "number";
 	};
 
@@ -254,7 +254,7 @@
 	} );
 
 	$.async = {
-		version: "1.0.0",
+		version: "2.0.2",
 		data: {
 			form: "async",
 			elements: "async-element",
